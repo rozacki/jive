@@ -181,6 +181,6 @@ public class TechnicalMappingJSONFieldSchema {
      * @return
      */
     static public String normalizeHIVEObjectName(String in){
-        return in.toLowerCase().replaceAll("[-\\.\\[\\]\\*]","_").replaceAll("\\d+.*","");
+        return in.toLowerCase().replaceAll("[-\\.\\[\\]\\*]","_");
     }
 }
