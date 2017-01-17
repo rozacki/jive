@@ -1,7 +1,7 @@
 package uk.gov.dwp.uc.dip.mappingreader;
 
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
 import java.io.IOException;

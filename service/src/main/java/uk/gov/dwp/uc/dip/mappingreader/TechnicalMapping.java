@@ -1,6 +1,5 @@
 package uk.gov.dwp.uc.dip.mappingreader;
 
-import org.apache.commons.lang.builder.HashCodeBuilder;
 import uk.gov.dwp.uc.dip.schemagenerator.datachecks.DataCheckEnum;
 import java.util.*;
 import static uk.gov.dwp.uc.dip.mappingreader.MappingTypeEnum.SOURCE_TYPE_CUSTOM;
@@ -93,14 +92,12 @@ public class TechnicalMapping {
      */
     @Override
     public int hashCode() {
-        return new HashCodeBuilder(17, 31). // two randomly chosen prime numbers
-                // if deriving: appendSuper(super.hashCode()).
-                        append(sourceDatabase).
-                        append(sourceCollection).
-                        append(targetType).
-                        append(targetFieldName).
-                        append(targetTableName).
-                        toHashCode();
+        int result = sourceDatabase != null ? sourceDatabase.hashCode() : 0;
+        result = 31 * result + (sourceCollection != null ? sourceCollection.hashCode() : 0);
+        result = 31 * result + (targetType != null ? targetType.hashCode() : 0);
+        result = 31 * result + (targetFieldName != null ? targetFieldName.hashCode() : 0);
+        result = 31 * result + (targetTableName != null ? targetTableName.hashCode() : 0);
+        return result;
     }
 
     /**
