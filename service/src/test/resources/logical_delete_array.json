@@ -1,0 +1,2 @@
+{"field1":"field1_value","secondArray":["field2_item1","field2_item2","field2_item3"]}
+{"_removed":{"field1":"removed_field1_value","field2":["removed_field2_item1","removed_field2_item2","removed_field2_item3"],"secondArray":["removed_secondArray_item1","removed_secondArray_item2","removed_secondArray_item3"]}}

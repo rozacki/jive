@@ -1,0 +1,4 @@
+sourceDB,sourceCollection,sourceFieldLocation,sourceDataType,destinationTable,destinationField,destinationDataType,function
+sourceDB,sourceCollection,a.b[1],string,targetTable,my_result,string,
+sourceDB,sourceCollection,a.b[*],string,targetTable,my_result,string,
+sourceDB,sourceCollection,a.b[1].c,string,targetTable,my_result,string,

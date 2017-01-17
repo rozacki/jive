@@ -1,0 +1,4 @@
+sourceDB,sourceCollection,sourceFieldLocation,sourceDataType,destinationTable,destinationField,destinationDataType,function
+sourceDB,sourceCollection,myMap[mk],string,targetTable,mapKey,string,
+sourceDB,sourceCollection,myMap[mv],int,targetTable,mapValue,int,
+sourceDB,sourceCollection,_id,int,targetTable,id,int,

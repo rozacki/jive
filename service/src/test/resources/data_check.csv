@@ -1,0 +1,5 @@
+sourceDB,sourceCollection,sourceFieldLocation,sourceDataType,destinationTable,destinationField,destinationDataType,function,dataCheck
+sourceDB,sourceCollection,field1,string,targetTable,target_field_1,string,,not_nullable unique
+sourceDB,sourceCollection,field1,string,targetTable,target_field_2,string,,
+sourceDB,sourceCollection,field2,string,targetTable,target_field_3,string,,not_nullable unique
+sourceDB,sourceCollection,field3,string,targetTable,target_field_4,string,,not_nullable unique

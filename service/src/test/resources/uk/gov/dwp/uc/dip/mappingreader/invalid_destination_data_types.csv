@@ -1,0 +1,2 @@
+sourceDB,sourceCollection,sourceFieldLocation,sourceDataType,destinationTable,destinationField,destinationDataType,function
+sourceDB,sourceCollection,my_data,string,targetTable,my_result,stung,

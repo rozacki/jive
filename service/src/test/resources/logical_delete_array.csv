@@ -1,0 +1,4 @@
+sourceDB,sourceCollection,sourceFieldLocation,sourceDataType,destinationTable,destinationField,destinationDataType,function
+sourceDB,sourceCollection,field1,string,targetTable,logical_delete_field1,string,
+sourceDB,sourceCollection,field2[*],string,targetTable,logical_delete_field2,string,
+sourceDB,sourceCollection,secondArray[*],string,targetTable,logical_delete_field3,string,

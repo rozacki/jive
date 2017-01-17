@@ -1,0 +1,1 @@
+sourceDB,sourceCollection,sourceFieldLocation,sourceDataType,destinationTable,destinationField,destinationDataType,functionsourceDB,sourceCollection,field1,string,targetTable,created_ts,TIMESTAMP,sourceDB,sourceCollection,field2,string,targetTable,int_column,int,

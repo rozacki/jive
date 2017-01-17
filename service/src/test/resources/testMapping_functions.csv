@@ -1,0 +1,3 @@
+sourceDB,sourceCollection,sourceFieldLocation,sourceDataType,destinationTable,destinationField,destinationDataType,function
+sourceDB,sourceCollection,my_data,string,targetTable,my_result,int,ROUND
+sourceDB,sourceCollection,_id,int,targetTable,id,int,

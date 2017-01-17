@@ -1,0 +1,11 @@
+{"field1":0, "field2":[20]}
+{"field1":{"a":1},"field2":[{"a":21}]}
+{"field1":{"b":2},"field2":[{"a":22}]}
+{"field1":3, "field8":[80]}
+{"field1":4, "field8":[{"b":81}]}
+{"field1":5, "field9":90}
+{"_removed":{"field1":6, "field2":[23]}}
+{"field4":40}
+{"_removed":{"field4":41}}
+{"field6":[60]}
+{"field7":71}

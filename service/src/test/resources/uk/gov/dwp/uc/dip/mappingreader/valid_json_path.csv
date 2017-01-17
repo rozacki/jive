@@ -1,0 +1,3 @@
+sourceDB,sourceCollection,sourceFieldLocation,sourceDataType,destinationTable,destinationField,destinationDataType,function,dq
+sourceDB,sourceCollection,a.b[mv],string,targetTable,my_result,string,,
+sourceDB,sourceCollection,a.b[mk],string,targetTable,my_result1,string,,

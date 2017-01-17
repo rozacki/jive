@@ -1,0 +1,6 @@
+sourceDB,sourceCollection,sourceFieldLocation,sourceDataType,destinationTable,destinationField,destinationDataType,function
+sourceDB,sourceCollection,field1,string,targetTable,many_sources_to_target,string,
+sourceDB,sourceCollection,field2,string,targetTable,many_sources_to_target,string,
+sourceDB,sourceCollection,field3.field4,string,targetTable,many_sources_to_target,string,
+sourceDB,sourceCollection,field10,string,targetTable,simple_to_array_to_target,string,
+sourceDB,sourceCollection,field11[*],string,targetTable,simple_to_array_to_target,string,

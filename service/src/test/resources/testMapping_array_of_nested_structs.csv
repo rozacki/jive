@@ -1,0 +1,6 @@
+sourceDB,sourceCollection,sourceFieldLocation,sourceDataType,destinationTable,destinationField,destinationDataType,function
+sourceDB,sourceCollection,parentId,string,targetTable,parentId,int,
+sourceDB,sourceCollection,myArray[*]._id1._id2._id3,string,targetTable,structure_id1,string,
+sourceDB,sourceCollection,myArray[*]._id1._id2._value,string,targetTable,structure_value1,int,
+sourceDB,sourceCollection,myArray[*]._id1._id4._id5,string,targetTable,structure_id2,string,
+sourceDB,sourceCollection,myArray[*]._id1._id4._value,string,targetTable,structure_value2,int,

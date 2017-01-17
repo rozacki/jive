@@ -1,0 +1,6 @@
+*.idea
+*.iml
+/service/target/*
+/web/dependency-reduced-pom.xml
+/web/target/*
+/service/dependency-reduced-pom.xml

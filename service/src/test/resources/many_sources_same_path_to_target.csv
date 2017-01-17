@@ -1,0 +1,12 @@
+sourceDB,sourceCollection,sourceFieldLocation,sourceDataType,destinationTable,destinationField,destinationDataType,function
+sourceDB,sourceCollection,field1,string,targetTable,target_column1,string,
+sourceDB,sourceCollection,field1.a,string,targetTable,target_column1,string,
+sourceDB,sourceCollection,field1.b,string,targetTable,target_column1,string,
+sourceDB,sourceCollection,field2[0],string,targetTable,target_column2,int,
+sourceDB,sourceCollection,field2[0].a,string,targetTable,target_column2,int,
+sourceDB,sourceCollection,field4,string,targetTable,target_column1,string,
+sourceDB,sourceCollection,field6[0],string,targetTable,target_column1,string,
+sourceDB,sourceCollection,field7,string,targetTable,target_column2,int,
+sourceDB,sourceCollection,field8[0],string,targetTable,target_column2,int,
+sourceDB,sourceCollection,field8[0].b,string,targetTable,target_column2,int,
+sourceDB,sourceCollection,field9,string,targetTable,target_column2,int,

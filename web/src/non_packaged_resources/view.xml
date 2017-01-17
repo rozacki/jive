@@ -1,0 +1,13 @@
+<view>
+    <name>VAADIN_TEST</name>
+    <label>VAADIN_TEST</label>
+    <version>0.1.20</version>
+
+
+    <parameter>
+        <name>jive.folder</name>
+        <description>Provide a configuration value</description>
+        <required>true</required>
+    </parameter>
+
+</view>

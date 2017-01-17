@@ -1,0 +1,4 @@
+sourceDB,sourceCollection,sourceFieldLocation,sourceDataType,destinationTable,destinationField,destinationDataType,function
+sourceDB,sourceCollection,myArray[*],string,targetTable,array3,string,
+sourceDB,sourceCollection,myArray[0],string,targetTable,arrayElement0,string,
+sourceDB,sourceCollection,secondArray[*],string,targetTable,array1,string,
