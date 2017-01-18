@@ -3,8 +3,10 @@ package uk.gov.dwp.uc.dip.functionalTest;
 import com.google.common.io.Resources;
 import com.klarna.hiverunner.HiveShell;
 import com.klarna.hiverunner.StandaloneHiveRunner;
+import com.klarna.hiverunner.annotations.HiveSQL;
 import com.opencsv.CSVReader;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
@@ -23,24 +25,15 @@ public abstract class AbstractHiveTest {
     @Rule
     public TestName name = new TestName();
 
-
-    private HiveShell shell;
-
     private String sourceCollection;
     String targetTableName;
     private String SourceDB;
     SchemaGenerator schemaGenerator;
     Utility util = new Utility();
 
-    /**
-     * Reflection in hivesql annotation only works in subclass. Grrrr.
-     * Need subclass to have
-     * {AT symbol for annotation}HiveSQL(files = {}, autoStart = false)
-     * private HiveShell shell;
-     * Fixed in HiveRunner 3.1 apparently.
-     * @return a hive shell
-     */
-    abstract HiveShell getHiveShell();
+    @HiveSQL(files = {}, autoStart = false)
+    protected HiveShell shell;
+
     /**
      * The mapping file for the test. e.g. conversions_test.csv
      * @return mapping file name
@@ -71,7 +64,6 @@ public abstract class AbstractHiveTest {
     @Before
     public void setupEnv() throws IOException, URISyntaxException {
 
-        shell = getHiveShell();
         getSourceInfoFromMappingFile();
         schemaGenerator = new SchemaGenerator(Resources.getResource(getTestMappingFileName()).getPath());
 
@@ -81,7 +73,7 @@ public abstract class AbstractHiveTest {
 
         String location = String.format("%s/%s/%s/%s",
                 HDFSSourceJSONFileLocation, SourceDB,
-                sourceCollection,getJsonDataFileName());
+                sourceCollection, getJsonDataFileName());
         shell.addResource(location, new File(Resources.getResource(getJsonDataFileName()).toURI()));
 
         shell.start();
@@ -91,7 +83,7 @@ public abstract class AbstractHiveTest {
             shell.executeQuery(toRun);
         }
 
-        if(outputSourceAndTargetTableData()) {
+        if (outputSourceAndTargetTableData()) {
             outputTableData();
         }
     }

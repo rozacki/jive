@@ -14,14 +14,6 @@ import java.util.List;
 
 public class ManySourcesToTargetTest extends AbstractHiveTest {
 
-    @HiveSQL(files = {}, autoStart = false)
-    private HiveShell shell;
-
-    @Override
-    HiveShell getHiveShell() {
-        return shell;
-    }
-
     @Override
     String getTestMappingFileName() {
         return "many_sources_to_target.csv";

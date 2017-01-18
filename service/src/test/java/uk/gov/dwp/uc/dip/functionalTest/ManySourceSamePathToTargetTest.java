@@ -14,13 +14,6 @@ import java.util.List;
  * Created by chrisrozacki on 03/01/2017.
  */
 public class ManySourceSamePathToTargetTest extends AbstractHiveTest{
-    @HiveSQL(files = {}, autoStart = false)
-    private HiveShell shell;
-
-    @Override
-    HiveShell getHiveShell() {
-        return shell;
-    }
 
     @Override
     String getTestMappingFileName() {

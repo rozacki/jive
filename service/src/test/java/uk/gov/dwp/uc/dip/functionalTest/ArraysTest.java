@@ -11,14 +11,6 @@ import static org.junit.Assert.assertEquals;
 
 public class ArraysTest extends AbstractHiveTest {
 
-    @HiveSQL(files = {}, autoStart = false)
-    private HiveShell shell;
-
-    @Override
-    HiveShell getHiveShell() {
-        return shell;
-    }
-
     @Override
     String getTestMappingFileName() {
         return "testMapping_arrays.csv";

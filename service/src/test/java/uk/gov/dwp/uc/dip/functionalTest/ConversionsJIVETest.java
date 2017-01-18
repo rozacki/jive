@@ -1,7 +1,5 @@
 package uk.gov.dwp.uc.dip.functionalTest;
 
-import com.klarna.hiverunner.HiveShell;
-import com.klarna.hiverunner.annotations.HiveSQL;
 import org.junit.Test;
 
 import java.util.Collections;
@@ -14,9 +12,6 @@ import static org.junit.Assert.assertEquals;
     */
 
 public class ConversionsJIVETest extends AbstractHiveTest{
-
-    @HiveSQL(files = {}, autoStart = false)
-    private HiveShell shell;
 
     @Test
     public void countNotNullStrings() {
@@ -55,13 +50,9 @@ public class ConversionsJIVETest extends AbstractHiveTest{
         List<Object[]> results = shell.executeStatement("select bool_column from " + targetTableName +
                 " where bool_column is not null");
         Object[] a = results.get(0);
-        assertEquals(false, a[0]);
+        assertEquals("Check boolean false", false, a[0]);
     }
 
-    @Override
-    HiveShell getHiveShell() {
-        return shell;
-    }
 
     @Override
     String getTestMappingFileName() {
@@ -75,7 +66,7 @@ public class ConversionsJIVETest extends AbstractHiveTest{
 
     @Override
     boolean outputSourceAndTargetTableData() {
-        return true;
+        return false;
     }
 
     @Override

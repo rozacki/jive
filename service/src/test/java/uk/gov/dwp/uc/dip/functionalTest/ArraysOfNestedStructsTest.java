@@ -13,14 +13,6 @@ import static org.junit.Assert.assertEquals;
  */
 public class ArraysOfNestedStructsTest extends AbstractHiveTest {
 
-    @HiveSQL(files = {},autoStart = false)
-    private HiveShell shell;
-
-    @Override
-    HiveShell getHiveShell() {
-        return shell;
-    }
-
     @Override
     String getTestMappingFileName() {
         return "testMapping_array_of_nested_structs.csv";
@@ -42,7 +34,7 @@ public class ArraysOfNestedStructsTest extends AbstractHiveTest {
     }
 
     @Test
-    public void arrayExploedTest(){
+    public void arrayExplodedTest(){
         String sql = "SELECT * FROM " + targetTableName;
         List<String> results = shell.executeQuery(sql);
 

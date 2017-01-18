@@ -19,14 +19,6 @@ import static org.junit.Assert.assertEquals;
 @RunWith(StandaloneHiveRunner.class)
 public class  SystemFieldsJIVETest extends AbstractHiveTest {
 
-    @HiveSQL(files = {}, autoStart = false)
-    private HiveShell shell;
-
-    @Override
-    HiveShell getHiveShell() {
-        return shell;
-    }
-
     @Override
     String getTestMappingFileName() {
         return "testMapping_systemFields.csv";

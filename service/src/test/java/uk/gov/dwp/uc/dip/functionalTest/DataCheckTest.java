@@ -24,13 +24,6 @@ import static org.junit.Assert.*;
  * - generates data checks
  */
 public class DataCheckTest extends AbstractHiveTest {
-    @HiveSQL(files = {}, autoStart = false)
-    private HiveShell shell;
-
-    @Override
-    HiveShell getHiveShell() {
-        return shell;
-    }
 
     @Override
     String getTestMappingFileName() {
