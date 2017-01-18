@@ -1,7 +1,7 @@
 <view>
-    <name>VAADIN_TEST</name>
-    <label>VAADIN_TEST</label>
-    <version>0.1.20</version>
+    <name>JIVE</name>
+    <label>JIVE</label>
+    <version>${project.version}</version>
 
 
     <parameter>
