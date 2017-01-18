@@ -1,8 +1,11 @@
 package uk.gov.dwp.uc.dip.jive;
 
+import com.vaadin.server.VaadinServlet;
+import com.vaadin.ui.Notification;
 import org.apache.ambari.view.ViewContext;
 
 import javax.inject.Inject;
+import javax.servlet.ServletContext;
 
 class Properties {
 
@@ -20,7 +23,6 @@ class Properties {
     // TODO get properties from ambari OR properties file
     // TODO Perhaps lose the ambari properties completely.
 
-    @Inject
     ViewContext context;
 
     public static Properties getInstance(){
@@ -33,7 +35,11 @@ class Properties {
 
     // TODO refreshing values?
     private void read() {
+        ServletContext servletContext = VaadinServlet.getCurrent().getServletContext();
+        context = (ViewContext) servletContext.getAttribute(ViewContext.CONTEXT_ATTRIBUTE);
+
         if(null != context){
+            Notification.show(context.getUsername(), Notification.Type.HUMANIZED_MESSAGE);
             dataLocation = context.getProperties().get(JIVE_WORKING_DIRECTORY);
         }else{
             dataLocation = "/etl/uc/mongo/";
