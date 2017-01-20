@@ -1,5 +1,6 @@
 package uk.gov.dwp.uc.dip.jive;
 
+import com.vaadin.server.Page;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Upload;
@@ -16,15 +17,16 @@ class MainPanel extends Panel {
     MainPanel() {
         final VerticalLayout layout = new VerticalLayout();
 
-        TextField dataLocationTextField = new TextField("Data Location");
+        TextField dataLocationTextField = new TextField("Data Location:");
         dataLocationTextField.setWidth(20, Unit.EM);
+        dataLocationTextField.setDescription("Location for JSON files in HDFS");
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         String dataLocation = Properties.getInstance().getDataLocation()
                 + dateFormat.format(new Date());
         dataLocationTextField.setValue(dataLocation);
 
-        MappingFileUploader mappingFileUploader = new MappingFileUploader("Select a file");
+        MappingFileUploader mappingFileUploader = new MappingFileUploader("Upload the Mapping File:");
         layout.addComponent(dataLocationTextField);
         layout.addComponent(mappingFileUploader);
 
@@ -35,7 +37,7 @@ class MainPanel extends Panel {
         layout.setMargin(true);
         layout.setSpacing(true);
         this.setContent(layout);
-        this.setCaption("Settings And File Upload");
+        this.setCaption("Settings and File Upload");
 
         mappingFileUploader.addSucceededListener((Upload.SucceededListener) event -> {
             processFilePanel.setOriginalFileName(mappingFileUploader.getOriginalFileName());
@@ -44,7 +46,5 @@ class MainPanel extends Panel {
             processFilePanel.setJsonSourcePath(dataLocationTextField.getValue());
         });
 
-        mappingFileUploader.addFailedListener((Upload.FailedListener) event ->
-                processFilePanel.setStatus(ProcessFilePanel.StatusEnum.FILE_NOT_SET));
     }
 }

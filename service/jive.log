@@ -1,0 +1,403 @@
+[DEBUG] 2017-01-18 14:50:26,054 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-18 14:50:26,054 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[WARN ] 2017-01-18 14:50:26,288 org.apache.hadoop.util.NativeCodeLoader - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[WARN ] 2017-01-18 14:50:28,019 org.apache.hadoop.hive.metastore.ObjectStore - Version information not found in metastore. hive.metastore.schema.verification is not enabled so recording the schema version 1.2.0
+[WARN ] 2017-01-18 14:50:28,066 org.apache.hadoop.hive.metastore.ObjectStore - Failed to get database default, returning NoSuchObjectException
+[ERROR] 2017-01-18 14:50:30,680 hive.ql.metadata.Hive - Table src_sourcedb_sourcecollection_targettable not found: default.src_sourcedb_sourcecollection_targettable table not found
+[ERROR] 2017-01-18 14:50:30,839 hive.ql.metadata.Hive - Table targetTable not found: default.targetTable table not found
+[ERROR] 2017-01-18 14:50:31,503 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:31,663 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:32,056 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[DEBUG] 2017-01-18 14:50:32,557 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-18 14:50:32,557 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[WARN ] 2017-01-18 14:50:32,908 org.apache.hadoop.hive.metastore.ObjectStore - Failed to get database default, returning NoSuchObjectException
+[ERROR] 2017-01-18 14:50:33,005 hive.ql.metadata.Hive - Table src_sourcedb_sourcecollection_targettable not found: default.src_sourcedb_sourcecollection_targettable table not found
+[ERROR] 2017-01-18 14:50:33,038 hive.ql.metadata.Hive - Table targetTable not found: default.targetTable table not found
+[ERROR] 2017-01-18 14:50:33,225 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:33,240 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:33,446 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[DEBUG] 2017-01-18 14:50:33,760 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-18 14:50:33,760 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[WARN ] 2017-01-18 14:50:34,110 org.apache.hadoop.hive.metastore.ObjectStore - Failed to get database default, returning NoSuchObjectException
+[ERROR] 2017-01-18 14:50:34,204 hive.ql.metadata.Hive - Table src_sourcedb_sourcecollection_targettable not found: default.src_sourcedb_sourcecollection_targettable table not found
+[ERROR] 2017-01-18 14:50:34,230 hive.ql.metadata.Hive - Table targetTable not found: default.targetTable table not found
+[ERROR] 2017-01-18 14:50:34,435 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:34,450 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:34,640 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[DEBUG] 2017-01-18 14:50:34,968 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-18 14:50:34,968 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[WARN ] 2017-01-18 14:50:35,241 org.apache.hadoop.hive.metastore.ObjectStore - Failed to get database default, returning NoSuchObjectException
+[ERROR] 2017-01-18 14:50:35,341 hive.ql.metadata.Hive - Table src_sourcedb_sourcecollection_targettable not found: default.src_sourcedb_sourcecollection_targettable table not found
+[ERROR] 2017-01-18 14:50:35,360 hive.ql.metadata.Hive - Table targetTable not found: default.targetTable table not found
+[ERROR] 2017-01-18 14:50:35,470 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:35,477 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:35,652 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-18 14:50:36,005 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:36,012 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:36,178 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[DEBUG] 2017-01-18 14:50:36,428 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-18 14:50:36,428 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[WARN ] 2017-01-18 14:50:36,763 org.apache.hadoop.hive.metastore.ObjectStore - Failed to get database default, returning NoSuchObjectException
+[ERROR] 2017-01-18 14:50:36,877 hive.ql.metadata.Hive - Table src_sourcedb_sourcecollection_targettable not found: default.src_sourcedb_sourcecollection_targettable table not found
+[ERROR] 2017-01-18 14:50:36,901 hive.ql.metadata.Hive - Table targetTable not found: default.targetTable table not found
+[ERROR] 2017-01-18 14:50:37,122 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:37,132 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:37,305 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[DEBUG] 2017-01-18 14:50:37,626 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-18 14:50:37,626 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[WARN ] 2017-01-18 14:50:37,888 org.apache.hadoop.hive.metastore.ObjectStore - Failed to get database default, returning NoSuchObjectException
+[ERROR] 2017-01-18 14:50:37,993 hive.ql.metadata.Hive - Table src_sourcedb_sourcecollection_targettable not found: default.src_sourcedb_sourcecollection_targettable table not found
+[ERROR] 2017-01-18 14:50:38,014 hive.ql.metadata.Hive - Table targetTable not found: default.targetTable table not found
+[ERROR] 2017-01-18 14:50:38,179 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:38,188 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:38,369 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-18 14:50:38,598 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:38,605 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:38,774 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[DEBUG] 2017-01-18 14:50:38,935 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-18 14:50:38,935 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[WARN ] 2017-01-18 14:50:39,250 org.apache.hadoop.hive.metastore.ObjectStore - Failed to get database default, returning NoSuchObjectException
+[ERROR] 2017-01-18 14:50:39,378 hive.ql.metadata.Hive - Table src_sourcedb_sourcecollection_targettable not found: default.src_sourcedb_sourcecollection_targettable table not found
+[ERROR] 2017-01-18 14:50:39,398 hive.ql.metadata.Hive - Table targetTable not found: default.targetTable table not found
+[ERROR] 2017-01-18 14:50:39,489 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:39,496 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:39,668 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-18 14:50:39,795 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:39,800 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:39,976 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[DEBUG] 2017-01-18 14:50:40,082 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-18 14:50:40,082 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[WARN ] 2017-01-18 14:50:40,389 org.apache.hadoop.hive.metastore.ObjectStore - Failed to get database default, returning NoSuchObjectException
+[ERROR] 2017-01-18 14:50:40,472 hive.ql.metadata.Hive - Table src_sourcedb_sourcecollection_targettable not found: default.src_sourcedb_sourcecollection_targettable table not found
+[ERROR] 2017-01-18 14:50:40,487 hive.ql.metadata.Hive - Table targetTable not found: default.targetTable table not found
+[ERROR] 2017-01-18 14:50:40,567 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:40,578 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:40,765 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-18 14:50:40,929 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:40,934 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:41,103 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[DEBUG] 2017-01-18 14:50:41,214 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-18 14:50:41,214 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[WARN ] 2017-01-18 14:50:41,495 org.apache.hadoop.hive.metastore.ObjectStore - Failed to get database default, returning NoSuchObjectException
+[ERROR] 2017-01-18 14:50:41,594 hive.ql.metadata.Hive - Table src_sourcedb_sourcecollection_targettable not found: default.src_sourcedb_sourcecollection_targettable table not found
+[ERROR] 2017-01-18 14:50:41,614 hive.ql.metadata.Hive - Table targetTable not found: default.targetTable table not found
+[ERROR] 2017-01-18 14:50:41,691 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:41,698 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:41,889 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-18 14:50:42,032 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:42,038 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:42,207 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[DEBUG] 2017-01-18 14:50:42,305 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-18 14:50:42,305 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[WARN ] 2017-01-18 14:50:42,579 org.apache.hadoop.hive.metastore.ObjectStore - Failed to get database default, returning NoSuchObjectException
+[ERROR] 2017-01-18 14:50:42,669 hive.ql.metadata.Hive - Table src_sourcedb_sourcecollection_targettable not found: default.src_sourcedb_sourcecollection_targettable table not found
+[ERROR] 2017-01-18 14:50:42,686 hive.ql.metadata.Hive - Table targetTable not found: default.targetTable table not found
+[ERROR] 2017-01-18 14:50:42,764 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:42,771 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:42,960 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-18 14:50:43,083 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:43,089 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:43,258 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[DEBUG] 2017-01-18 14:50:43,437 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-18 14:50:43,437 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[WARN ] 2017-01-18 14:50:43,675 org.apache.hadoop.hive.metastore.ObjectStore - Failed to get database default, returning NoSuchObjectException
+[ERROR] 2017-01-18 14:50:43,763 hive.ql.metadata.Hive - Table src_sourcedb_sourcecollection_targettable not found: default.src_sourcedb_sourcecollection_targettable table not found
+[ERROR] 2017-01-18 14:50:43,781 hive.ql.metadata.Hive - Table targetTable not found: default.targetTable table not found
+[ERROR] 2017-01-18 14:50:43,873 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:43,881 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:44,056 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-18 14:50:44,167 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:44,173 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:44,332 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[DEBUG] 2017-01-18 14:50:44,481 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-18 14:50:44,481 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[WARN ] 2017-01-18 14:50:44,743 org.apache.hadoop.hive.metastore.ObjectStore - Failed to get database default, returning NoSuchObjectException
+[ERROR] 2017-01-18 14:50:44,827 hive.ql.metadata.Hive - Table src_sourcedb_sourcecollection_targettable not found: default.src_sourcedb_sourcecollection_targettable table not found
+[ERROR] 2017-01-18 14:50:44,849 hive.ql.metadata.Hive - Table targetTable not found: default.targetTable table not found
+[ERROR] 2017-01-18 14:50:44,922 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:44,929 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:45,092 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-18 14:50:45,231 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:45,239 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:45,401 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[DEBUG] 2017-01-18 14:50:45,512 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-18 14:50:45,512 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[WARN ] 2017-01-18 14:50:45,783 org.apache.hadoop.hive.metastore.ObjectStore - Failed to get database default, returning NoSuchObjectException
+[ERROR] 2017-01-18 14:50:45,875 hive.ql.metadata.Hive - Table src_sourcedb_sourcecollection_targettable not found: default.src_sourcedb_sourcecollection_targettable table not found
+[ERROR] 2017-01-18 14:50:45,889 hive.ql.metadata.Hive - Table targetTable not found: default.targetTable table not found
+[ERROR] 2017-01-18 14:50:45,946 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:45,952 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:46,113 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-18 14:50:46,317 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:46,323 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:46,502 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-18 14:50:46,620 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:46,625 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:46,789 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-18 14:50:46,903 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:46,909 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:47,064 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-18 14:50:47,166 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:47,172 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:47,323 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-18 14:50:47,458 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:47,463 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:47,645 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-18 14:50:47,750 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:47,756 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:47,920 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[DEBUG] 2017-01-18 14:50:48,010 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-18 14:50:48,010 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[WARN ] 2017-01-18 14:50:48,257 org.apache.hadoop.hive.metastore.ObjectStore - Failed to get database default, returning NoSuchObjectException
+[ERROR] 2017-01-18 14:50:48,361 hive.ql.metadata.Hive - Table src_sourcedb_sourcecollection_targettable not found: default.src_sourcedb_sourcecollection_targettable table not found
+[ERROR] 2017-01-18 14:50:48,373 hive.ql.metadata.Hive - Table targetTable not found: default.targetTable table not found
+[ERROR] 2017-01-18 14:50:48,436 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:48,442 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:48,607 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[DEBUG] 2017-01-18 14:50:48,849 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-18 14:50:48,849 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[WARN ] 2017-01-18 14:50:49,122 org.apache.hadoop.hive.metastore.ObjectStore - Failed to get database default, returning NoSuchObjectException
+[ERROR] 2017-01-18 14:50:49,207 hive.ql.metadata.Hive - Table src_sourcedb_sourcecollection_targettable not found: default.src_sourcedb_sourcecollection_targettable table not found
+[ERROR] 2017-01-18 14:50:49,221 hive.ql.metadata.Hive - Table targetTable not found: default.targetTable table not found
+[ERROR] 2017-01-18 14:50:49,705 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:49,713 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:49,885 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-18 14:50:50,088 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:50,094 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:50,251 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[DEBUG] 2017-01-18 14:50:50,367 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-18 14:50:50,367 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[WARN ] 2017-01-18 14:50:50,647 org.apache.hadoop.hive.metastore.ObjectStore - Failed to get database default, returning NoSuchObjectException
+[ERROR] 2017-01-18 14:50:50,740 hive.ql.metadata.Hive - Table src_sourcedb_sourcecollection_targettable not found: default.src_sourcedb_sourcecollection_targettable table not found
+[ERROR] 2017-01-18 14:50:50,755 hive.ql.metadata.Hive - Table targetTable not found: default.targetTable table not found
+[ERROR] 2017-01-18 14:50:50,920 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:50,928 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:51,089 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-18 14:50:51,301 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:51,306 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:51,481 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-18 14:50:51,578 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:51,584 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:51,734 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[DEBUG] 2017-01-18 14:50:51,840 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-18 14:50:51,840 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[WARN ] 2017-01-18 14:50:52,123 org.apache.hadoop.hive.metastore.ObjectStore - Failed to get database default, returning NoSuchObjectException
+[ERROR] 2017-01-18 14:50:52,210 hive.ql.metadata.Hive - Table src_sourcedb_sourcecollection_targettable not found: default.src_sourcedb_sourcecollection_targettable table not found
+[ERROR] 2017-01-18 14:50:52,231 hive.ql.metadata.Hive - Table targetTable not found: default.targetTable table not found
+[ERROR] 2017-01-18 14:50:52,304 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:52,311 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:52,505 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-18 14:50:52,773 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:52,780 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:52,980 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-18 14:50:53,111 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:53,116 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:53,295 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[DEBUG] 2017-01-18 14:50:53,470 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-18 14:50:53,470 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[WARN ] 2017-01-18 14:50:53,735 org.apache.hadoop.hive.metastore.ObjectStore - Failed to get database default, returning NoSuchObjectException
+[ERROR] 2017-01-18 14:50:53,819 hive.ql.metadata.Hive - Table src_sourcedb_sourcecollection_targettable not found: default.src_sourcedb_sourcecollection_targettable table not found
+[ERROR] 2017-01-18 14:50:53,830 hive.ql.metadata.Hive - Table targetTable not found: default.targetTable table not found
+[ERROR] 2017-01-18 14:50:53,921 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:53,928 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:54,098 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-18 14:50:54,319 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:54,324 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:54,488 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-18 14:50:54,587 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:54,592 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:54,752 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[DEBUG] 2017-01-18 14:50:54,857 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-18 14:50:54,857 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[WARN ] 2017-01-18 14:50:55,111 org.apache.hadoop.hive.metastore.ObjectStore - Failed to get database default, returning NoSuchObjectException
+[ERROR] 2017-01-18 14:50:55,189 hive.ql.metadata.Hive - Table src_sourcedb_sourcecollection_targettable not found: default.src_sourcedb_sourcecollection_targettable table not found
+[ERROR] 2017-01-18 14:50:55,200 hive.ql.metadata.Hive - Table targetTable not found: default.targetTable table not found
+[ERROR] 2017-01-18 14:50:55,277 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:55,284 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:55,458 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-18 14:50:55,674 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:55,680 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:55,830 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-18 14:50:55,948 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:55,954 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:56,107 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[DEBUG] 2017-01-18 14:50:56,222 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-18 14:50:56,222 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[WARN ] 2017-01-18 14:50:56,456 org.apache.hadoop.hive.metastore.ObjectStore - Failed to get database default, returning NoSuchObjectException
+[ERROR] 2017-01-18 14:50:56,533 hive.ql.metadata.Hive - Table src_sourcedb_sourcecollection_targettable not found: default.src_sourcedb_sourcecollection_targettable table not found
+[ERROR] 2017-01-18 14:50:56,546 hive.ql.metadata.Hive - Table targetTable not found: default.targetTable table not found
+[ERROR] 2017-01-18 14:50:56,625 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:56,631 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:56,785 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[DEBUG] 2017-01-18 14:50:57,047 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-18 14:50:57,047 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[WARN ] 2017-01-18 14:50:57,315 org.apache.hadoop.hive.metastore.ObjectStore - Failed to get database default, returning NoSuchObjectException
+[ERROR] 2017-01-18 14:50:57,411 hive.ql.metadata.Hive - Table src_sourcedb_sourcecollection_targettable not found: default.src_sourcedb_sourcecollection_targettable table not found
+[ERROR] 2017-01-18 14:50:57,423 hive.ql.metadata.Hive - Table targetTable not found: default.targetTable table not found
+[ERROR] 2017-01-18 14:50:57,485 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:57,491 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:57,651 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-18 14:50:57,840 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:57,846 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:58,010 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[DEBUG] 2017-01-18 14:50:58,139 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-18 14:50:58,139 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[WARN ] 2017-01-18 14:50:58,385 org.apache.hadoop.hive.metastore.ObjectStore - Failed to get database default, returning NoSuchObjectException
+[ERROR] 2017-01-18 14:50:58,464 hive.ql.metadata.Hive - Table src_sourcedb_sourcecollection_targettable not found: default.src_sourcedb_sourcecollection_targettable table not found
+[ERROR] 2017-01-18 14:50:58,474 hive.ql.metadata.Hive - Table targetTable not found: default.targetTable table not found
+[ERROR] 2017-01-18 14:50:58,542 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:58,548 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:58,730 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-18 14:50:58,927 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:58,933 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:59,086 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[DEBUG] 2017-01-18 14:50:59,175 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-18 14:50:59,175 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[WARN ] 2017-01-18 14:50:59,425 org.apache.hadoop.hive.metastore.ObjectStore - Failed to get database default, returning NoSuchObjectException
+[ERROR] 2017-01-18 14:50:59,511 hive.ql.metadata.Hive - Table src_sourcedb_sourcecollection_targettable not found: default.src_sourcedb_sourcecollection_targettable table not found
+[ERROR] 2017-01-18 14:50:59,523 hive.ql.metadata.Hive - Table targetTable not found: default.targetTable table not found
+[ERROR] 2017-01-18 14:50:59,582 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:59,588 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:50:59,764 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-18 14:50:59,968 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:50:59,974 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:51:00,133 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[DEBUG] 2017-01-18 14:51:00,225 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-18 14:51:00,225 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[WARN ] 2017-01-18 14:51:00,496 org.apache.hadoop.hive.metastore.ObjectStore - Failed to get database default, returning NoSuchObjectException
+[ERROR] 2017-01-18 14:51:00,574 hive.ql.metadata.Hive - Table src_sourcedb_sourcecollection_targettable not found: default.src_sourcedb_sourcecollection_targettable table not found
+[ERROR] 2017-01-18 14:51:00,583 hive.ql.metadata.Hive - Table targetTable not found: default.targetTable table not found
+[ERROR] 2017-01-18 14:51:00,638 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:51:00,644 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:51:00,803 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-18 14:51:01,025 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-18 14:51:01,031 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-18 14:51:01,185 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[DEBUG] 2017-01-19 10:14:54,024 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-19 10:14:54,024 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[WARN ] 2017-01-19 10:14:54,247 org.apache.hadoop.util.NativeCodeLoader - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[WARN ] 2017-01-19 10:14:56,011 org.apache.hadoop.hive.metastore.ObjectStore - Version information not found in metastore. hive.metastore.schema.verification is not enabled so recording the schema version 1.2.0
+[WARN ] 2017-01-19 10:14:56,060 org.apache.hadoop.hive.metastore.ObjectStore - Failed to get database default, returning NoSuchObjectException
+[ERROR] 2017-01-19 10:14:58,397 hive.ql.metadata.Hive - Table src_sourcedb_sourcecollection_targettable not found: default.src_sourcedb_sourcecollection_targettable table not found
+[ERROR] 2017-01-19 10:14:58,542 hive.ql.metadata.Hive - Table targetTable not found: default.targetTable table not found
+[ERROR] 2017-01-19 10:14:59,048 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-19 10:14:59,212 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-19 10:14:59,567 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-19 10:15:00,033 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-19 10:15:00,043 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-19 10:15:00,317 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-19 10:15:00,628 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-19 10:15:00,636 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-19 10:15:00,835 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-19 10:15:00,987 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-19 10:15:00,993 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-19 10:15:01,175 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-19 10:15:01,314 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-19 10:15:01,320 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-19 10:15:01,518 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-19 10:15:01,638 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-19 10:15:01,646 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-19 10:15:01,815 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-19 10:15:01,954 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-19 10:15:01,967 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-19 10:15:02,168 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[DEBUG] 2017-01-19 10:45:59,088 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-19 10:45:59,088 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-19 10:45:59,180 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-19 10:45:59,180 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-19 10:45:59,180 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-19 10:45:59,180 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-19 10:45:59,237 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-19 10:45:59,237 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-19 10:45:59,346 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-19 10:45:59,346 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-19 10:45:59,394 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-19 10:45:59,394 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-19 10:45:59,434 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-19 10:45:59,434 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-19 10:45:59,475 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-19 10:45:59,475 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[WARN ] 2017-01-19 10:45:59,726 org.apache.hadoop.util.NativeCodeLoader - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[WARN ] 2017-01-19 10:45:59,796 org.apache.hadoop.util.NativeCodeLoader - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[WARN ] 2017-01-19 10:45:59,806 org.apache.hadoop.util.NativeCodeLoader - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[WARN ] 2017-01-19 10:45:59,910 org.apache.hadoop.util.NativeCodeLoader - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[WARN ] 2017-01-19 10:45:59,957 org.apache.hadoop.util.NativeCodeLoader - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[WARN ] 2017-01-19 10:45:59,992 org.apache.hadoop.util.NativeCodeLoader - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[WARN ] 2017-01-19 10:46:00,076 org.apache.hadoop.util.NativeCodeLoader - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[WARN ] 2017-01-19 10:46:00,231 org.apache.hadoop.util.NativeCodeLoader - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[WARN ] 2017-01-19 10:46:06,928 org.apache.hadoop.hive.metastore.ObjectStore - Version information not found in metastore. hive.metastore.schema.verification is not enabled so recording the schema version 1.2.0
+[WARN ] 2017-01-19 10:46:06,937 org.apache.hadoop.hive.metastore.ObjectStore - Version information not found in metastore. hive.metastore.schema.verification is not enabled so recording the schema version 1.2.0
+[WARN ] 2017-01-19 10:46:07,100 org.apache.hadoop.hive.metastore.ObjectStore - Version information not found in metastore. hive.metastore.schema.verification is not enabled so recording the schema version 1.2.0
+[WARN ] 2017-01-19 10:46:07,119 org.apache.hadoop.hive.metastore.ObjectStore - Version information not found in metastore. hive.metastore.schema.verification is not enabled so recording the schema version 1.2.0
+[WARN ] 2017-01-19 10:46:07,136 org.apache.hadoop.hive.metastore.ObjectStore - Version information not found in metastore. hive.metastore.schema.verification is not enabled so recording the schema version 1.2.0
+[WARN ] 2017-01-19 10:46:07,166 org.apache.hadoop.hive.metastore.ObjectStore - Failed to get database default, returning NoSuchObjectException
+[WARN ] 2017-01-19 10:46:07,186 org.apache.hadoop.hive.metastore.ObjectStore - Failed to get database default, returning NoSuchObjectException
+[WARN ] 2017-01-19 10:46:07,212 org.apache.hadoop.hive.metastore.ObjectStore - Version information not found in metastore. hive.metastore.schema.verification is not enabled so recording the schema version 1.2.0
+[WARN ] 2017-01-19 10:46:07,256 org.apache.hadoop.hive.metastore.ObjectStore - Version information not found in metastore. hive.metastore.schema.verification is not enabled so recording the schema version 1.2.0
+[WARN ] 2017-01-19 10:46:07,320 org.apache.hadoop.hive.metastore.ObjectStore - Failed to get database default, returning NoSuchObjectException
+[WARN ] 2017-01-19 10:46:07,352 org.apache.hadoop.hive.metastore.ObjectStore - Failed to get database default, returning NoSuchObjectException
+[WARN ] 2017-01-19 10:46:07,351 org.apache.hadoop.hive.metastore.ObjectStore - Version information not found in metastore. hive.metastore.schema.verification is not enabled so recording the schema version 1.2.0
+[WARN ] 2017-01-19 10:46:07,366 org.apache.hadoop.hive.metastore.ObjectStore - Failed to get database default, returning NoSuchObjectException
+[WARN ] 2017-01-19 10:46:07,446 org.apache.hadoop.hive.metastore.ObjectStore - Failed to get database default, returning NoSuchObjectException
+[WARN ] 2017-01-19 10:46:07,457 org.apache.hadoop.hive.metastore.ObjectStore - Failed to get database default, returning NoSuchObjectException
+[WARN ] 2017-01-19 10:46:07,641 org.apache.hadoop.hive.metastore.ObjectStore - Failed to get database default, returning NoSuchObjectException
+[ERROR] 2017-01-19 10:46:14,089 hive.ql.metadata.Hive - Table src_sourcedb_sourcecollection_targettable not found: default.src_sourcedb_sourcecollection_targettable table not found
+[ERROR] 2017-01-19 10:46:14,105 hive.ql.metadata.Hive - Table src_sourcedb_sourcecollection_targettable not found: default.src_sourcedb_sourcecollection_targettable table not found
+[ERROR] 2017-01-19 10:46:14,171 hive.ql.metadata.Hive - Table src_sourcedb_sourcecollection_targettable not found: default.src_sourcedb_sourcecollection_targettable table not found
+[ERROR] 2017-01-19 10:46:14,188 hive.ql.metadata.Hive - Table src_sourcedb_sourcecollection_targettable not found: default.src_sourcedb_sourcecollection_targettable table not found
+[ERROR] 2017-01-19 10:46:14,194 hive.ql.metadata.Hive - Table src_sourcedb_sourcecollection_targettable not found: default.src_sourcedb_sourcecollection_targettable table not found
+[ERROR] 2017-01-19 10:46:14,334 hive.ql.metadata.Hive - Table src_sourcedb_sourcecollection_targettable not found: default.src_sourcedb_sourcecollection_targettable table not found
+[ERROR] 2017-01-19 10:46:14,372 hive.ql.metadata.Hive - Table src_sourcedb_sourcecollection_targettable not found: default.src_sourcedb_sourcecollection_targettable table not found
+[ERROR] 2017-01-19 10:46:14,447 hive.ql.metadata.Hive - Table src_sourcedb_sourcecollection_targettable not found: default.src_sourcedb_sourcecollection_targettable table not found
+[ERROR] 2017-01-19 10:46:14,567 hive.ql.metadata.Hive - Table targetTable not found: default.targetTable table not found
+[ERROR] 2017-01-19 10:46:14,595 hive.ql.metadata.Hive - Table targetTable not found: default.targetTable table not found
+[ERROR] 2017-01-19 10:46:14,638 hive.ql.metadata.Hive - Table targetTable not found: default.targetTable table not found
+[ERROR] 2017-01-19 10:46:14,694 hive.ql.metadata.Hive - Table targetTable not found: default.targetTable table not found
+[ERROR] 2017-01-19 10:46:14,748 hive.ql.metadata.Hive - Table targetTable not found: default.targetTable table not found
+[ERROR] 2017-01-19 10:46:14,883 hive.ql.metadata.Hive - Table targetTable not found: default.targetTable table not found
+[ERROR] 2017-01-19 10:46:14,934 hive.ql.metadata.Hive - Table targetTable not found: default.targetTable table not found
+[ERROR] 2017-01-19 10:46:14,982 hive.ql.metadata.Hive - Table targetTable not found: default.targetTable table not found
+[ERROR] 2017-01-19 10:46:17,479 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[ERROR] 2017-01-19 10:46:17,604 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[ERROR] 2017-01-19 10:46:17,644 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[ERROR] 2017-01-19 10:46:17,702 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[ERROR] 2017-01-19 10:46:17,782 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[ERROR] 2017-01-19 10:46:17,998 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-19 10:46:18,106 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-19 10:46:18,283 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[ERROR] 2017-01-19 10:46:18,308 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-19 10:46:18,313 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-19 10:46:18,399 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-19 10:46:18,603 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[ERROR] 2017-01-19 10:46:18,860 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-19 10:46:18,995 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-19 10:46:19,203 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-19 10:46:19,976 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[ERROR] 2017-01-19 10:46:21,988 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-19 10:46:22,008 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[DEBUG] 2017-01-19 10:46:22,676 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-19 10:46:22,676 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-19 10:46:23,087 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-19 10:46:23,087 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-19 10:46:23,199 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-19 10:46:23,199 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[WARN ] 2017-01-19 10:46:23,302 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-19 10:46:23,385 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-19 10:46:23,401 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[ERROR] 2017-01-19 10:46:23,654 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-19 10:46:23,716 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[DEBUG] 2017-01-19 10:46:23,845 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-19 10:46:23,845 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-19 16:34:13,959 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[DEBUG] 2017-01-19 16:34:13,959 uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator - source table:src_sourcedb_sourcecollection_targettable, target table: targetTable, removed enabled: true
+[WARN ] 2017-01-19 16:34:14,217 org.apache.hadoop.util.NativeCodeLoader - Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+[WARN ] 2017-01-19 16:34:15,882 org.apache.hadoop.hive.metastore.ObjectStore - Version information not found in metastore. hive.metastore.schema.verification is not enabled so recording the schema version 1.2.0
+[WARN ] 2017-01-19 16:34:15,929 org.apache.hadoop.hive.metastore.ObjectStore - Failed to get database default, returning NoSuchObjectException
+[ERROR] 2017-01-19 16:34:18,593 hive.ql.metadata.Hive - Table src_sourcedb_sourcecollection_targettable not found: default.src_sourcedb_sourcecollection_targettable table not found
+[ERROR] 2017-01-19 16:34:18,745 hive.ql.metadata.Hive - Table targetTable not found: default.targetTable table not found
+[ERROR] 2017-01-19 16:34:19,396 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-19 16:34:19,553 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-19 16:34:19,894 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead
+[ERROR] 2017-01-19 16:34:20,326 org.apache.hadoop.hive.ql.exec.mr.ExecDriver - local
+[WARN ] 2017-01-19 16:34:20,333 org.apache.hadoop.mapreduce.JobSubmitter - Hadoop command-line option parsing not performed. Implement the Tool interface and execute your application with ToolRunner to remedy this.
+[WARN ] 2017-01-19 16:34:20,506 mapreduce.Counters - Group org.apache.hadoop.mapred.Task$Counter is deprecated. Use org.apache.hadoop.mapreduce.TaskCounter instead

@@ -12,8 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.UUID;
 
-import static com.vaadin.ui.Notification.Type.ERROR_MESSAGE;
-import static com.vaadin.ui.Notification.Type.TRAY_NOTIFICATION;
+import static com.vaadin.ui.Notification.Type.*;
 
 
 class ProcessFilePanel extends Panel{
@@ -25,15 +24,17 @@ class ProcessFilePanel extends Panel{
     }
 
     enum StatusEnum{
-        FILE_NOT_SET("File not selected"),
-        FILE_UPLOADED("File uploaded."),
-        FILE_VERIFIED("File valid."),
-        FILE_INVALID("File failed verification"),
-        FILE_GENERATED("File Generated.");
+        FILE_UPLOADED("File uploaded.",true),
+        FILE_VERIFIED("Valid Mapping File.", true),
+        FILE_INVALID("File Verification Failed.", false),
+        FILE_GENERATED("SQL File Generated.", true);
 
         private String description;
-        StatusEnum(String description) {
+        private boolean is_success;
+
+        StatusEnum(String description, boolean is_success) {
             this.description = description;
+            this.is_success = is_success;
         }
 
         public String getDescription() {
@@ -42,7 +43,6 @@ class ProcessFilePanel extends Panel{
     }
 
     private String tempFilePath;
-    private String originalFileName;
     private String scriptFilePath;
     private Label statusLabel;
     private Button validateButton;
@@ -58,6 +58,7 @@ class ProcessFilePanel extends Panel{
         super();
         VerticalLayout verticalLayout = new VerticalLayout();
         statusLabel = new Label();
+
         HorizontalLayout buttonBar = new HorizontalLayout();
         Label emptyLabel = new Label();
         emptyLabel.setSizeFull();
@@ -65,11 +66,24 @@ class ProcessFilePanel extends Panel{
         // Error popup
         errorText = new Label();
         errorText.setSizeFull();
-        errorPopup = new PopupView("Validation Errors;", errorText);
+
+        errorPopup = new PopupView(new PopupView.Content() {
+            @Override
+            public String getMinimizedValueAsHTML() {
+                return "";
+            }
+
+            @Override
+            public Component getPopupComponent() {
+                return errorText;
+            }
+        });
+
         errorPopup.setPopupVisible(false);
         verticalLayout.addComponent(errorPopup);
+        verticalLayout.addStyleName("v-margin-bottom");
 
-        validateButton = new Button("Validate File");
+        validateButton = new Button("1. Validate File");
         validateButton.addClickListener((Button.ClickListener) event -> {
             mappingValidator = new TechnicalMappingValidator();
             if(mappingValidator.isFileValid(tempFilePath)){
@@ -84,11 +98,12 @@ class ProcessFilePanel extends Panel{
                 }
 
                 errorText.setValue(error.toString());
+                errorText.addStyleName("v-label-failure");
                 errorPopup.setPopupVisible(true);
             }
         });
 
-        generateButton = new Button("Generate SQL");
+        generateButton = new Button("2. Generate SQL");
         generateButton.addClickListener((Button.ClickListener) event -> {
             try {
                 schemaGenerator = new SchemaGenerator(tempFilePath, jsonSourcePath);
@@ -106,35 +121,41 @@ class ProcessFilePanel extends Panel{
             }
         });
 
-        runButton = new Button("Run SQL");
-        runButton.addClickListener((Button.ClickListener) event -> Notification.show("Not done yet.", ERROR_MESSAGE));
+        runButton = new Button("4. Run SQL");
+        runButton.addClickListener((Button.ClickListener) event -> Notification.show("This feature is not developed yet.", WARNING_MESSAGE));
 
-        downloadButton = new Button("Download SQL");
+        downloadButton = new Button("3. Download SQL");
         StreamResource myResource = createResource();
         FileDownloader fileDownloader = new FileDownloader(myResource);
         fileDownloader.extend(downloadButton);
 
-
+        //buttonBar.setSpacing(true);
         buttonBar.addComponent(validateButton);
         buttonBar.addComponent(generateButton);
         buttonBar.addComponent(downloadButton);
         buttonBar.addComponent(runButton);
 
         verticalLayout.addComponent(statusLabel);
+        verticalLayout.addComponent(new Label(""));
         verticalLayout.addComponent(buttonBar);
+
         this.setContent(verticalLayout);
 
     }
 
     void setStatus(StatusEnum status){
+        statusLabel.setWidth(30, Unit.EM);
         statusLabel.setValue(status.getDescription());
-        Notification.show(status.getDescription(), TRAY_NOTIFICATION);
+        //Notification.show(status.getDescription(), HUMANIZED_MESSAGE);
+        if(status.is_success){
+            statusLabel.addStyleName("v-label-success");
+            statusLabel.removeStyleName("v-label-failure");
+        }else{
+            statusLabel.addStyleName("v-label-failure");
+            statusLabel.removeStyleName("v-label-success");
+        }
+
         switch(status){
-            case FILE_NOT_SET:
-                this.setVisible(false);
-                tempFilePath = "";
-                originalFileName = "";
-                break;
             case FILE_UPLOADED:
                 validateButton.setEnabled(true);
                 generateButton.setEnabled(false);
@@ -149,6 +170,7 @@ class ProcessFilePanel extends Panel{
                 downloadButton.setEnabled(false);
                 break;
             case FILE_INVALID:
+                errorPopup.setPopupVisible(true);
                 validateButton.setEnabled(true);
                 generateButton.setEnabled(false);
                 runButton.setEnabled(false);
@@ -168,8 +190,7 @@ class ProcessFilePanel extends Panel{
     }
 
     void setOriginalFileName(String originalFileName) {
-        this.originalFileName = originalFileName;
-        this.setCaption("Process File: " + originalFileName);
+        this.setCaption("File Name: " + originalFileName);
     }
 
     private StreamResource createResource() {

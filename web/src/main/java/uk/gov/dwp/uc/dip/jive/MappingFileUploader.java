@@ -16,6 +16,7 @@ class MappingFileUploader extends Upload {
     MappingFileUploader(String caption) {
         super();
         setCaption(caption);
+
         setReceiver((Upload.Receiver) (filename, mimeType) -> {
             try {
                 originalFileName = filename;
@@ -30,7 +31,7 @@ class MappingFileUploader extends Upload {
             }
         });
 
-        setImmediate(false);
+        setImmediate(true);
         setButtonCaption("Upload");
     }
 
