@@ -1,5 +1,5 @@
-sourceDB,sourceCollection,sourceFieldLocation,sourceDataType,destinationTable,destinationField,destinationDataType,function
-sourceDB,sourceCollection,myArray[*]._id,string,targetTable,structure_id,string,
-sourceDB,sourceCollection,myArray[*]._value,string,targetTable,structure_value,int,
-sourceDB,sourceCollection,myArray[0]._id,string,targetTable,arrayElement0Id,string,
-sourceDB,sourceCollection,parentId,string,targetTable,parentId,int,
+sourceDB,sourceCollection,sourceFieldLocation,sourceDataType,destinationTable,destinationField,destinationDataType,function,dq
+sourceDB,sourceCollection,myArray[*]._id,string,targetTable,structure_id,string,,
+sourceDB,sourceCollection,myArray[*]._value,string,targetTable,structure_value,int,,
+sourceDB,sourceCollection,myArray[0]._id,string,targetTable,arrayElement0Id,string,,
+sourceDB,sourceCollection,parentId,string,targetTable,parentId,int,,
