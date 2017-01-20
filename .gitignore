@@ -4,3 +4,9 @@
 /web/dependency-reduced-pom.xml
 /web/target/*
 /service/dependency-reduced-pom.xml
+pom.xml.versionsBackup
+service/jive.log
+service/pom.xml.versionsBackup
+service/src/test/.DS_Store
+web/jive.log*
+web/pom.xml.versionsBackup
