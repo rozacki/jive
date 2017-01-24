@@ -1,22 +1,22 @@
 package uk.gov.dwp.uc.dip.jive;
 
-import com.vaadin.server.Page;
-import com.vaadin.ui.Panel;
-import com.vaadin.ui.TextField;
-import com.vaadin.ui.Upload;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
+import org.apache.log4j.Logger;
+import uk.gov.dwp.uc.dip.jive.hiverun.HiveResultsPanel;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 class MainPanel extends Panel {
+    private static final Logger log = Logger.getLogger(MainPanel.class);
 
     private ProcessFilePanel processFilePanel;
 
     MainPanel() {
+        super();
         final VerticalLayout layout = new VerticalLayout();
-
+        log.debug("Building main panel.");
         TextField dataLocationTextField = new TextField("Data Location:");
         dataLocationTextField.setWidth(20, Unit.EM);
         dataLocationTextField.setDescription("Location for JSON files in HDFS");
@@ -45,6 +45,13 @@ class MainPanel extends Panel {
             processFilePanel.setStatus(ProcessFilePanel.StatusEnum.FILE_UPLOADED);
             processFilePanel.setJsonSourcePath(dataLocationTextField.getValue());
         });
+    }
 
+    void setHiveResultsPanel(HiveResultsPanel hiveResultsPanel) {
+        processFilePanel.setHiveResultsPanel(hiveResultsPanel);
+    }
+
+    void setTabSheet(TabSheet tabSheet) {
+        processFilePanel.setTabSheet(tabSheet);
     }
 }

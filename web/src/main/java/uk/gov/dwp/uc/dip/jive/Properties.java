@@ -1,17 +1,24 @@
 package uk.gov.dwp.uc.dip.jive;
 
+import com.google.common.io.Resources;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Notification;
 import org.apache.ambari.view.ViewContext;
 import org.apache.log4j.Logger;
 
 import javax.servlet.ServletContext;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 import static com.vaadin.ui.Notification.Type.ERROR_MESSAGE;
 
-class Properties {
+public class Properties {
 
     private final static Logger log = Logger.getLogger(Properties.class);
 
@@ -20,7 +27,10 @@ class Properties {
         JSON_PATH("jive.json.path"),
         HIVE_HOST("jive.hive.host"),
         HIVE_PORT("jive.hive.port"),
-        HIVE_USER("jive.hive.user")
+        HIVE_PRINCIPAL_USER("jive.hive.principal.user"),
+        JAAS_CONF("jive.jaas.conf.file"),
+        HOST_REALM("jive.hive.host.realm"),
+        NON_AMBARI_USER("jive.dev.user")
         ;
 
         private String key;
@@ -33,16 +43,19 @@ class Properties {
 
     private static Properties properties;
     private String dataLocation;
-    private String uploadPath = "/tmp/uploads/";
-    private String scriptsPath = "/tmp/scripts/";
-    private String hiveHost = "10.88.253.128";
-    private String hiveUser = "paulroberts";
-    private String hivePort = "10000";
+    private String uploadPath;
+    private String scriptsPath;
+    private String hiveHost;
+    private String hivePrincipalUser;
+    private String hivePort;
+    private String jaasConfFile;
+    private String hiveHostRealm;
+    private String jiveDevUser;
 
     // TODO get properties from ambari OR properties file
     // TODO Perhaps lose the ambari properties completely.
 
-    static Properties getInstance(){
+    public static Properties getInstance(){
         if(null == properties){
             properties = new Properties();
             try {
@@ -65,13 +78,38 @@ class Properties {
             properties = context.getProperties();
         }else{
             java.util.Properties p = new java.util.Properties();
-            p.load(this.getClass().getResourceAsStream("jive.properties"));
-            //noinspection unchecked
-            properties = (Map<String, String>) p.entrySet();
+            FileInputStream fis = new FileInputStream(
+                    Resources.getResource("jive.properties").getPath());
+            p.load(fis);
+
+            properties = new HashMap<>();
+            for(Map.Entry<Object, Object> entry : p.entrySet()){
+
+                properties.put((String)entry.getKey(), (String)entry.getValue());
+            }
         }
         dataLocation = checkPath(properties.get(Property.JSON_PATH.key));
         uploadPath = checkPath(properties.get(Property.WORKING_DIR.key)) + "/uploads/";
         scriptsPath = checkPath(properties.get(Property.WORKING_DIR.key)) + "/scripts/";
+        hivePrincipalUser = properties.get(Property.HIVE_PRINCIPAL_USER.key);
+        hiveHost = properties.get(Property.HIVE_HOST.key);
+        hivePort = properties.get(Property.HIVE_PORT.key);
+        jaasConfFile = properties.get(Property.JAAS_CONF.key);
+        log.debug(jaasConfFile);
+        hiveHostRealm = properties.get(Property.HOST_REALM.key);
+        jiveDevUser = properties.get(Property.NON_AMBARI_USER.key);
+        checkDirectoriesExist();
+    }
+
+    private void checkDirectoriesExist() {
+        File f = new File(getUploadPath());
+        if(!f.exists()){
+            f.mkdirs();
+        }
+        f = new File(getScriptsPath());
+        if(!f.exists()){
+            f.mkdirs();
+        }
     }
 
     public String getDataLocation() {
@@ -90,12 +128,24 @@ class Properties {
         return hiveHost;
     }
 
-    public String getHiveUser() {
-        return hiveUser;
+    public String getHivePrincipalUser() {
+        return hivePrincipalUser;
     }
 
     public String getHivePort() {
         return hivePort;
+    }
+
+    public String getJaasConfFile() {
+        return jaasConfFile;
+    }
+
+    public String getHiveHostRealm() {
+        return hiveHostRealm;
+    }
+
+    public String getJiveDevUser() {
+        return jiveDevUser;
     }
 
     private String checkPath(String path){

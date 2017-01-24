@@ -35,4 +35,11 @@
   @include valo;
 
   // Insert your own theme rules here
+  .v-grid-row-error {
+    color: red;
+  }
+  .v-grid-row-ok {
+    color: green;
+  }
+
 }

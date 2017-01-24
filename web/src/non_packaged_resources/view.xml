@@ -28,14 +28,28 @@
         <name>jive.hive.port</name>
         <label>HIVE port</label>
         <description>Port!.</description>
-        <default-value>/10000</default-value>
+        <default-value>10000</default-value>
         <required>true</required>
     </parameter>
     <parameter>
-        <name>jive.hive.user</name>
+        <name>jive.hive.principal.user</name>
         <label>HIVE user</label>
         <description>Proxy user to connect with, will delegate to logged in users permissions.</description>
         <default-value>hive</default-value>
+        <required>true</required>
+    </parameter>
+    <parameter>
+        <name>jive.jaas.conf.file</name>
+        <label>JASS config file</label>
+        <description>Absolute location of jaas config file.</description>
+        <default-value>/etc/ambari-server/conf/jive.conf</default-value>
+        <required>true</required>
+    </parameter>
+    <parameter>
+        <name>jive.hive.host.realm</name>
+        <label>Host realm</label>
+        <description>Host realm.</description>
+        <default-value>UCDIP.DEV.LOCAL</default-value>
         <required>true</required>
     </parameter>
 </view>

@@ -2,7 +2,12 @@ package uk.gov.dwp.uc.dip.jive;
 
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.StreamResource;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import org.apache.commons.lang.StringUtils;
+import org.apache.log4j.Logger;
+import uk.gov.dwp.uc.dip.jive.hiverun.HiveProxyExecutor;
+import uk.gov.dwp.uc.dip.jive.hiverun.HiveResultsPanel;
 import uk.gov.dwp.uc.dip.mappingreader.TechnicalMappingValidator;
 import uk.gov.dwp.uc.dip.schemagenerator.SchemaGenerator;
 
@@ -10,17 +15,27 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.util.List;
 import java.util.UUID;
-
-import static com.vaadin.ui.Notification.Type.*;
 
 
 class ProcessFilePanel extends Panel{
 
     private String jsonSourcePath;
+    private HiveResultsPanel hiveResultsPanel;
+    private TabSheet tabSheet;
 
     void setJsonSourcePath(String jsonSourcePath) {
         this.jsonSourcePath = jsonSourcePath;
+    }
+
+    void setHiveResultsPanel(HiveResultsPanel hiveResultsPanel) {
+        this.hiveResultsPanel = hiveResultsPanel;
+    }
+
+    void setTabSheet(TabSheet tabSheet) {
+        this.tabSheet = tabSheet;
     }
 
     enum StatusEnum{
@@ -42,6 +57,7 @@ class ProcessFilePanel extends Panel{
         }
     }
 
+    private final static Logger log = Logger.getLogger(ProcessFilePanel.class);
     private String tempFilePath;
     private String scriptFilePath;
     private Label statusLabel;
@@ -63,7 +79,10 @@ class ProcessFilePanel extends Panel{
         Label emptyLabel = new Label();
         emptyLabel.setSizeFull();
 
-        // Error popup
+        // Hive database to run sql against if run button pressed
+        TextField runDatabaseTextField = new TextField("Run Database:");
+
+        // Error popup - Used to display file validation errors.
         errorText = new Label();
         errorText.setSizeFull();
 
@@ -82,9 +101,11 @@ class ProcessFilePanel extends Panel{
         errorPopup.setPopupVisible(false);
         verticalLayout.addComponent(errorPopup);
         verticalLayout.addStyleName("v-margin-bottom");
+        verticalLayout.addComponent(runDatabaseTextField);
 
         validateButton = new Button("1. Validate File");
         validateButton.addClickListener((Button.ClickListener) event -> {
+            log.debug("Validate button pressed.");
             mappingValidator = new TechnicalMappingValidator();
             if(mappingValidator.isFileValid(tempFilePath)){
                 setStatus(StatusEnum.FILE_VERIFIED);
@@ -96,7 +117,7 @@ class ProcessFilePanel extends Panel{
                 for(String message : mappingValidator.getErrors()){
                     error.append(message).append("\n");
                 }
-
+                errorText.setContentMode(ContentMode.PREFORMATTED);
                 errorText.setValue(error.toString());
                 errorText.addStyleName("v-label-failure");
                 errorPopup.setPopupVisible(true);
@@ -106,9 +127,11 @@ class ProcessFilePanel extends Panel{
         generateButton = new Button("2. Generate SQL");
         generateButton.addClickListener((Button.ClickListener) event -> {
             try {
+                log.debug("Generate button pressed.");
                 schemaGenerator = new SchemaGenerator(tempFilePath, jsonSourcePath);
                 scriptFilePath = Properties.getInstance().getScriptsPath()
                         + UUID.randomUUID().toString() + ".sql";
+                log.debug("Writing:" + scriptFilePath);
                 File script = new File(scriptFilePath);
                 FileWriter writer = new FileWriter(script);
                 writer.write(schemaGenerator.transformAll());
@@ -117,19 +140,38 @@ class ProcessFilePanel extends Panel{
                 setStatus(StatusEnum.FILE_GENERATED);
             } catch (IOException e) {
                 e.printStackTrace();
-                Notification.show(e.getLocalizedMessage(),ERROR_MESSAGE);
+                NotificationUtils.displayError(e);
             }
         });
 
         runButton = new Button("4. Run SQL");
-        runButton.addClickListener((Button.ClickListener) event -> Notification.show("This feature is not developed yet.", WARNING_MESSAGE));
+        runButton.addClickListener((Button.ClickListener) event -> {
+            log.debug("Run button pressed.");
+            File script = new File(scriptFilePath);
+            try {
+                List<String> allStatementLines = Files.readAllLines(script.toPath());
+                StringBuilder allStatements = new StringBuilder();
+                // Filter out !echo lines
+                allStatementLines.stream().filter(line -> !StringUtils.trim(line).startsWith("!echo"))
+                        .forEach(line -> allStatements.append(line).append("\n"));
+                tabSheet.setSelectedTab(1);
+                HiveProxyExecutor hpe = new HiveProxyExecutor();
+                hiveResultsPanel.reset();
+
+                hpe.executeSemiColonSeparatedStatements(allStatements.toString()
+                        , runDatabaseTextField.getValue()
+                        , hiveResultsPanel.getContainer());
+            } catch (IOException e) {
+                e.printStackTrace();
+                NotificationUtils.displayError(e);
+            }
+        });
 
         downloadButton = new Button("3. Download SQL");
         StreamResource myResource = createResource();
         FileDownloader fileDownloader = new FileDownloader(myResource);
         fileDownloader.extend(downloadButton);
 
-        //buttonBar.setSpacing(true);
         buttonBar.addComponent(validateButton);
         buttonBar.addComponent(generateButton);
         buttonBar.addComponent(downloadButton);
