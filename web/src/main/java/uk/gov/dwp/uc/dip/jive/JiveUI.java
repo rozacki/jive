@@ -7,6 +7,8 @@ import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
+import org.apache.log4j.Logger;
+import uk.gov.dwp.uc.dip.jive.hiverun.HiveResultsPanel;
 
 /**
  * This UI is the application entry point. A UI may either represent a browser window 
@@ -18,13 +20,19 @@ import com.vaadin.ui.*;
 @SuppressWarnings("WeakerAccess")
 @Theme("mytheme")
 public class JiveUI extends UI {
+    private final static Logger log = Logger.getLogger(JiveUI.class);
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
+        log.debug("User request:" + User.getUserName());
         TabSheet tabSheet = new TabSheet();
         MainPanel mp = new MainPanel();
-        tabSheet.addTab(mp,"Generate SQL");
+        tabSheet.addTab(mp, "Generate SQL");
 
+        HiveResultsPanel hrp = new HiveResultsPanel();
+        tabSheet.addTab(hrp, "Run Results");
+        mp.setHiveResultsPanel(hrp);
+        mp.setTabSheet(tabSheet);
         setContent(tabSheet);
     }
 

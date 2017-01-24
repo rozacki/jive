@@ -12984,3 +12984,11 @@ div.v-layout.v-horizontal.v-widget {
 	width: 19px;
 	overflow: hidden;
 }
+
+.mytheme .v-grid-row-error {
+	color: red;
+}
+
+.mytheme .v-grid-row-ok {
+	color: green;
+}
