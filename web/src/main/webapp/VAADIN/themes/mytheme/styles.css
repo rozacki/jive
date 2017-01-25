@@ -12992,3 +12992,15 @@ div.v-layout.v-horizontal.v-widget {
 .mytheme .v-grid-row-ok {
 	color: green;
 }
+
+.mytheme .v-jive-margin-bottom {
+	margin-bottom: 1em;
+}
+
+.mytheme .v-jive-padding-left {
+	padding-left: 1em;
+}
+
+.mytheme .v-jive-padding-bottom {
+	padding-bottom: 1em;
+}

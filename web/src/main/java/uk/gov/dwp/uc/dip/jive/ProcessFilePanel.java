@@ -73,14 +73,18 @@ class ProcessFilePanel extends Panel{
     ProcessFilePanel() {
         super();
         VerticalLayout verticalLayout = new VerticalLayout();
+        verticalLayout.addStyleName("v-jive-padding-left");
         statusLabel = new Label();
 
         HorizontalLayout buttonBar = new HorizontalLayout();
+        buttonBar.addStyleName("v-jive-padding-bottom");
         Label emptyLabel = new Label();
         emptyLabel.setSizeFull();
+        emptyLabel.setVisible(false);
 
         // Hive database to run sql against if run button pressed
-        TextField runDatabaseTextField = new TextField("Run Database:");
+        TextField runDatabaseTextField = new TextField("Enter Database Name:");
+        runDatabaseTextField.setVisible(false);
 
         // Error popup - Used to display file validation errors.
         errorText = new Label();
@@ -101,7 +105,6 @@ class ProcessFilePanel extends Panel{
         errorPopup.setPopupVisible(false);
         verticalLayout.addComponent(errorPopup);
         verticalLayout.addStyleName("v-margin-bottom");
-        verticalLayout.addComponent(runDatabaseTextField);
 
         validateButton = new Button("1. Validate File");
         validateButton.addClickListener((Button.ClickListener) event -> {
@@ -121,6 +124,8 @@ class ProcessFilePanel extends Panel{
                 errorText.setValue(error.toString());
                 errorText.addStyleName("v-label-failure");
                 errorPopup.setPopupVisible(true);
+                runDatabaseTextField.setVisible(false);
+                emptyLabel.setVisible(false);
             }
         });
 
@@ -138,6 +143,8 @@ class ProcessFilePanel extends Panel{
                 writer.flush();
                 writer.close();
                 setStatus(StatusEnum.FILE_GENERATED);
+                runDatabaseTextField.setVisible(true);
+                emptyLabel.setVisible(true);
             } catch (IOException e) {
                 e.printStackTrace();
                 NotificationUtils.displayError(e);
@@ -179,7 +186,10 @@ class ProcessFilePanel extends Panel{
 
         verticalLayout.addComponent(statusLabel);
         verticalLayout.addComponent(new Label(""));
+        verticalLayout.addComponent(runDatabaseTextField);
+        verticalLayout.addComponent(emptyLabel);
         verticalLayout.addComponent(buttonBar);
+        verticalLayout.addComponent(new Label());
 
         this.setContent(verticalLayout);
 
