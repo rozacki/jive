@@ -113,6 +113,7 @@ class ProcessFilePanel extends Panel{
             if(mappingValidator.isFileValid(tempFilePath)){
                 setStatus(StatusEnum.FILE_VERIFIED);
                 errorPopup.setPopupVisible(false);
+                tabSheet.getTab(1).setEnabled(false);
             }else{
                 setStatus(StatusEnum.FILE_INVALID);
 
@@ -126,6 +127,7 @@ class ProcessFilePanel extends Panel{
                 errorPopup.setPopupVisible(true);
                 runDatabaseTextField.setVisible(false);
                 emptyLabel.setVisible(false);
+                tabSheet.getTab(1).setEnabled(false);
             }
         });
 
@@ -161,6 +163,7 @@ class ProcessFilePanel extends Panel{
                 // Filter out !echo lines
                 allStatementLines.stream().filter(line -> !StringUtils.trim(line).startsWith("!echo"))
                         .forEach(line -> allStatements.append(line).append("\n"));
+                tabSheet.getTab(1).setEnabled(true);
                 tabSheet.setSelectedTab(1);
                 HiveProxyExecutor hpe = new HiveProxyExecutor();
                 hiveResultsPanel.reset();
