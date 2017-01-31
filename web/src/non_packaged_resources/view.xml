@@ -21,7 +21,7 @@
         <name>jive.hive.host</name>
         <label>HIVE host</label>
         <description>Name or IP of HIVE hist.</description>
-        <default-value>10.88.100.32</default-value>
+        <default-value>vs-dip-dev02.server.uc</default-value>
         <required>true</required>
     </parameter>
     <parameter>
