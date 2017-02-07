@@ -9,7 +9,7 @@
     </appender>
 
     <appender name="FILE" class="org.apache.log4j.RollingFileAppender">
-        <param name="file" value="jive.log"/>
+        <param name="file" value="/var/log/ambari-server/jive-view/jive.log"/>
         <param name="MaxFileSize" value="5MB"/>
         <param name="MaxBackupIndex" value="10"/>
         <layout class="org.apache.log4j.PatternLayout">
@@ -17,15 +17,15 @@
         </layout>
     </appender>
 
-    <logger name="uk.gov.dwp.uc.dip" additivity="true">
+    <logger name="uk.gov.dwp.uc.dip" additivity="false">
         <level value="debug"/>
         <appender-ref ref="FILE" />
-        <appender-ref ref="CONSOLE" />
+        <!-- appender-ref ref="CONSOLE" /-->
     </logger>
 
     <root>
         <priority value ="warn" />
-        <appender-ref ref="CONSOLE" />
+        <!-- appender-ref ref="CONSOLE" /-->
         <appender-ref ref="FILE" />
     </root>
 
