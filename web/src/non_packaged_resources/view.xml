@@ -14,7 +14,7 @@
         <name>jive.json.path</name>
         <label>Jive JSON Path</label>
         <description>Absolute path to JSON files (without date folder).</description>
-        <default-value>/etc/uc/mongo</default-value>
+        <default-value>/etl/uc/mongo</default-value>
         <required>true</required>
     </parameter>
     <parameter>
@@ -40,7 +40,7 @@
     </parameter>
     <parameter>
         <name>jive.jaas.conf.file</name>
-        <label>JASS config file</label>
+        <label>JAAS config file</label>
         <description>Absolute location of jaas config file.</description>
         <default-value>/etc/ambari-server/conf/jive.conf</default-value>
         <required>true</required>
@@ -49,7 +49,7 @@
         <name>jive.hive.host.realm</name>
         <label>Host realm</label>
         <description>Host realm.</description>
-        <default-value>UCDIP.DEV.LOCAL</default-value>
+        <default-value>UCDIP.LOCAL</default-value>
         <required>true</required>
     </parameter>
 </view>
