@@ -44,11 +44,13 @@ public class HiveProxyExecutor {
     private String getJdbcUrl(){
         log.debug("Building JDBC URL.");
         Properties props = Properties.getInstance();
-        return JDBC_DB_URL.replace("<HOST>", props.getHiveHost())
+        String uri = JDBC_DB_URL.replace("<HOST>", props.getHiveHost())
                 .replace("<PORT>",props.getHivePort())
                 .replace("<REALM>", props.getHiveHostRealm())
                 .replace("<PROXY_USER>", User.getUserName())
                 .replace("<PRINCIPAL>", props.getHivePrincipalUser());
+        log.info("JDBC URI: " + uri);
+        return uri;
     }
 
     public void executeSemiColonSeparatedStatements(
@@ -57,10 +59,18 @@ public class HiveProxyExecutor {
         executeMultipleStatements(statements, database, container);
     }
 
-    private void executeMultipleStatements(
+    public void executeMultipleStatements(
             List<String> statements, String database, BeanItemContainer<StatementResult> container) {
+
+        log.debug(String.format("sql statements %d",statements.size()));
         Subject subject = null;
         int order = 1;
+
+        if (database == null) {
+            log.debug("database is missing");
+        }else{
+            log.debug("database is set to "+ database);
+        }
 
         try {
             subject = login();
@@ -83,6 +93,7 @@ public class HiveProxyExecutor {
                                  }
                              }); Statement stmt = conn.createStatement()) {
                     if(StringUtils.trimToNull(database) != null) {
+                        log.debug("Switching to database " + database);
                         stmt.execute("use " + database);
                     }
                     for (String sql : statements) {

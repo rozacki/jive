@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.cli.*;
+import org.apache.log4j.Logger;
 import uk.gov.dwp.uc.dip.mappingreader.TechnicalMapping;
 import uk.gov.dwp.uc.dip.mappingreader.TechnicalMappingException;
 import uk.gov.dwp.uc.dip.mappingreader.TechnicalMappingReader;
@@ -21,6 +22,7 @@ public class SchemaGenerator {
 
     private String sourceJsonFileLocation;
     private TechnicalMappingReader techMap;
+    private final static Logger log = Logger.getLogger(SchemaGenerator.class);
 
     public SchemaGenerator() {
     }
@@ -141,6 +143,14 @@ public class SchemaGenerator {
             result.append(transformAsString(t));
         }
         return result.toString();
+    }
+
+    public List<String> transformAllToList(){
+        List<String> transforms = new ArrayList<>();
+        for (String t : techMap.getTargetTables()) {
+            transform(t).forEach(s -> transforms.add(s) );
+        }
+        return transforms;
     }
 
     private String transformAsString(String targetTable){

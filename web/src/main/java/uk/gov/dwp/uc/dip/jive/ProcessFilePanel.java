@@ -154,24 +154,18 @@ class ProcessFilePanel extends Panel{
         });
 
         runButton = new Button("4. Run SQL");
-        runButton.addClickListener((Button.ClickListener) event -> {
+        runButton.addClickListener((Button.ClickListener) event->{
             log.debug("Run button pressed.");
-            File script = new File(scriptFilePath);
             try {
-                List<String> allStatementLines = Files.readAllLines(script.toPath());
-                StringBuilder allStatements = new StringBuilder();
-                // Filter out !echo lines
-                allStatementLines.stream().filter(line -> !StringUtils.trim(line).startsWith("!echo"))
-                        .forEach(line -> allStatements.append(line).append("\n"));
+                schemaGenerator = new SchemaGenerator(tempFilePath, jsonSourcePath);
+                List<String> allStatements = schemaGenerator.transformAllToList();
                 tabSheet.getTab(1).setEnabled(true);
                 tabSheet.setSelectedTab(1);
                 HiveProxyExecutor hpe = new HiveProxyExecutor();
                 hiveResultsPanel.reset();
-
-                hpe.executeSemiColonSeparatedStatements(allStatements.toString()
-                        , runDatabaseTextField.getValue()
-                        , hiveResultsPanel.getContainer());
-            } catch (IOException e) {
+                hpe.executeMultipleStatements(allStatements,runDatabaseTextField.getValue(),hiveResultsPanel.getContainer());
+            }
+            catch (IOException e) {
                 e.printStackTrace();
                 NotificationUtils.displayError(e);
             }
