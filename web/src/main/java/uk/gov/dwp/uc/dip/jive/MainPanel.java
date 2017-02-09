@@ -26,9 +26,22 @@ class MainPanel extends Panel {
                 + dateFormat.format(new Date());
         dataLocationTextField.setValue(dataLocation);
 
+        // schema tree
+        Tree menu = new Tree();
+        menu.setCaption("Schema");
+
+        JSONSchemaLoader loadButton = new JSONSchemaLoader("Load schema", menu);
+        /*
+        menu.addItem("Mercury");
+        menu.setChildrenAllowed("Mercury", false);
+        menu.addItem("Venus");
+        menu.setChildrenAllowed("Venus", false);
+        */
         MappingFileUploader mappingFileUploader = new MappingFileUploader("Upload the Mapping File:");
         layout.addComponent(dataLocationTextField);
         layout.addComponent(mappingFileUploader);
+        layout.addComponent(menu);
+        layout.addComponent(loadButton);
 
         processFilePanel = new ProcessFilePanel();
         processFilePanel.setVisible(false);

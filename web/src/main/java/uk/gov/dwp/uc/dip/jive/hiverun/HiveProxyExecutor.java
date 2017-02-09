@@ -53,12 +53,6 @@ public class HiveProxyExecutor {
         return uri;
     }
 
-    public void executeSemiColonSeparatedStatements(
-            String statement, String database, BeanItemContainer<StatementResult> container){
-        List<String> statements = Arrays.asList(statement.split(";"));
-        executeMultipleStatements(statements, database, container);
-    }
-
     public void executeMultipleStatements(
             List<String> statements, String database, BeanItemContainer<StatementResult> container) {
 
@@ -97,9 +91,9 @@ public class HiveProxyExecutor {
                         stmt.execute("use " + database);
                     }
                     for (String sql : statements) {
-                        log.debug("Running:" + StringUtils.left(sql, 50) + "...");
-                        stmt.execute(sql);
-                        container.addBean(new StatementResult(true, sql, order++));
+                            log.debug("Running:" + StringUtils.left(sql, 50) + "...");
+                            stmt.execute(sql);
+                            container.addBean(new StatementResult(true, sql, order++));
                     }
                 }
             } catch (SQLException | PrivilegedActionException e) {

@@ -16,7 +16,9 @@ import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 
@@ -69,6 +71,7 @@ class ProcessFilePanel extends Panel{
     private TechnicalMappingValidator mappingValidator;
     private Label errorText;
     private PopupView errorPopup;
+    private Button previewButton;
 
     ProcessFilePanel() {
         super();
@@ -171,6 +174,25 @@ class ProcessFilePanel extends Panel{
             }
         });
 
+        previewButton = new Button("5. Preview");
+        previewButton.addClickListener((Button.ClickListener) event->{
+            log.debug("Run preview pressed.");
+            try{
+                schemaGenerator = new SchemaGenerator(tempFilePath, jsonSourcePath);
+                // As we generate preview per table this is just work around to take first available table
+                // Ideally we should choose target table from the list
+                Set<String>  targetTables = schemaGenerator.techMap.getTargetTables();
+                HiveProxyExecutor hpe = new HiveProxyExecutor();
+                targetTables.toArray();
+                List<String> allStatements = new ArrayList<String>();
+                allStatements.add(String.format("select * from %s limit 100",targetTables.toArray()[0]));
+                hpe.executeMultipleStatements(allStatements,runDatabaseTextField.getValue(),hiveResultsPanel.getContainer());
+            }catch(Exception e){
+                e.printStackTrace();
+                NotificationUtils.displayError(e);
+            }
+        });
+
         downloadButton = new Button("3. Download SQL");
         StreamResource myResource = createResource();
         FileDownloader fileDownloader = new FileDownloader(myResource);
@@ -180,6 +202,7 @@ class ProcessFilePanel extends Panel{
         buttonBar.addComponent(generateButton);
         buttonBar.addComponent(downloadButton);
         buttonBar.addComponent(runButton);
+        buttonBar.addComponent(previewButton);
 
         verticalLayout.addComponent(statusLabel);
         verticalLayout.addComponent(new Label(""));
@@ -210,6 +233,7 @@ class ProcessFilePanel extends Panel{
                 generateButton.setEnabled(false);
                 runButton.setEnabled(false);
                 downloadButton.setEnabled(false);
+                previewButton.setEnabled(false);
                 setVisible(true);
                 break;
             case FILE_VERIFIED:
@@ -217,6 +241,7 @@ class ProcessFilePanel extends Panel{
                 generateButton.setEnabled(true);
                 runButton.setEnabled(false);
                 downloadButton.setEnabled(false);
+                previewButton.setEnabled(false);
                 break;
             case FILE_INVALID:
                 errorPopup.setPopupVisible(true);
@@ -224,12 +249,14 @@ class ProcessFilePanel extends Panel{
                 generateButton.setEnabled(false);
                 runButton.setEnabled(false);
                 downloadButton.setEnabled(false);
+                previewButton.setEnabled(false);
                 break;
             case FILE_GENERATED:
                 validateButton.setEnabled(true);
                 generateButton.setEnabled(true);
                 runButton.setEnabled(true);
                 downloadButton.setEnabled(true);
+                previewButton.setEnabled(true);
                 break;
         }
     }
