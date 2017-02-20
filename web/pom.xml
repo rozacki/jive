@@ -14,7 +14,7 @@
 	<parent>
 		<groupId>uk.gov.dwp.uc.dip</groupId>
 		<artifactId>jive</artifactId>
-		<version>1.0.2</version>
+		<version>1.0.3</version>
 	</parent>
 
 	<repositories>
@@ -157,6 +157,10 @@
 				<version>${jetty.plugin.version}</version>
 				<configuration>
 					<scanIntervalSeconds>2</scanIntervalSeconds>
+					<httpConnector>
+						<!--host>localhost</host-->
+						<port>8081</port>
+					</httpConnector>
 				</configuration>
 			</plugin>
             <plugin>
