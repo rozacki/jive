@@ -37,6 +37,10 @@ class ProcessFilePanel extends Panel{
         this.hiveResultsPanel = hiveResultsPanel;
     }
 
+    void setHivePreviewPanel(DataGrid dataGrid){
+        this.dataGrid = dataGrid;
+    }
+
     void setTabSheet(TabSheet tabSheet) {
         this.tabSheet = tabSheet;
     }
@@ -200,26 +204,6 @@ class ProcessFilePanel extends Panel{
                     dataGrid.setData(table);
                 }
 
-                /*
-                List<List<Object>> table = new ArrayList<>();
-                List<Object> innerList = new ArrayList<>(3);
-                innerList.add("column1");
-                innerList.add("column2");
-                innerList.add("column3");
-                table.add(innerList);
-                innerList = new ArrayList<>(3);
-                innerList.add(new Integer(1));
-                innerList.add(new Integer(2));
-                innerList.add(new Integer(3));
-                table.add(innerList);
-
-                innerList = new ArrayList<>(3);
-                innerList.add(new Integer(11));
-                innerList.add(new Integer(22));
-                innerList.add(new Integer(33));
-                table.add(innerList);
-                */
-
             }catch(Exception e){
                 e.printStackTrace();
                 NotificationUtils.displayError(e);
@@ -231,14 +215,13 @@ class ProcessFilePanel extends Panel{
         FileDownloader fileDownloader = new FileDownloader(myResource);
         fileDownloader.extend(downloadButton);
 
-        dataGrid= new DataGrid();
+
 
         buttonBar.addComponent(validateButton);
         buttonBar.addComponent(generateButton);
         buttonBar.addComponent(downloadButton);
         buttonBar.addComponent(runButton);
         buttonBar.addComponent(previewButton);
-        buttonBar.addComponent(dataGrid);
 
         verticalLayout.addComponent(statusLabel);
         verticalLayout.addComponent(new Label(""));

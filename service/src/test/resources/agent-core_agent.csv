@@ -1,0 +1,5 @@
+sourceDB,sourceCollection,sourceFieldLocation,sourceDataType,destinationTable,destinationField,destinationDataType,function,dataQuality
+agent-core,agent,_id.agentId,string,agent,agent_id,string,,
+agent-core,agent,firstName,string,agent,first_name,string,,
+agent-core,agent,lastName,string,agent,last_name,string,,
+agent-core,agent,sortName,string,agent,sort_name,string,,
