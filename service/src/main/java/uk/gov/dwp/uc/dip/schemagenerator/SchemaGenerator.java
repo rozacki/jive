@@ -21,7 +21,7 @@ import uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator;
 public class SchemaGenerator {
 
     private String sourceJsonFileLocation;
-    private TechnicalMappingReader techMap;
+    public TechnicalMappingReader techMap;
     private final static Logger log = Logger.getLogger(SchemaGenerator.class);
 
     public SchemaGenerator() {

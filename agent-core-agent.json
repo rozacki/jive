@@ -1,0 +1,9 @@
+{"fields":
+[{"metadata":{},"name":"_entityVersion","nullable":true,"type":{"fields":[{"name":"level2","type":{"fields":[{"name":"level1", "type":"string"}]}}]}},
+  {"metadata":{},"name":"_id","nullable":true,"type":{"fields":[{"metadata":{},"name":"agentId","nullable":true,"type":"string"}],"type":"struct"}},
+  {"metadata":{},"name":"_lastModifiedDateTime","nullable":true,"type":{"fields":[{"metadata":{},"name":"d_date","nullable":true,"type":"string"}],"type":"struct"}},
+  {"metadata":{},"name":"_version","nullable":true,"type":"long"},
+  {"metadata":{},"name":"createdDateTime","nullable":true,"type":{"fields":[{"metadata":{},"name":"d_date","nullable":true,"type":"string"}],"type":"struct"}},
+  {"metadata":{},"name":"deliveryUnits","nullable":true,"type":{"containsNull":true,"elementType":"string","type":"array"}},
+  {"metadata":{},"name":"firstName","nullable":true,"type":"string"},{"metadata":{},"name":"lastName","nullable":true,"type":"string"},
+  {"metadata":{},"name":"name","nullable":true,"type":"string"},{"metadata":{},"name":"sortName","nullable":true,"type":"string"}],"type":"struct"}

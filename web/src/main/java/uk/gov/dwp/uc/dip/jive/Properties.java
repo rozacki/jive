@@ -1,6 +1,7 @@
 package uk.gov.dwp.uc.dip.jive;
 
 import com.google.common.io.Resources;
+import com.google.common.primitives.Booleans;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Notification;
 import org.apache.ambari.view.ViewContext;
@@ -30,7 +31,8 @@ public class Properties {
         HIVE_PRINCIPAL_USER("jive.hive.principal.user"),
         JAAS_CONF("jive.jaas.conf.file"),
         HOST_REALM("jive.hive.host.realm"),
-        NON_AMBARI_USER("jive.dev.user")
+        NON_AMBARI_USER("jive.dev.user"),
+        HIVE_AUTH_DISABLED("jive.hive.auth.disable")
         ;
 
         private String key;
@@ -51,6 +53,7 @@ public class Properties {
     private String jaasConfFile;
     private String hiveHostRealm;
     private String jiveDevUser;
+    private boolean hiveAuthDisabled;
 
     // TODO get properties from ambari OR properties file
     // TODO Perhaps lose the ambari properties completely.
@@ -98,6 +101,7 @@ public class Properties {
         log.debug(jaasConfFile);
         hiveHostRealm = properties.get(Property.HOST_REALM.key);
         jiveDevUser = properties.get(Property.NON_AMBARI_USER.key);
+        hiveAuthDisabled = Boolean.valueOf(properties.get(Property.HIVE_AUTH_DISABLED.key));
         checkDirectoriesExist();
     }
 
@@ -144,8 +148,10 @@ public class Properties {
         return hiveHostRealm;
     }
 
-    public String getJiveDevUser() {
-        return jiveDevUser;
+    public String getJiveDevUser() {return jiveDevUser;}
+
+    public boolean isHiveAuthenticationDisabled() {
+        return hiveAuthDisabled;
     }
 
     private String checkPath(String path){

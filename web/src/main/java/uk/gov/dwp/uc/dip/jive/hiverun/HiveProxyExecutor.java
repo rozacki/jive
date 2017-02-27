@@ -2,7 +2,6 @@ package uk.gov.dwp.uc.dip.jive.hiverun;
 
 import com.vaadin.data.util.BeanItemContainer;
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.log4j.Logger;
 import uk.gov.dwp.uc.dip.jive.NotificationUtils;
 import uk.gov.dwp.uc.dip.jive.Properties;
@@ -15,11 +14,8 @@ import java.lang.reflect.Constructor;
 import java.security.Principal;
 import java.security.PrivilegedActionException;
 import java.security.PrivilegedExceptionAction;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Arrays;
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,13 +49,7 @@ public class HiveProxyExecutor {
         return uri;
     }
 
-    public void executeSemiColonSeparatedStatements(
-            String statement, String database, BeanItemContainer<StatementResult> container){
-        List<String> statements = Arrays.asList(statement.split(";"));
-        executeMultipleStatements(statements, database, container);
-    }
-
-    public void executeMultipleStatements(
+    public List<List<Object>> executeMultipleStatements(
             List<String> statements, String database, BeanItemContainer<StatementResult> container) {
 
         log.debug(String.format("sql statements %d",statements.size()));
@@ -79,12 +69,13 @@ public class HiveProxyExecutor {
             log.error("Failed login (for proxy jdbc)", e);
             container.addItem(new StatementResult(false, e.getLocalizedMessage(), order++));
         }
+
         if(null != subject) {
             HackToGetSubjectDoAsWorking(subject);
             log.debug("Connecting to HIVE.");
             try {
-                try (Connection conn =
-                             (Connection) Subject.doAs(subject, new PrivilegedExceptionAction<Object>() {
+                try (
+                        Connection conn = (Connection) Subject.doAs(subject, new PrivilegedExceptionAction<Object>() {
                                  public Object run() throws SQLException, ClassNotFoundException {
                                      Connection con;
                                      Class.forName(JDBC_DRIVER);
@@ -97,9 +88,13 @@ public class HiveProxyExecutor {
                         stmt.execute("use " + database);
                     }
                     for (String sql : statements) {
-                        log.debug("Running:" + StringUtils.left(sql, 50) + "...");
-                        stmt.execute(sql);
-                        container.addBean(new StatementResult(true, sql, order++));
+                            log.debug("Running:" + StringUtils.left(sql, 50) + "...");
+                            boolean hasResult = stmt.execute(sql);
+                            container.addBean(new StatementResult(true, sql, order++));
+                            if(hasResult){
+                                //we return first that have
+                                return convertResutlSetToTable(stmt.getResultSet());
+                            }
                     }
                 }
             } catch (SQLException | PrivilegedActionException e) {
@@ -111,6 +106,64 @@ public class HiveProxyExecutor {
             log.error("Null Kerberos subject");
             container.addItem(new StatementResult(false, "No Hive login subject", order));
         }
+        return null;
+    }
+
+    public List<List<Object>> executeMultipleStatementsNoAuth(
+            List<String> statements, String database, BeanItemContainer<StatementResult> container) {
+
+        log.debug(String.format("sql statements %d",statements.size()));
+        int order = 1;
+
+        if (database == null) {
+            log.debug("database is missing");
+        }else{
+            log.debug("database is set to "+ database);
+        }
+
+        log.debug("Connecting to HIVE.");
+        try {
+            try (
+                Connection conn = DriverManager.getConnection("jdbc:hive2://localhost:10000/default", null, null);
+                Statement stmt = conn.createStatement()) {
+                if(StringUtils.trimToNull(database) != null) {
+                    log.debug("Switching to database " + database);
+                    stmt.execute("use " + database);
+                }
+                for (String sql : statements) {
+                    log.debug("Running:" + StringUtils.left(sql, 50) + "...");
+                    boolean hasResult = stmt.execute(sql);
+                    container.addBean(new StatementResult(true, sql, order++));
+                    if(hasResult){
+                        //we return first that have
+                        return convertResutlSetToTable(stmt.getResultSet());
+                    }
+                }
+            }
+        }catch (SQLException e) {
+            NotificationUtils.displayError(e);
+            log.error(e);
+            container.addItem(new StatementResult(false, e, order));
+        }
+        return null;
+    }
+    private List<List<Object>> convertResutlSetToTable(ResultSet rs) throws SQLException{
+        List<List<Object>> table = new ArrayList<>();
+        List<Object> columns = new ArrayList<>();
+        for(int i=1;i<=rs.getMetaData().getColumnCount();i++){
+            columns.add(rs.getMetaData().getColumnName(i));
+        }
+        table.add(columns);
+
+        while(rs.next()){
+            columns = new ArrayList<>();
+            for(int i=1;i<=rs.getMetaData().getColumnCount();i++){
+                columns.add(rs.getObject(i));
+            }
+            table.add(columns);
+        }
+
+        return table;
     }
 
     private Subject login() throws LoginException {
