@@ -37,10 +37,6 @@ class ProcessFilePanel extends Panel{
         this.hiveResultsPanel = hiveResultsPanel;
     }
 
-    void setHivePreviewPanel(DataGrid dataGrid){
-        this.dataGrid = dataGrid;
-    }
-
     void setTabSheet(TabSheet tabSheet) {
         this.tabSheet = tabSheet;
     }
@@ -76,8 +72,7 @@ class ProcessFilePanel extends Panel{
     private TechnicalMappingValidator mappingValidator;
     private Label errorText;
     private PopupView errorPopup;
-    private Button previewButton;
-    private DataGrid dataGrid;
+    TextField runDatabaseTextField;
 
     ProcessFilePanel() {
         super();
@@ -92,7 +87,7 @@ class ProcessFilePanel extends Panel{
         emptyLabel.setVisible(false);
 
         // Hive database to run sql against if run button pressed
-        TextField runDatabaseTextField = new TextField("Enter Database Name:");
+        runDatabaseTextField = new TextField("Enter Database Name:");
         runDatabaseTextField.setVisible(false);
 
         // Error popup - Used to display file validation errors.
@@ -184,44 +179,16 @@ class ProcessFilePanel extends Panel{
             }
         });
 
-        previewButton = new Button("5. Preview");
-        previewButton.addClickListener((Button.ClickListener) event->{
-            log.debug("Run preview pressed.");
-            try{
-                schemaGenerator = new SchemaGenerator(tempFilePath, jsonSourcePath);
-                // As we generate preview per table this is just work around to take first available table
-                // Ideally we should choose target table from the list
-                Set<String>  targetTables = schemaGenerator.techMap.getTargetTables();
-                HiveProxyExecutor hpe = new HiveProxyExecutor();
-                targetTables.toArray();
-                List<String> allStatements = new ArrayList<String>();
-                allStatements.add(String.format("select * from %s limit 100",targetTables.toArray()[0]));
-                if(Properties.getInstance().isHiveAuthenticationDisabled()) {
-                    List<List<Object>> table = hpe.executeMultipleStatementsNoAuth(allStatements, runDatabaseTextField.getValue(), hiveResultsPanel.getContainer());
-                    dataGrid.setData(table);
-                }else{
-                    List<List<Object>> table = hpe.executeMultipleStatements(allStatements, runDatabaseTextField.getValue(), hiveResultsPanel.getContainer());
-                    dataGrid.setData(table);
-                }
-
-            }catch(Exception e){
-                e.printStackTrace();
-                NotificationUtils.displayError(e);
-            }
-        });
 
         downloadButton = new Button("3. Download SQL");
         StreamResource myResource = createResource();
         FileDownloader fileDownloader = new FileDownloader(myResource);
         fileDownloader.extend(downloadButton);
 
-
-
         buttonBar.addComponent(validateButton);
         buttonBar.addComponent(generateButton);
         buttonBar.addComponent(downloadButton);
         buttonBar.addComponent(runButton);
-        buttonBar.addComponent(previewButton);
 
         verticalLayout.addComponent(statusLabel);
         verticalLayout.addComponent(new Label(""));
@@ -252,7 +219,6 @@ class ProcessFilePanel extends Panel{
                 generateButton.setEnabled(false);
                 runButton.setEnabled(false);
                 downloadButton.setEnabled(false);
-                previewButton.setEnabled(false);
                 setVisible(true);
                 break;
             case FILE_VERIFIED:
@@ -260,7 +226,6 @@ class ProcessFilePanel extends Panel{
                 generateButton.setEnabled(true);
                 runButton.setEnabled(false);
                 downloadButton.setEnabled(false);
-                previewButton.setEnabled(false);
                 break;
             case FILE_INVALID:
                 errorPopup.setPopupVisible(true);
@@ -268,14 +233,12 @@ class ProcessFilePanel extends Panel{
                 generateButton.setEnabled(false);
                 runButton.setEnabled(false);
                 downloadButton.setEnabled(false);
-                previewButton.setEnabled(false);
                 break;
             case FILE_GENERATED:
                 validateButton.setEnabled(true);
                 generateButton.setEnabled(true);
                 runButton.setEnabled(true);
                 downloadButton.setEnabled(true);
-                previewButton.setEnabled(true);
                 break;
         }
     }
@@ -299,5 +262,9 @@ class ProcessFilePanel extends Panel{
             }
 
         }, "jive_script.sql");
+    }
+
+    public String getDataBaseName(){
+        return this.runDatabaseTextField.getValue();
     }
 }

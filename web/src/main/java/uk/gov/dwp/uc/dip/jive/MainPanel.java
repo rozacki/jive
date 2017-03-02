@@ -11,14 +11,16 @@ import java.util.Date;
 class MainPanel extends Panel {
     private static final Logger log = Logger.getLogger(MainPanel.class);
 
-    private ProcessFilePanel processFilePanel;
+    public ProcessFilePanel processFilePanel;
+    public MappingFileUploader mappingFileUploader;
+    private TextField dataLocationTextField;
 
     MainPanel() {
         super();
         final VerticalLayout layout = new VerticalLayout();
         final HorizontalLayout mappingLayout = new HorizontalLayout();
         log.debug("Building main panel.");
-        TextField dataLocationTextField = new TextField("Data Location:");
+        dataLocationTextField = new TextField("Data Location:");
         dataLocationTextField.setWidth(20, Unit.EM);
         dataLocationTextField.setDescription("Location for JSON files in HDFS");
 
@@ -30,6 +32,7 @@ class MainPanel extends Panel {
         // schema tree
         Tree schemaTree = new Tree();
         schemaTree.setCaption("Schema");
+        schemaTree.setVisible(false);
         JSONSchemaLoader loadButton = new JSONSchemaLoader("Load schema", schemaTree);
 
         Table mappingGrid= new Table();
@@ -42,16 +45,14 @@ class MainPanel extends Panel {
         mappingGrid.addContainerProperty("destination data type", String.class, null);
         mappingGrid.addContainerProperty("destination function", String.class, null);
         mappingGrid.addContainerProperty("destination DQ", String.class, null);
+        mappingGrid.setVisible(false);
 
-        DataGrid previewGrid= new DataGrid();
-
-        MappingFileUploader mappingFileUploader = new MappingFileUploader("Upload the Mapping File:");
+        mappingFileUploader = new MappingFileUploader("Upload the Mapping File:");
         layout.addComponent(dataLocationTextField);
         layout.addComponent(mappingFileUploader);
         layout.addComponent(mappingLayout);
         layout.addComponent(mappingGrid);
         layout.addComponent(loadButton);
-        layout.addComponent(previewGrid);
 
         mappingLayout.addComponent(schemaTree);
         mappingLayout.addComponent(mappingGrid);
@@ -59,8 +60,6 @@ class MainPanel extends Panel {
         processFilePanel = new ProcessFilePanel();
         processFilePanel.setVisible(false);
         layout.addComponent(processFilePanel);
-
-        processFilePanel.setHivePreviewPanel(previewGrid);
 
         layout.setMargin(true);
         layout.setSpacing(true);
@@ -79,11 +78,11 @@ class MainPanel extends Panel {
         processFilePanel.setHiveResultsPanel(hiveResultsPanel);
     }
 
-    void setPreviewPanel(DataGrid dataGrid) {
-        processFilePanel.setHivePreviewPanel(dataGrid);
-    }
-
     void setTabSheet(TabSheet tabSheet) {
         processFilePanel.setTabSheet(tabSheet);
+    }
+
+    public String getLocation(){
+        return dataLocationTextField.getValue();
     }
 }

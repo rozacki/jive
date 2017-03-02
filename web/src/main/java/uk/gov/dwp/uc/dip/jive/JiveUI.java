@@ -26,7 +26,9 @@ public class JiveUI extends UI {
     @Override
     protected void init(VaadinRequest vaadinRequest) {
         log.debug("User request:" + User.getUserName());
+
         TabSheet tabSheet = new TabSheet();
+
         MainPanel mp = new MainPanel();
         tabSheet.addTab(mp, "Generate SQL");
 
@@ -37,6 +39,9 @@ public class JiveUI extends UI {
         mp.setHiveResultsPanel(hrp);
         mp.setTabSheet(tabSheet);
         setContent(tabSheet);
+
+        PreviewPanel preview = new PreviewPanel(mp, hrp);
+        tabSheet.addTab(preview,"Preview").setEnabled(true);
     }
 
     @WebServlet(urlPatterns = "/*", name = "JiveServlet", asyncSupported = true)
