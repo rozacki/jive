@@ -15,15 +15,18 @@ public class DataGrid extends Table {
         this.addItems();
     }
 
-    public void setData(List<List<Object>> data) {
+    /***
+     * Sets both columns and rows
+     * @param content
+     */
+    public void setContent(List<List<Object>> content) {
         this.clear();
-        Iterator<List<Object>> rowIt = data.iterator();
+        Iterator<List<Object>> rowIt = content.iterator();
         if (!rowIt.hasNext()) {
             this.addContainerProperty("No data available", Object.class, null);
             return;
         }
         List<Object> columnNames = rowIt.next();
-        // table.addContainerProperty("Name", String.class, null);
         for (Object columnValue : columnNames) {
             this.addContainerProperty(columnValue, Object.class, null);
         }
@@ -33,7 +36,14 @@ public class DataGrid extends Table {
             //Iterator<Object> colIt = rowIt.next().iterator();
             Object[] o = rowIt.next().toArray();
             this.addItem(o,i++);
-            log.debug(o);
         }
+    }
+
+    /***
+     * Sets only rows not columns names
+     * @param rows
+     */
+    public void setRows(List<List<Object>> rows){
+
     }
 }

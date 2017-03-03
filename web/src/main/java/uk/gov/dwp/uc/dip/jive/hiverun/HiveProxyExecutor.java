@@ -49,7 +49,21 @@ public class HiveProxyExecutor {
         return uri;
     }
 
-    public List<List<Object>> executeMultipleStatements(
+    public List<List<Object>> executeSingleStatement(String statement, String database, BeanItemContainer<StatementResult> container) {
+        List<String> statements = new ArrayList<String>();
+        statements.add(statement);
+        return executeMultipleStatements(statements,  database, container);
+    }
+
+    public List<List<Object>> executeMultipleStatements(List<String> statements, String database, BeanItemContainer<StatementResult> container) {
+        if (Properties.getInstance().isHiveAuthenticationDisabled()) {
+            return executeMultipleStatementsNoAuthImpl(statements, database, container);
+        } else {
+            return executeMultipleStatementsImpl(statements, database, container);
+        }
+    }
+
+    List<List<Object>> executeMultipleStatementsImpl(
             List<String> statements, String database, BeanItemContainer<StatementResult> container) {
 
         log.debug(String.format("sql statements %d",statements.size()));
@@ -109,7 +123,7 @@ public class HiveProxyExecutor {
         return null;
     }
 
-    public List<List<Object>> executeMultipleStatementsNoAuth(
+    List<List<Object>> executeMultipleStatementsNoAuthImpl(
             List<String> statements, String database, BeanItemContainer<StatementResult> container) {
 
         log.debug(String.format("sql statements %d",statements.size()));

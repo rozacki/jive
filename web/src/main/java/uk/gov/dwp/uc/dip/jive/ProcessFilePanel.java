@@ -167,11 +167,7 @@ class ProcessFilePanel extends Panel{
                 tabSheet.setSelectedTab(1);
                 HiveProxyExecutor hpe = new HiveProxyExecutor();
                 hiveResultsPanel.reset();
-                if(Properties.getInstance().isHiveAuthenticationDisabled()) {
-                    hpe.executeMultipleStatementsNoAuth(allStatements, runDatabaseTextField.getValue(), hiveResultsPanel.getContainer());
-                }else{
-                    hpe.executeMultipleStatements(allStatements, runDatabaseTextField.getValue(), hiveResultsPanel.getContainer());
-                }
+                hpe.executeMultipleStatements(allStatements, runDatabaseTextField.getValue(), hiveResultsPanel.getContainer());
             }
             catch (IOException e) {
                 e.printStackTrace();

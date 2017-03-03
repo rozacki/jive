@@ -1,0 +1,9 @@
+sourceDB,sourceCollection,sourceFieldLocation,sourceDataType,destinationTable,destinationField,destinationDataType,function,dataQuality
+advances,advanceGroup,originalAdvanceGroupId,string,advance_group,advance_group_id,string,,
+advances,advanceGroup,originalAdvanceGroupId,string,advance_group,original_advance_group_id,string,,
+advances,advanceGroup,contractId,string,advance_group,contract_id,string,,
+advances,advanceGroup,advanceType,string,advance_group,advance_type,string,,
+advances,advanceGroup,advancePaidToClaimantDeadline,string,advance_group,advance_paid_to_claimant_deadline_date,timestamp,,
+advances,advanceGroup,repaymentMonths,string,advance_group,repayment_months,int,,
+advances,advanceGroup,advanceAmount,string,advance_group,advance_amount,"decimal(15,2)",,
+advances,advanceGroup,monthlyRepaymentAmount,string,advance_group,monthly_repayment_amount,"decimal(15,2)",,
