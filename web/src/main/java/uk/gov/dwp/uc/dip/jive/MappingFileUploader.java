@@ -11,7 +11,7 @@ import java.util.UUID;
 
 class MappingFileUploader extends Upload {
 
-    private final static Logger log = Logger.getLogger(Upload.class);
+    private final static Logger log = Logger.getLogger(MappingFileUploader.class);
     private String filePath;
     private String originalFileName;
 

@@ -20,31 +20,45 @@ import java.util.Set;
  */
 public class PreviewPanel extends Panel {
     private static final Logger log = Logger.getLogger(MainPanel.class);
+    final TextArea console = new TextArea("Console");
+    final StringBuilder consoleStringBuilder = new StringBuilder();
 
     PreviewPanel(MainPanel mainPanel, HiveResultsPanel sqlResultPanel) {
         super();
         final HiveProxyExecutor hpe = new HiveProxyExecutor();
+
         final VerticalLayout layout = new VerticalLayout();
+        final VerticalSplitPanel splitPanel1 = new VerticalSplitPanel();
+        final HorizontalLayout previewButtonBar = new HorizontalLayout();
+        final DataGrid previewGrid= new DataGrid();
+        final Button previewButton = new Button("Preview");
+        final HorizontalLayout statsButtonBar = new HorizontalLayout();
+        final DataGrid statsGrid = new DataGrid();
+        final ComboBox targetTablesCombo = new ComboBox();
+        final Button refreshTargetTablesButton = new Button("Refresh target tables list");
+        final Button refereshStatsButton    =   new Button("Refresh statistics");
 
-        HorizontalLayout previewButtonBar = new HorizontalLayout();
+        this.setContent(layout);
         layout.addComponent(previewButtonBar);
-
-        DataGrid previewGrid= new DataGrid();
         layout.addComponent(previewGrid);
-
-        Button previewButton = new Button("Preview");
-        previewButtonBar.addComponent(previewButton);
-
-        DataGrid statsGrid = new DataGrid();
+        layout.addComponent(statsButtonBar);
         layout.addComponent(statsGrid);
-
-        ComboBox targetTablesCombo = new ComboBox();
         previewButtonBar.addComponent(targetTablesCombo);
+        previewButtonBar.addComponent(previewButton);
+        previewButtonBar.addComponent(refreshTargetTablesButton);
+        statsButtonBar.addComponent(refereshStatsButton);
+        layout.addComponent(console);
+
+        previewGrid.setSizeFull();
+        statsGrid.setSizeFull();
+        console.setWordwrap(true);
+        console.setSizeFull();;
+        console.setReadOnly(true);
+
         Property.ValueChangeListener listener = new Property.ValueChangeListener() {
             public void valueChange(Property.ValueChangeEvent event) {
                 String targetTable = (String)targetTablesCombo.getValue();
                 log.debug("Change target table selection to " + targetTable);
-
                 loadStats(statsGrid, mainPanel.processFilePanel.getDataBaseName(), targetTable, mainPanel.mappingFileUploader.getFilePath()
                         ,hpe, sqlResultPanel.getContainer());
             }
@@ -55,49 +69,53 @@ public class PreviewPanel extends Panel {
             String targetTable = (String)targetTablesCombo.getValue();
             log.debug("Run preview pressed for table " + targetTable);
             try{
-                List<List<Object>> table =  hpe.executeSingleStatement(String.format("select * from %s limit 100"
-                        ,targetTable), mainPanel.processFilePanel.getDataBaseName()
+                String sql=String.format("select * from %s limit 100",targetTable);
+                logToConsole("getting preview 100 rows", sql);
+                List<List<Object>> table =  hpe.executeSingleStatement(sql, mainPanel.processFilePanel.getDataBaseName()
                         , sqlResultPanel.getContainer());
+                logToConsole("fetched rows", String.valueOf(table.size()));
                 previewGrid.setContent(table);
             }catch(Exception e){
+                logToConsole("error getting preview",e.toString());
                 e.printStackTrace();
                 NotificationUtils.displayError(e);
             }
         });
 
-        Button refreshTargetTables = new Button("Refresh target tables list");
-        previewButtonBar.addComponent(refreshTargetTables);
-        refreshTargetTables.addClickListener((Button.ClickListener) event->{
+        refreshTargetTablesButton.addClickListener((Button.ClickListener) event->{
             log.debug("Run refresh target table pressed.");
             try{
                 SchemaGenerator schemaGenerator = new SchemaGenerator(mainPanel.mappingFileUploader.getFilePath(), mainPanel.getLocation());
                 Set<String> targetTables = schemaGenerator.techMap.getTargetTables();
+                targetTablesCombo.removeAllItems();
                 targetTablesCombo.addItems(targetTables);
             }catch(Exception e){
                 e.printStackTrace();
                 NotificationUtils.displayError(e);
             }
-        }
-        );
+        });
 
-        HorizontalLayout statsButtonBar = new HorizontalLayout();
-        Button refereshStats    =   new Button("Refresh statistics");
-        statsButtonBar.addComponent(refereshStats);
-        layout.addComponent(refereshStats);
-
-        refereshStats.addClickListener((Button.ClickListener) event->{
+        refereshStatsButton.addClickListener((Button.ClickListener) event->{
             String targetTable = (String)targetTablesCombo.getValue();
+            String sql = String.format("ANALYZE TABLE %s COMPUTE STATISTICS FOR COLUMNS",targetTable);
             log.debug("Refresh statistics pressed for table " + targetTable);
-            hpe.executeSingleStatement(String.format("ANALYZE TABLE %s COMPUTE STATISTICS FOR COLUMNS",targetTable)
-                    , mainPanel.processFilePanel.getDataBaseName(),sqlResultPanel.getContainer());
+            logToConsole("refresh statistics for table",targetTable,sql);
+            hpe.executeSingleStatement(sql, mainPanel.processFilePanel.getDataBaseName(),sqlResultPanel.getContainer());
 
             loadStats(statsGrid, mainPanel.processFilePanel.getDataBaseName(), targetTable, mainPanel.mappingFileUploader.getFilePath()
                     ,hpe, sqlResultPanel.getContainer());
         });
-
-        this.setContent(layout);
     }
 
+    /***
+     *
+     * @param statsGrid
+     * @param databaseName
+     * @param targetTable
+     * @param mappingPath
+     * @param hpe
+     * @param container
+     */
     public void loadStats(DataGrid statsGrid, String databaseName, String targetTable, String mappingPath
             , HiveProxyExecutor hpe, BeanItemContainer<StatementResult> container) {
         log.debug("Change target table selection to " + targetTable);
@@ -111,18 +129,18 @@ public class PreviewPanel extends Panel {
             columnNames.add("data_type");
             columnNames.add("min");
             columnNames.add("max");
-            columnNames.add("num_nulls");
-            columnNames.add("distinct_count");
-            columnNames.add("avg_col_len");
-            columnNames.add("max_col_len");
-            columnNames.add("num_trues");
-            columnNames.add("num_falses");
+            columnNames.add("num nulls");
+            columnNames.add("distinct count");
+            columnNames.add("avg col len");
+            columnNames.add("max col len");
+            columnNames.add("num trues");
+            columnNames.add("num falses");
             columnNames.add("comment");
             allStats.add(columnNames);
             for(TechnicalMapping columnMapping: schemaGenerator.techMap.getTargetColumns(targetTable)){
-                List<List<Object>> stats  = hpe.executeSingleStatement(String.format(statsSQLTemplate,targetTable
-                        , columnMapping.targetFieldName)
-                        , databaseName,container);
+                String sql = String.format(statsSQLTemplate,targetTable, columnMapping.targetFieldName);
+                logToConsole("loading statistics for column",columnMapping.targetFieldName,sql);
+                List<List<Object>> stats  = hpe.executeSingleStatement(sql, databaseName,container);
                 if(stats !=null && stats.size()==4) {
                     allStats.add(stats.get(3));
                 }
@@ -130,9 +148,18 @@ public class PreviewPanel extends Panel {
             statsGrid.setContent(allStats);
         }
         catch(Exception e) {
+            logToConsole(e.toString());
             e.printStackTrace();
             NotificationUtils.displayError(e);
-            log.error(e);
         }
+    }
+    void logToConsole(String... values){
+        for(String string: values){
+            consoleStringBuilder.append(string).append(": ");
+        }
+        console.setReadOnly(false);
+        console.setValue(consoleStringBuilder.append('\n').toString());
+        console.setReadOnly(true);
+        console.setCursorPosition(console.getValue().length());
     }
 }
