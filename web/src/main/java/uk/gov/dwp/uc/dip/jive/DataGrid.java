@@ -1,5 +1,6 @@
 package uk.gov.dwp.uc.dip.jive;
 
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import com.vaadin.ui.Table;
@@ -20,17 +21,27 @@ public class DataGrid extends Table {
      * @param content
      */
     public void setContent(List<List<Object>> content) {
-        this.clear();
+        log.debug("");
+        this.removeAllItems();
+
+        //remove all columns
+        Object[] ids  = this.getContainerPropertyIds().toArray();
+        for(Object id: ids){
+            log.debug(id);
+            this.removeContainerProperty(id);
+        }
+
         Iterator<List<Object>> rowIt = content.iterator();
         if (!rowIt.hasNext()) {
             this.addContainerProperty("No data available", Object.class, null);
             return;
         }
+        // add columns
         List<Object> columnNames = rowIt.next();
         for (Object columnValue : columnNames) {
             this.addContainerProperty(columnValue, Object.class, null);
         }
-
+        // add rows
         int i=0;
         while (rowIt.hasNext()) {
             //Iterator<Object> colIt = rowIt.next().iterator();
