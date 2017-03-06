@@ -3,6 +3,7 @@ package uk.gov.dwp.uc.dip.jive;
 
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.server.Sizeable;
 import com.vaadin.ui.*;
 import org.apache.log4j.Logger;
 import uk.gov.dwp.uc.dip.jive.hiverun.HiveProxyExecutor;
@@ -27,10 +28,14 @@ public class PreviewPanel extends Panel {
         super();
         final HiveProxyExecutor hpe = new HiveProxyExecutor();
 
-        final VerticalLayout layout = new VerticalLayout();
-        final VerticalSplitPanel splitPanel1 = new VerticalSplitPanel();
+        final VerticalLayout mainLayout = new VerticalLayout();
+        final VerticalLayout previewLayout = new VerticalLayout();
+        final VerticalLayout statsLayout = new VerticalLayout();
+        final VerticalLayout consoleLayout = new VerticalLayout();
+        //final VerticalSplitPanel splitPanelUpper = new VerticalSplitPanel();
+        //final VerticalSplitPanel splitPanelLower = new VerticalSplitPanel();
         final HorizontalLayout previewButtonBar = new HorizontalLayout();
-        final DataGrid previewGrid= new DataGrid();
+        final DataGrid previewGrid = new DataGrid();
         final Button previewButton = new Button("Preview");
         final HorizontalLayout statsButtonBar = new HorizontalLayout();
         final DataGrid statsGrid = new DataGrid();
@@ -38,21 +43,39 @@ public class PreviewPanel extends Panel {
         final Button refreshTargetTablesButton = new Button("Refresh target tables list");
         final Button refereshStatsButton    =   new Button("Refresh statistics");
 
-        this.setContent(layout);
-        layout.addComponent(previewButtonBar);
-        layout.addComponent(previewGrid);
-        layout.addComponent(statsButtonBar);
-        layout.addComponent(statsGrid);
+
+        this.setContent(mainLayout);
+        //this.setContent(splitPanelUpper);
+        //splitPanelUpper.setFirstComponent(previewLayout);
+        //splitPanelUpper.setSecondComponent(splitPanelLower);
+        //splitPanelLower.setFirstComponent(statsLayout);
+        //splitPanelLower.setSecondComponent(consoleLayout);
+        //splitPanelUpper.setSplitPosition(40, Unit.PERCENTAGE);
+        //splitPanelLower.setSplitPosition(60, Unit.PERCENTAGE);
+
+        mainLayout.addComponent(previewLayout);
+        previewLayout.addComponent(previewButtonBar);
+        previewLayout.addComponent(previewGrid);
         previewButtonBar.addComponent(targetTablesCombo);
         previewButtonBar.addComponent(previewButton);
         previewButtonBar.addComponent(refreshTargetTablesButton);
-        statsButtonBar.addComponent(refereshStatsButton);
-        layout.addComponent(console);
 
+        mainLayout.addComponent(statsLayout);
+        statsLayout.addComponent(statsButtonBar);
+        statsLayout.addComponent(statsGrid);
+        statsButtonBar.addComponent(refereshStatsButton);
+
+        mainLayout.addComponent(consoleLayout);
+        consoleLayout.addComponent(console);
+
+        this.setSizeFull();
+        this.setHeight("100%");
+        //splitPanelUpper.setSizeFull();
+        //splitPanelUpper.setHeight("100%");
         previewGrid.setSizeFull();
         statsGrid.setSizeFull();
         console.setWordwrap(true);
-        console.setSizeFull();;
+        console.setSizeFull();
         console.setReadOnly(true);
 
         Property.ValueChangeListener listener = new Property.ValueChangeListener() {
@@ -162,4 +185,5 @@ public class PreviewPanel extends Panel {
         console.setReadOnly(true);
         console.setCursorPosition(console.getValue().length());
     }
+
 }
