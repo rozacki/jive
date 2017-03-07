@@ -29,33 +29,10 @@ class MainPanel extends Panel {
                 + dateFormat.format(new Date());
         dataLocationTextField.setValue(dataLocation);
 
-        // schema tree
-        Tree schemaTree = new Tree();
-        schemaTree.setCaption("Schema");
-        schemaTree.setVisible(false);
-        JSONSchemaLoader loadButton = new JSONSchemaLoader("Load schema", schemaTree);
-
-        Table mappingGrid= new Table();
-        //sourceDB,sourceCollection,sourceFieldLocation,sourceDataType,destinationTable,destinationField,destinationDataType,function,dataQuality
-        mappingGrid.addContainerProperty("source DB", String.class, null);
-        mappingGrid.addContainerProperty("source collection", String.class, null);
-        mappingGrid.addContainerProperty("source field location", String.class, null);
-        mappingGrid.addContainerProperty("destination table", String.class, null);
-        mappingGrid.addContainerProperty("destination column", String.class, null);
-        mappingGrid.addContainerProperty("destination data type", String.class, null);
-        mappingGrid.addContainerProperty("destination function", String.class, null);
-        mappingGrid.addContainerProperty("destination DQ", String.class, null);
-        mappingGrid.setVisible(false);
-
         mappingFileUploader = new MappingFileUploader("Upload the Mapping File:");
         layout.addComponent(dataLocationTextField);
         layout.addComponent(mappingFileUploader);
         layout.addComponent(mappingLayout);
-        layout.addComponent(mappingGrid);
-        layout.addComponent(loadButton);
-
-        mappingLayout.addComponent(schemaTree);
-        mappingLayout.addComponent(mappingGrid);
 
         processFilePanel = new ProcessFilePanel();
         processFilePanel.setVisible(false);

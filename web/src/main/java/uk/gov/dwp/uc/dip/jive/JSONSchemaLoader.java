@@ -16,7 +16,9 @@ import java.util.Iterator;
 public class JSONSchemaLoader extends Button implements Button.ClickListener{
 
     private final static Logger log = Logger.getLogger(Upload.class);
+    private final static ConsoleLogger consoleLogger = (ConsoleLogger) Logger.getLogger("ConsoleLogger", new Log4JFactory(JiveUI.Console));
     private Tree schemaTree;
+
 
     public JSONSchemaLoader(String caption,Tree menu){
         super(caption);
@@ -25,6 +27,7 @@ public class JSONSchemaLoader extends Button implements Button.ClickListener{
     }
 
     public void buttonClick(Button.ClickEvent event){
+        //Properties.getInstance().getSchemaLocation();
         loadSchemaLocal("/Users/chrisrozacki/DIP/jive/agent_core_agenttodo.schema");
     }
 
@@ -35,13 +38,11 @@ public class JSONSchemaLoader extends Button implements Button.ClickListener{
             rootNode = mapper.readTree(new File(path));
         }
         catch(Exception ex){
-            log.fatal("Error while loading file "+ path);
-            log.fatal(ex);
+            consoleLogger.error("Error while loading file "+ path);
+            log.error(ex);
             return;
         }
-        log.info("JSON file loaded " + path);
-
-        Notification.show("loaded schema");
+        consoleLogger.info("JSON file loaded " + path);
         addItems(null, rootNode);
     }
 

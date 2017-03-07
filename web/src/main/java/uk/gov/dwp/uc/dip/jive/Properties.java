@@ -32,7 +32,8 @@ public class Properties {
         JAAS_CONF("jive.jaas.conf.file"),
         HOST_REALM("jive.hive.host.realm"),
         NON_AMBARI_USER("jive.dev.user"),
-        HIVE_AUTH_DISABLED("jive.hive.auth.disable")
+        HIVE_AUTH_DISABLED("jive.hive.auth.disable"),
+        SCHEMA_LOCATION("jive.schema.location")
         ;
 
         private String key;
@@ -54,6 +55,7 @@ public class Properties {
     private String hiveHostRealm;
     private String jiveDevUser;
     private boolean hiveAuthDisabled;
+    private String schemaLocation;
 
     // TODO get properties from ambari OR properties file
     // TODO Perhaps lose the ambari properties completely.
@@ -102,6 +104,7 @@ public class Properties {
         hiveHostRealm = properties.get(Property.HOST_REALM.key);
         jiveDevUser = properties.get(Property.NON_AMBARI_USER.key);
         hiveAuthDisabled = Boolean.valueOf(properties.get(Property.HIVE_AUTH_DISABLED.key));
+        schemaLocation = properties.get(Property.SCHEMA_LOCATION);
         checkDirectoriesExist();
     }
 
@@ -150,9 +153,9 @@ public class Properties {
 
     public String getJiveDevUser() {return jiveDevUser;}
 
-    public boolean isHiveAuthenticationDisabled() {
-        return hiveAuthDisabled;
-    }
+    public boolean isHiveAuthenticationDisabled() {return hiveAuthDisabled;}
+
+    public String getSchemaLocation() {return schemaLocation;}
 
     private String checkPath(String path){
         // Make sure all paths end with a forward slash

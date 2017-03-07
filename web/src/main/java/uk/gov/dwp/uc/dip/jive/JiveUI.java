@@ -5,6 +5,7 @@ import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.TabSheet;
+import com.vaadin.ui.TextArea;
 import com.vaadin.ui.UI;
 import org.apache.log4j.Logger;
 import uk.gov.dwp.uc.dip.jive.hiverun.HiveResultsPanel;
@@ -22,7 +23,7 @@ import javax.servlet.annotation.WebServlet;
 @Theme("mytheme")
 public class JiveUI extends UI {
     private final static Logger log = Logger.getLogger(JiveUI.class);
-
+    public final static TextArea Console =  new TextArea("ConsoleLogger");
     @Override
     protected void init(VaadinRequest vaadinRequest) {
         log.debug("User request:" + User.getUserName());
@@ -42,6 +43,13 @@ public class JiveUI extends UI {
 
         PreviewPanel preview = new PreviewPanel(mp, hrp);
         tabSheet.addTab(preview,"Preview").setEnabled(true);
+
+        MappingEditor mapping = new MappingEditor();
+        tabSheet.addTab(mapping,"Mapping").setEnabled(true);
+
+        Console.setWordwrap(true);
+        Console.setSizeFull();
+        Console.setReadOnly(true);
     }
 
     @WebServlet(urlPatterns = "/*", name = "JiveServlet", asyncSupported = true)

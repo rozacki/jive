@@ -21,7 +21,7 @@ import java.util.Set;
  */
 public class PreviewPanel extends Panel {
     private static final Logger log = Logger.getLogger(MainPanel.class);
-    final TextArea console = new TextArea("Console");
+    final TextArea console = new TextArea("ConsoleLogger");
     final StringBuilder consoleStringBuilder = new StringBuilder();
 
     PreviewPanel(MainPanel mainPanel, HiveResultsPanel sqlResultPanel) {
@@ -185,5 +185,4 @@ public class PreviewPanel extends Panel {
         console.setReadOnly(true);
         console.setCursorPosition(console.getValue().length());
     }
-
 }
