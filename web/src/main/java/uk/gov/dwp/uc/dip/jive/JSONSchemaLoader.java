@@ -94,22 +94,39 @@ public class JSONSchemaLoader extends Button implements Button.ClickListener{
      * @param typeStruct
      */
     void addItems(Object parentId, JsonNode typeStruct){
-        JsonNode typeNode = typeStruct.path("type");
-        JsonNode fieldsNode = typeStruct.path("fields");
-
-        if (fieldsNode.getNodeType() == JsonNodeType.ARRAY) {
+        if (typeStruct.path("fields").getNodeType() == JsonNodeType.ARRAY) {
+            JsonNode fieldsNode = typeStruct.path("fields");
             //iterate all elements
             fieldsNode.elements().forEachRemaining(e -> {
+
+                if(getType(e).equals("array")){
+                    JsonNode elementTypeNode = e.path("type").path("elementType");
+
+                    if(elementTypeNode.getNodeType() == JsonNodeType.OBJECT) {
+                        String menuItemText = String.format("%s, type:array, nullable:%s"
+                                , e.path("name").asText()
+                                , e.path("nullable").asText()
+                        );
+                        Object id = addTreeItem(parentId, menuItemText);
+                        addItems(id, elementTypeNode);
+                    }else{
+                        String menuItemText = String.format("%s, type: array, elementType:%s, nullable:%s, containsNull:%s, elementType:%s"
+                                , e.path("name").asText()
+                                , getType(e)
+                                , e.path("nullable").asText()
+                                , e.path("type").path("containsNull").asText()
+                                , e.path("type").path("elementType").asText());
+                        Object id = addTreeItem(parentId, menuItemText);
+                    }
+                    return;
+                }
+
                 String menuItemText = String.format("%s, type:%s, nullable:%s"
                         , e.path("name").asText()
-                        , e.path("type").getNodeType() != JsonNodeType.NULL ? e.path("type").asText() : e.path("type").getNodeType()
+                        , e.path("type").asText()
                         , e.path("nullable").asText());
 
-                Object id = schemaTree.addItem();
-                schemaTree.setItemCaption(id, menuItemText);
-                if (parentId != null) {
-                    schemaTree.setParent(id,parentId );
-                }
+                Object id = addTreeItem(parentId, menuItemText);
 
                 JsonNode childType = e.path("type");
                 if(childType.getNodeType() == JsonNodeType.OBJECT){
@@ -119,15 +136,56 @@ public class JSONSchemaLoader extends Button implements Button.ClickListener{
             return;
         }
 
-        String menuItemText = String.format("%s, type:%s, nullable:%s"
-                , typeStruct.path("name").asText()
-                , typeStruct.getNodeType() == JsonNodeType.STRING ? "struct" : typeStruct.asText()
-                , typeStruct.path("nullable").asText());
+        if(typeStruct.path("type").equals("array")) {
+            String menuItemText = String.format("elementType:%s, containsNull:%s"
+                    , typeStruct.path("elementType").asText()
+                    , typeStruct.path("containsNull").asText());
 
+            addTreeItem(parentId, menuItemText);
+        }else {
+
+            String menuItemText = String.format("%s, type:%s, nullable:%s"
+                    , typeStruct.path("name").asText()
+                    , getType(typeStruct)
+                    , typeStruct.path("nullable").asText());
+
+            addTreeItem(parentId, menuItemText);
+        }
+    }
+
+    /**
+     * Helper, as adding new item to tree has a few steps
+     * @param parentId
+     * @param caption
+     * @return
+     */
+    Object addTreeItem(Object parentId, String caption){
         Object id = schemaTree.addItem();
-        schemaTree.setItemCaption(id, menuItemText);
+        schemaTree.setItemCaption(id, caption);
         if (parentId != null) {
-            schemaTree.setParent(id,parentId);
+            schemaTree.setParent(id,parentId );
+        }
+        return id;
+    }
+
+    /**
+     * Helper, as "type" can be either simple type or complex
+     * @param e
+     * @return
+     */
+    String getType(JsonNode e){
+        // if JsonNode does not exit e.path() will return JsonNodeType.NULL
+        JsonNode typeNode = e.path("type");
+        JsonNodeType typeNodeName = typeNode.getNodeType();
+
+        switch(typeNodeName){
+            // it's either object or array
+            case OBJECT:
+                return typeNode.path("type").asText();
+            //it's a simple type
+            case STRING:
+            default:
+                return e.asText();
         }
     }
 
