@@ -14,7 +14,7 @@
 	<parent>
 		<groupId>uk.gov.dwp.uc.dip</groupId>
 		<artifactId>jive</artifactId>
-		<version>1.0.4</version>
+		<version>1.0.7</version>
 	</parent>
 
 	<repositories>
@@ -135,6 +135,21 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-shade-plugin</artifactId>
+				<configuration>
+					<filters>
+						<filter>
+							<artifact>*:*</artifact>
+							<!-- exclude manifest sugnature files
+							http://stackoverflow.com/questions/999489/invalid-signature-file-when-attempting-to-run-a-jar-->
+							<excludes>
+								<exclude>META-INF/*.SF</exclude>
+								<exclude>META-INF/*.DSA</exclude>
+								<exclude>META-INF/*.RSA</exclude>
+							</excludes>
+						</filter>
+					</filters>
+					<!-- Additional configuration. -->
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>

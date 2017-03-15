@@ -30,6 +30,8 @@ public class ConsoleLogger extends Logger {
      Overrides the standard debug method by appending " world" at the
      end of each message.  */
     public void debug(Object message) {
+        if(message==null)
+            return;
         // log both to log and  console
         super.log(FQCN, Level.DEBUG, message, null);
         logToConsole(message.toString());

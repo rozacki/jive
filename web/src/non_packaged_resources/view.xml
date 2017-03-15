@@ -20,14 +20,14 @@
     <parameter>
         <name>jive.hive.host</name>
         <label>HIVE host</label>
-        <description>Name or IP of HIVE hist.</description>
+        <description>Name or IP of HIVE host.</description>
         <default-value>vs-dip-dev02.server.uc</default-value>
         <required>true</required>
     </parameter>
     <parameter>
         <name>jive.hive.port</name>
         <label>HIVE port</label>
-        <description>Port!.</description>
+        <description>HIVE Port.</description>
         <default-value>10000</default-value>
         <required>true</required>
     </parameter>
@@ -50,6 +50,27 @@
         <label>Host realm</label>
         <description>Host realm.</description>
         <default-value>UCDIP.LOCAL</default-value>
+        <required>true</required>
+    </parameter>
+    <parameter>
+        <name>jive.hdfs.endpoint</name>
+        <label>HDFS endpoint</label>
+        <description>HDFS endpoint.</description>
+        <default-value>hdfs://vs-dip-srv01.server.uc:8020</default-value>
+        <required>true</required>
+    </parameter>
+    <parameter>
+        <name>jive.hive.auth.disable</name>
+        <label>Authentication disabled</label>
+        <description>Authentication disabled. Useful in environments where security is disabled.</description>
+        <default-value>true</default-value>
+        <required>true</required>
+    </parameter>
+    <parameter>
+        <name>jive.schema.location</name>
+        <label>JSON schema location</label>
+        <description>Where json schema are located.</description>
+        <default-value>/Users/chrisrozacki/meta-data/schema/etl/uc/mongo</default-value>
         <required>true</required>
     </parameter>
 </view>

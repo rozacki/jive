@@ -8,6 +8,9 @@
         </layout>
     </appender>
 
+
+
+
     <appender name="FILE" class="org.apache.log4j.RollingFileAppender">
         <!--param name="file" value="/var/log/ambari-server/jive-view/jive.log"/-->
         <param name="file" value="jive.log"/>
@@ -25,7 +28,7 @@
     </logger>
 
     <root>
-        <priority value ="warn" />
+        <priority value ="debug" />
         <!-- appender-ref ref="CONSOLE" /-->
         <appender-ref ref="FILE" />
     </root>

@@ -10,7 +10,7 @@
     <parent>
         <groupId>uk.gov.dwp.uc.dip</groupId>
         <artifactId>jive</artifactId>
-        <version>1.0.4</version>
+        <version>1.0.7</version>
     </parent>
 
     <name>${project.artifactId}-${project.version}</name>

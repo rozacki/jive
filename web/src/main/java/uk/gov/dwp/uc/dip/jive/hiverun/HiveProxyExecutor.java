@@ -56,7 +56,7 @@ public class HiveProxyExecutor {
     }
 
     public List<List<Object>> executeMultipleStatements(List<String> statements, String database, BeanItemContainer<StatementResult> container) {
-        if (Properties.getInstance().isHiveAuthenticationDisabled()) {
+        if (Properties.getInstance().isAuthenticationDisabled()) {
             return executeMultipleStatementsNoAuthImpl(statements, database, container);
         } else {
             return executeMultipleStatementsImpl(statements, database, container);

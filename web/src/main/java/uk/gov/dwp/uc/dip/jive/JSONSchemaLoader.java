@@ -3,23 +3,24 @@ package uk.gov.dwp.uc.dip.jive;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.JsonNodeType;
-import com.vaadin.data.Item;
 import com.vaadin.ui.*;
 import org.apache.hadoop.conf.Configuration;
-import org.apache.hadoop.fs.FSDataInputStream;
-import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.hdfs.web.resources.ExceptionHandler;
-import org.apache.hadoop.io.IOUtils;
 import org.apache.log4j.Logger;
 
+import javax.security.auth.Subject;
+import javax.security.auth.login.LoginContext;
+import javax.security.auth.login.LoginException;
 import java.io.*;
+import java.lang.reflect.Constructor;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Iterator;
+import java.security.Principal;
+import java.security.PrivilegedExceptionAction;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by chrisrozacki on 07/02/2017.
@@ -29,19 +30,28 @@ public class JSONSchemaLoader extends Button implements Button.ClickListener{
     private final static Logger log = Logger.getLogger(Upload.class);
     private final static ConsoleLogger consoleLogger = (ConsoleLogger) Logger.getLogger("ConsoleLogger", new Log4JFactory(JiveUI.Console));
     private Tree schemaTree;
+    private MappingEditor mappingEditor;
+    final String schemaFileName = "schema.json";
 
-    public JSONSchemaLoader(String caption,Tree menu){
+    public JSONSchemaLoader(MappingEditor mappingEditor, String caption,Tree menu){
         super(caption);
         addClickListener(this);
         schemaTree = menu;
+        this.mappingEditor = mappingEditor;
     }
 
     public void buttonClick(Button.ClickEvent event){
-        //Properties.getInstance().getSchemaLocation();
-        //loadSchemaLocal("/Users/chrisrozacki/DIP/jive/agent_core_agenttodo.schema");
         String path = Properties.getInstance().getSchemaLocation();
-        path= "hdfs:///user/chrisrozacki/meta-data/schema/etl/uc/mongo/2017-03-08/accepted-data/carerCircumstances/schema.json";
-        String jsonSchema = getSchemaFromHDFSAsString(path);
+        SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd");
+
+        path+= "/" + dt1.format(mappingEditor.dateTime.getValue()) + "/" + mappingEditor.databasesComboBox.getValue()
+                + "/" + mappingEditor.collectionsComboBox.getValue() + "/" + schemaFileName;
+        String jsonSchema;
+        if(Properties.getInstance().isAuthenticationDisabled())
+            jsonSchema = getSchemaFromFSAsString(path,false);
+        else
+            jsonSchema = getSchemaFromFSAsStringAuth(path);
+
         loadSchemaHDFS(jsonSchema);
     }
 
@@ -90,8 +100,8 @@ public class JSONSchemaLoader extends Button implements Button.ClickListener{
         if (fieldsNode.getNodeType() == JsonNodeType.ARRAY) {
             //iterate all elements
             fieldsNode.elements().forEachRemaining(e -> {
-
-                String menuItemText = String.format("%s, type:%s, nullable:%s", e.path("name").asText()
+                String menuItemText = String.format("%s, type:%s, nullable:%s"
+                        , e.path("name").asText()
                         , e.path("type").getNodeType() != JsonNodeType.NULL ? e.path("type").asText() : e.path("type").getNodeType()
                         , e.path("nullable").asText());
 
@@ -109,7 +119,8 @@ public class JSONSchemaLoader extends Button implements Button.ClickListener{
             return;
         }
 
-        String menuItemText = String.format("%s, type:%s, nullable:%s", typeStruct.path("name").asText()
+        String menuItemText = String.format("%s, type:%s, nullable:%s"
+                , typeStruct.path("name").asText()
                 , typeStruct.getNodeType() == JsonNodeType.STRING ? "struct" : typeStruct.asText()
                 , typeStruct.path("nullable").asText());
 
@@ -120,39 +131,33 @@ public class JSONSchemaLoader extends Button implements Button.ClickListener{
         }
     }
 
-    String getSchemaFromHDFSAsString(String path){
-        final String TargetFile = "/tmp/schema.json";
+    String getSchemaFromFSAsString(String path, boolean authEnabled){
+        final String TargetFile = "/tmp/" + schemaFileName;
         Configuration conf = new Configuration();
-        conf.set("fs.defaultFS","hdfs://192.168.99.100:8020");
         conf.set("dfs.client.socket-timeout", "5000");
+        // tell namenode to return hostname instead of ip address
         conf.set("dfs.client.use.datanode.hostname","true");
         conf.set("dfs.datanode.use.datanode.hostname","true");
-        //conf.set("fs.defaultFS","hdfs://sandbox.hortonworks.com:8020");
-        //conf.set("fs.defaultFS","hdfs://127.0.0.1:8020");
+
+        if(!Properties.getInstance().getFSEndpoint().isEmpty())
+            conf.set("fs.defaultFS",Properties.getInstance().getFSEndpoint());
 
         FileSystem fs = null;
         try{
             fs = FileSystem.get(conf);
         }catch(Exception e) {
             consoleLogger.debug("error while getting file " + path + " " + e.toString());
-            return null;
-        }
-
-        try {
-            FileStatus status = fs.getFileStatus(new Path(path));
-            consoleLogger.debug(status.getOwner());
-        }
-        catch(Exception e){
             log.debug(e.getMessage());
-            consoleLogger.debug("error while storing json schema " + path + " " + e.toString());
+            log.debug(getStackTrace(e));
             return null;
         }
 
         try {
             fs.copyToLocalFile(new Path(path), new Path(TargetFile));
         }catch(Exception e){
+            consoleLogger.debug("error while getting json schema " + path + " " + e.toString());
             log.debug(e.getMessage());
-            consoleLogger.debug("error while storing json schema " + path + " " + e.toString());
+            log.debug(getStackTrace(e));
             return null;
         }
 
@@ -162,7 +167,47 @@ public class JSONSchemaLoader extends Button implements Button.ClickListener{
             return readFile(TargetFile, StandardCharsets.UTF_8);
         }
         catch(Exception e){
-            consoleLogger.debug("error while storing json schema " + path + " " + e.toString());
+            consoleLogger.debug("error while reading json schema to string " + path + " " + e.toString());
+            log.debug(e.getMessage());
+            log.debug(getStackTrace(e));
+            return null;
+        }
+    }
+
+    /**
+     *
+     * @param path
+     * @return
+     * This method does not work - hence we load schema from local file system
+     */
+    String getSchemaFromFSAsStringAuth(String path){
+        log.debug("authentication enabled");
+        Subject subject = null;
+
+        try {
+            subject = login();
+        } catch (LoginException e) {
+            NotificationUtils.displayError(e);
+            log.error("Failed login (for proxy jdbc)", e);
+            return null;
+        }
+
+        if(null != subject) {
+            HackToGetSubjectDoAsWorking(subject);
+            try {
+
+                return (String) Subject.doAs(subject, new PrivilegedExceptionAction<String>() {
+                    public String  run() throws Exception {
+                        return getSchemaFromFSAsString(path,true);
+                    }});
+            } catch (Exception e) {
+                NotificationUtils.displayError(e);
+                log.error(e);
+                return null;
+
+            }
+        }else{
+            log.error("Null Kerberos subject");
             return null;
         }
     }
@@ -172,5 +217,49 @@ public class JSONSchemaLoader extends Button implements Button.ClickListener{
     {
         byte[] encoded = Files.readAllBytes(Paths.get(path));
         return new String(encoded, encoding);
+    }
+
+    private Subject login() throws LoginException {
+        LoginContext lc;
+        Subject signedOnUserSubject = null;
+
+        log.debug("Creating LoginContext");
+        try {
+            lc = new LoginContext("JiveClient");
+            lc.login();
+            // get the Subject that represents the signed-on user
+            signedOnUserSubject = lc.getSubject();
+            log.debug("Logged in as" + signedOnUserSubject.toString());
+        }catch (SecurityException e){
+            log.error(e);
+            NotificationUtils.displayError(e);
+        }
+
+        return signedOnUserSubject;
+    }
+
+    // Hack to add an Dummy User to the list of principals in the subject
+    // This is not needed for functionality but to bypass the check in
+    // UserGroupInformation.getCurrentUser() till Hadoop/Hive formally supports multi-user kerberos.
+    // Using java reflection coz the "User" class is non-public
+    private static void HackToGetSubjectDoAsWorking(Subject signedOnUserSubject) {
+        try {
+            Class<?> mhn = Class.forName("org.apache.hadoop.security.User");
+            Class[] argTypes = {String.class};
+            Constructor<?> con = mhn.getDeclaredConstructor(argTypes);
+            con.setAccessible(true);
+            Object[] arguments = {""};
+            Object instance = con.newInstance(arguments);
+            signedOnUserSubject.getPrincipals().add((Principal)instance);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static String getStackTrace(final Throwable throwable) {
+        final StringWriter sw = new StringWriter();
+        final PrintWriter pw = new PrintWriter(sw, true);
+        throwable.printStackTrace(pw);
+        return sw.getBuffer().toString();
     }
 }

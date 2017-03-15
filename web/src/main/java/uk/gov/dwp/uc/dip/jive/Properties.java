@@ -1,7 +1,6 @@
 package uk.gov.dwp.uc.dip.jive;
 
 import com.google.common.io.Resources;
-import com.google.common.primitives.Booleans;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Notification;
 import org.apache.ambari.view.ViewContext;
@@ -11,11 +10,8 @@ import javax.servlet.ServletContext;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.IntStream;
 
 import static com.vaadin.ui.Notification.Type.ERROR_MESSAGE;
 
@@ -32,8 +28,9 @@ public class Properties {
         JAAS_CONF("jive.jaas.conf.file"),
         HOST_REALM("jive.hive.host.realm"),
         NON_AMBARI_USER("jive.dev.user"),
-        HIVE_AUTH_DISABLED("jive.hive.auth.disable"),
-        SCHEMA_LOCATION("jive.schema.location")
+        AUTH_DISABLED("jive.auth.disable"),
+        SCHEMA_LOCATION("jive.schema.location"),
+        FS_ENDPOINT("jive.fs.endpoint")
         ;
 
         private String key;
@@ -54,8 +51,9 @@ public class Properties {
     private String jaasConfFile;
     private String hiveHostRealm;
     private String jiveDevUser;
-    private boolean hiveAuthDisabled;
+    private boolean authDisabled;
     private String schemaLocation;
+    private String fsEndpoint;
 
     // TODO get properties from ambari OR properties file
     // TODO Perhaps lose the ambari properties completely.
@@ -100,11 +98,12 @@ public class Properties {
         hiveHost = properties.get(Property.HIVE_HOST.key);
         hivePort = properties.get(Property.HIVE_PORT.key);
         jaasConfFile = properties.get(Property.JAAS_CONF.key);
-        log.debug(jaasConfFile);
         hiveHostRealm = properties.get(Property.HOST_REALM.key);
         jiveDevUser = properties.get(Property.NON_AMBARI_USER.key);
-        hiveAuthDisabled = Boolean.valueOf(properties.get(Property.HIVE_AUTH_DISABLED.key));
-        schemaLocation = properties.get(Property.SCHEMA_LOCATION);
+        authDisabled = Boolean.valueOf(properties.get(Property.AUTH_DISABLED.key));
+        fsEndpoint = properties.get(Property.FS_ENDPOINT.key);
+        schemaLocation = properties.get(Property.SCHEMA_LOCATION.key);
+
         checkDirectoriesExist();
     }
 
@@ -153,9 +152,11 @@ public class Properties {
 
     public String getJiveDevUser() {return jiveDevUser;}
 
-    public boolean isHiveAuthenticationDisabled() {return hiveAuthDisabled;}
+    public boolean isAuthenticationDisabled() {return authDisabled;}
 
     public String getSchemaLocation() {return schemaLocation;}
+
+    public String getFSEndpoint() {return fsEndpoint;}
 
     private String checkPath(String path){
         // Make sure all paths end with a forward slash
