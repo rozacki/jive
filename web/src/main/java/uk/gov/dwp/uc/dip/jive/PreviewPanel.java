@@ -32,33 +32,25 @@ public class PreviewPanel extends Panel {
         final VerticalLayout previewLayout = new VerticalLayout();
         final VerticalLayout statsLayout = new VerticalLayout();
         final VerticalLayout consoleLayout = new VerticalLayout();
-        //final VerticalSplitPanel splitPanelUpper = new VerticalSplitPanel();
-        //final VerticalSplitPanel splitPanelLower = new VerticalSplitPanel();
         final HorizontalLayout previewButtonBar = new HorizontalLayout();
         final DataGrid previewGrid = new DataGrid();
-        final Button previewButton = new Button("Preview");
+        final Button previewButton = new Button("Table preview");
         final HorizontalLayout statsButtonBar = new HorizontalLayout();
         final DataGrid statsGrid = new DataGrid();
-        final ComboBox targetTablesCombo = new ComboBox();
-        final Button refreshTargetTablesButton = new Button("Refresh target tables list");
-        final Button refereshStatsButton    =   new Button("Refresh statistics");
-
+        final ComboBox targetTablesCombo = new ComboBox("Select table");
+        final Button refreshTargetTablesButton = new Button("Refresh tables list");
+        final Button refereshStatsButton    =   new Button("Refresh table statistics");
+        final TextField databaseName = new TextField("Enter database name:");
 
         this.setContent(mainLayout);
-        //this.setContent(splitPanelUpper);
-        //splitPanelUpper.setFirstComponent(previewLayout);
-        //splitPanelUpper.setSecondComponent(splitPanelLower);
-        //splitPanelLower.setFirstComponent(statsLayout);
-        //splitPanelLower.setSecondComponent(consoleLayout);
-        //splitPanelUpper.setSplitPosition(40, Unit.PERCENTAGE);
-        //splitPanelLower.setSplitPosition(60, Unit.PERCENTAGE);
 
         mainLayout.addComponent(previewLayout);
         previewLayout.addComponent(previewButtonBar);
         previewLayout.addComponent(previewGrid);
+        previewButtonBar.addComponent(databaseName);
         previewButtonBar.addComponent(targetTablesCombo);
-        previewButtonBar.addComponent(previewButton);
         previewButtonBar.addComponent(refreshTargetTablesButton);
+        previewButtonBar.addComponent(previewButton);
 
         mainLayout.addComponent(statsLayout);
         statsLayout.addComponent(statsButtonBar);
@@ -70,8 +62,6 @@ public class PreviewPanel extends Panel {
 
         this.setSizeFull();
         this.setHeight("100%");
-        //splitPanelUpper.setSizeFull();
-        //splitPanelUpper.setHeight("100%");
         previewGrid.setSizeFull();
         statsGrid.setSizeFull();
         console.setWordwrap(true);
@@ -82,7 +72,7 @@ public class PreviewPanel extends Panel {
             public void valueChange(Property.ValueChangeEvent event) {
                 String targetTable = (String)targetTablesCombo.getValue();
                 log.debug("Change target table selection to " + targetTable);
-                loadStats(statsGrid, mainPanel.processFilePanel.getDataBaseName(), targetTable, mainPanel.mappingFileUploader.getFilePath()
+                loadStats(statsGrid, databaseName.getValue(), targetTable, mainPanel.mappingFileUploader.getFilePath()
                         ,hpe, sqlResultPanel.getContainer());
             }
         };
@@ -94,7 +84,7 @@ public class PreviewPanel extends Panel {
             try{
                 String sql=String.format("select * from %s limit 100",targetTable);
                 logToConsole("getting preview 100 rows", sql);
-                List<List<Object>> table =  hpe.executeSingleStatement(sql, mainPanel.processFilePanel.getDataBaseName()
+                List<List<Object>> table =  hpe.executeSingleStatement(sql, databaseName.getValue()
                         , sqlResultPanel.getContainer());
                 logToConsole("fetched rows", String.valueOf(table.size()));
                 previewGrid.setContent(table);
@@ -123,9 +113,9 @@ public class PreviewPanel extends Panel {
             String sql = String.format("ANALYZE TABLE %s COMPUTE STATISTICS FOR COLUMNS",targetTable);
             log.debug("Refresh statistics pressed for table " + targetTable);
             logToConsole("refresh statistics for table",targetTable,sql);
-            hpe.executeSingleStatement(sql, mainPanel.processFilePanel.getDataBaseName(),sqlResultPanel.getContainer());
+            hpe.executeSingleStatement(sql, databaseName.getValue(),sqlResultPanel.getContainer());
 
-            loadStats(statsGrid, mainPanel.processFilePanel.getDataBaseName(), targetTable, mainPanel.mappingFileUploader.getFilePath()
+            loadStats(statsGrid, databaseName.getValue(), targetTable, mainPanel.mappingFileUploader.getFilePath()
                     ,hpe, sqlResultPanel.getContainer());
         });
     }

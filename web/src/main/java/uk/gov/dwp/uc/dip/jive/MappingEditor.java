@@ -42,10 +42,10 @@ public class MappingEditor extends Panel {
         targetTableLayout.addComponent(databasesComboBox);
         targetTableLayout.addComponent(collectionsComboBox);
         targetTableLayout.addComponent(dateTime);
+        targetTableLayout.addComponent(loadButton);
         targetTableLayout.addComponent(currentTargetTable);
         targetTableLayout.addComponent(newTargetTable);
         targetTableLayout.addComponent(addTargetTable);
-        schemaMappingLayout.addComponent(loadButton);
         schemaMappingLayout.addComponent(schemaTree);
         schemaMappingLayout.addComponent(mappingGrid);
         mainLayout.addComponent(schemaMappingLayout);
@@ -61,6 +61,7 @@ public class MappingEditor extends Panel {
         mappingGrid.addContainerProperty("destination data type", String.class, null);
         mappingGrid.addContainerProperty("destination function", String.class, null);
         mappingGrid.addContainerProperty("destination DQ", String.class, null);
+        dateTime.setValue(new Date());
 
         databasesComboBox.addItems(catalouge.getDatabases());
         Property.ValueChangeListener listener = new Property.ValueChangeListener() {
