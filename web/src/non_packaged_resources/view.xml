@@ -53,13 +53,6 @@
         <required>true</required>
     </parameter>
     <parameter>
-        <name>jive.hdfs.endpoint</name>
-        <label>HDFS endpoint</label>
-        <description>HDFS endpoint.</description>
-        <default-value>hdfs://vs-dip-srv01.server.uc:8020</default-value>
-        <required>true</required>
-    </parameter>
-    <parameter>
         <name>jive.hive.auth.disable</name>
         <label>Authentication disabled</label>
         <description>Authentication disabled. Useful in environments where security is disabled.</description>
@@ -70,7 +63,7 @@
         <name>jive.schema.location</name>
         <label>JSON schema location</label>
         <description>Where json schema are located.</description>
-        <default-value>/Users/chrisrozacki/meta-data/schema/etl/uc/mongo</default-value>
+        <default-value>/home/chrisrozacki/meta-data/schema/etl/uc/mongo</default-value>
         <required>true</required>
     </parameter>
 </view>

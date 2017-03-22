@@ -29,8 +29,7 @@ public class Properties {
         HOST_REALM("jive.hive.host.realm"),
         NON_AMBARI_USER("jive.dev.user"),
         AUTH_DISABLED("jive.auth.disable"),
-        SCHEMA_LOCATION("jive.schema.location"),
-        FS_ENDPOINT("jive.fs.endpoint")
+        SCHEMA_LOCATION("jive.schema.location")
         ;
 
         private String key;
@@ -53,7 +52,6 @@ public class Properties {
     private String jiveDevUser;
     private boolean authDisabled;
     private String schemaLocation;
-    private String fsEndpoint;
 
     // TODO get properties from ambari OR properties file
     // TODO Perhaps lose the ambari properties completely.
@@ -101,7 +99,6 @@ public class Properties {
         hiveHostRealm = properties.get(Property.HOST_REALM.key);
         jiveDevUser = properties.get(Property.NON_AMBARI_USER.key);
         authDisabled = Boolean.valueOf(properties.get(Property.AUTH_DISABLED.key));
-        fsEndpoint = properties.get(Property.FS_ENDPOINT.key);
         schemaLocation = properties.get(Property.SCHEMA_LOCATION.key);
 
         checkDirectoriesExist();
@@ -156,7 +153,6 @@ public class Properties {
 
     public String getSchemaLocation() {return schemaLocation;}
 
-    public String getFSEndpoint() {return fsEndpoint;}
 
     private String checkPath(String path){
         // Make sure all paths end with a forward slash

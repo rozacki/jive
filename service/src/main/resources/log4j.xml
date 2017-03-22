@@ -8,9 +8,6 @@
         </layout>
     </appender>
 
-
-
-
     <appender name="FILE" class="org.apache.log4j.RollingFileAppender">
         <!--param name="file" value="/var/log/ambari-server/jive-view/jive.log"/-->
         <param name="file" value="jive.log"/>

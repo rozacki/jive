@@ -46,12 +46,8 @@ public class JSONSchemaLoader extends Button implements Button.ClickListener{
 
         path+= "/" + dt1.format(mappingEditor.dateTime.getValue()) + "/" + mappingEditor.databasesComboBox.getValue()
                 + "/" + mappingEditor.collectionsComboBox.getValue() + "/" + schemaFileName;
-        String jsonSchema;
-        if(Properties.getInstance().isAuthenticationDisabled())
-            jsonSchema = getSchemaFromFSAsString(path,false);
-        else
-            jsonSchema = getSchemaFromFSAsStringAuth(path);
-
+        log.debug(path);
+        String jsonSchema = getSchemaFromFSAsString(path);
         loadSchemaHDFS(jsonSchema);
     }
 
@@ -189,16 +185,9 @@ public class JSONSchemaLoader extends Button implements Button.ClickListener{
         }
     }
 
-    String getSchemaFromFSAsString(String path, boolean authEnabled){
+    String getSchemaFromFSAsString(String path){
         final String TargetFile = "/tmp/" + schemaFileName;
         Configuration conf = new Configuration();
-        conf.set("dfs.client.socket-timeout", "5000");
-        // tell namenode to return hostname instead of ip address
-        conf.set("dfs.client.use.datanode.hostname","true");
-        conf.set("dfs.datanode.use.datanode.hostname","true");
-
-        if(!Properties.getInstance().getFSEndpoint().isEmpty())
-            conf.set("fs.defaultFS",Properties.getInstance().getFSEndpoint());
 
         FileSystem fs = null;
         try{
@@ -228,44 +217,6 @@ public class JSONSchemaLoader extends Button implements Button.ClickListener{
             consoleLogger.debug("error while reading json schema to string " + path + " " + e.toString());
             log.debug(e.getMessage());
             log.debug(getStackTrace(e));
-            return null;
-        }
-    }
-
-    /**
-     *
-     * @param path
-     * @return
-     * This method does not work - hence we load schema from local file system
-     */
-    String getSchemaFromFSAsStringAuth(String path){
-        log.debug("authentication enabled");
-        Subject subject = null;
-
-        try {
-            subject = login();
-        } catch (LoginException e) {
-            NotificationUtils.displayError(e);
-            log.error("Failed login (for proxy jdbc)", e);
-            return null;
-        }
-
-        if(null != subject) {
-            HackToGetSubjectDoAsWorking(subject);
-            try {
-
-                return (String) Subject.doAs(subject, new PrivilegedExceptionAction<String>() {
-                    public String  run() throws Exception {
-                        return getSchemaFromFSAsString(path,true);
-                    }});
-            } catch (Exception e) {
-                NotificationUtils.displayError(e);
-                log.error(e);
-                return null;
-
-            }
-        }else{
-            log.error("Null Kerberos subject");
             return null;
         }
     }
