@@ -9,18 +9,13 @@ import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
 import org.apache.log4j.Logger;
 
-import javax.security.auth.Subject;
-import javax.security.auth.login.LoginContext;
-import javax.security.auth.login.LoginException;
 import java.io.*;
-import java.lang.reflect.Constructor;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.security.Principal;
-import java.security.PrivilegedExceptionAction;
 import java.text.SimpleDateFormat;
+import uk.gov.dwp.uc.dip.jive.schema.*;
 
 /**
  * Created by chrisrozacki on 07/02/2017.
@@ -48,10 +43,10 @@ public class JSONSchemaLoader extends Button implements Button.ClickListener{
                 + "/" + mappingEditor.collectionsComboBox.getValue() + "/" + schemaFileName;
         log.debug(path);
         String jsonSchema = getSchemaFromFSAsString(path);
-        loadSchemaHDFS(jsonSchema);
+        loadSchema(jsonSchema);
     }
 
-    void loadSchemaHDFS(String jsonSchema){
+    void loadSchema(String jsonSchema){
         ObjectMapper mapper = new ObjectMapper();
         JsonNode rootNode;
         try {
@@ -64,22 +59,6 @@ public class JSONSchemaLoader extends Button implements Button.ClickListener{
             return;
         }
         consoleLogger.info("JSON schema loaded");
-        schemaTree.removeAllItems();
-        addItems(null, rootNode);
-    }
-
-    void loadSchemaLocal(String path){
-        ObjectMapper mapper = new ObjectMapper();
-        JsonNode rootNode;
-        try {
-            rootNode = mapper.readTree(new File(path));
-        }
-        catch(Exception ex){
-            consoleLogger.error("Error while loading file "+ path);
-            log.error(ex);
-            return;
-        }
-        consoleLogger.info("JSON file loaded " + path);
         schemaTree.removeAllItems();
         addItems(null, rootNode);
     }
@@ -99,14 +78,23 @@ public class JSONSchemaLoader extends Button implements Button.ClickListener{
                     JsonNode elementTypeNode = e.path("type").path("elementType");
 
                     if(elementTypeNode.getNodeType() == JsonNodeType.OBJECT) {
-                        String menuItemText = String.format("%s, type:array, nullable:%s"
+                        String menuItemText = String.format("%s, type: array, nullable:%s"
                                 , e.path("name").asText()
                                 , e.path("nullable").asText()
                         );
+
+                        try {
+                            SparkJsonSchemaType schemaType = new SparkJsonSchemaType(
+                                    e.path("name").asText()
+                                    , "array", e.path("nullable").asText());
+                        }catch(Exception ex){
+                            return;
+                        }
+
                         Object id = addTreeItem(parentId, menuItemText);
                         addItems(id, elementTypeNode);
                     }else{
-                        String menuItemText = String.format("%s, type: array, elementType:%s, nullable:%s, containsNull:%s, elementType:%s"
+                        String menuItemText = String.format("%s, type: array, nullable:%s, elementType:%s, containsNull:%s, elementType:%s"
                                 , e.path("name").asText()
                                 , getType(e)
                                 , e.path("nullable").asText()
@@ -226,43 +214,6 @@ public class JSONSchemaLoader extends Button implements Button.ClickListener{
     {
         byte[] encoded = Files.readAllBytes(Paths.get(path));
         return new String(encoded, encoding);
-    }
-
-    private Subject login() throws LoginException {
-        LoginContext lc;
-        Subject signedOnUserSubject = null;
-
-        log.debug("Creating LoginContext");
-        try {
-            lc = new LoginContext("JiveClient");
-            lc.login();
-            // get the Subject that represents the signed-on user
-            signedOnUserSubject = lc.getSubject();
-            log.debug("Logged in as" + signedOnUserSubject.toString());
-        }catch (SecurityException e){
-            log.error(e);
-            NotificationUtils.displayError(e);
-        }
-
-        return signedOnUserSubject;
-    }
-
-    // Hack to add an Dummy User to the list of principals in the subject
-    // This is not needed for functionality but to bypass the check in
-    // UserGroupInformation.getCurrentUser() till Hadoop/Hive formally supports multi-user kerberos.
-    // Using java reflection coz the "User" class is non-public
-    private static void HackToGetSubjectDoAsWorking(Subject signedOnUserSubject) {
-        try {
-            Class<?> mhn = Class.forName("org.apache.hadoop.security.User");
-            Class[] argTypes = {String.class};
-            Constructor<?> con = mhn.getDeclaredConstructor(argTypes);
-            con.setAccessible(true);
-            Object[] arguments = {""};
-            Object instance = con.newInstance(arguments);
-            signedOnUserSubject.getPrincipals().add((Principal)instance);
-        } catch (Throwable e) {
-            e.printStackTrace();
-        }
     }
 
     public static String getStackTrace(final Throwable throwable) {
