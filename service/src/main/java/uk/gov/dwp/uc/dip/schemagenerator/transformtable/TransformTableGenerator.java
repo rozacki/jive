@@ -50,26 +50,21 @@ public class TransformTableGenerator {
      * @return
      */
     private String getTransformSQL(String sourceTable, List<TechnicalMapping> rules, String targetTable) {
-
         logger.debug(String.format("source table:%s, target table: %s, removed enabled: %s",sourceTable,targetTable,removedEnabled));
-
         String selectSQL = "";
         String allExplodedSQL = "";
         // have unique explodeAliases
         HashMap<String,ColumnAndExplode> mapExplodeAliases = new HashMap<>();
-
         // group rules together by target to coalesce and produce one target column
         HashMap<TechnicalMapping, List<TechnicalMapping>> columnGroups = TechnicalMappingReader.groupByTarget(rules);
 
         // iterate each target group and generate columns
         for(HashMap.Entry<TechnicalMapping,List<TechnicalMapping>> columnGroup: columnGroups.entrySet()) {
-            String columnSQL="";
-
+            String columns="";
             //remember target field name
             String targetFieldName = columnGroup.getKey().targetFieldName;
             //remember size to coalesce later
             int groupsPerColumn = columnGroup.getValue().size();
-
             // group similar jsonpaths together, this grouping is useful when we source more than one type from single source
             // as if there are more that 1 item in the group we will have to COALESCE  group of get_json_object()
             Map<String,List<TechnicalMapping>> sameJsonPathSourceGroups = JsonPathUtils.groupByJSONPath(columnGroup.getValue());
@@ -77,18 +72,17 @@ public class TransformTableGenerator {
             // iterate each source group
             for(Map.Entry<String,List<TechnicalMapping>> sameJsonPathSourceGroupsEntry:sameJsonPathSourceGroups.entrySet()) {
                 List<TechnicalMapping> sameJsonPathSourceGroup = sameJsonPathSourceGroupsEntry.getValue();
+                String column;
 
                 //reverse the order as super jsonpath has to come last
-                sameJsonPathSourceGroup.sort((t1, t2) ->
-                        JsonPathUtils.compareJSONPathsDesc(t1.jsonPath,t2.jsonPath));
-                String columns = "";
+                sameJsonPathSourceGroup.sort((t1, t2) -> JsonPathUtils.compareJSONPathsDesc(t1.jsonPath,t2.jsonPath));
 
                 if (sameJsonPathSourceGroup.size() == 1 ) {
                     TechnicalMapping rule = sameJsonPathSourceGroup.get(0);
                     ColumnAndExplode columnAndExplode = findFirstColumnAndExplode(rule);
 
                     // add backticks to the column path
-                    String column = JsonPathUtils.addBackTicks(columnAndExplode.getColumnName());
+                    column = JsonPathUtils.addBackTicks(columnAndExplode.getColumnName());
 
                     // convert types
                     column = convertSourceToTargetHIVEType(rule, column);
@@ -104,12 +98,6 @@ public class TransformTableGenerator {
                         // wrap with coalesce
                         column = coalesceRemovedColumn(column, removedColumn);
                     }
-
-                    // gather all columns
-                    if (columns.length() > 0)
-                        columns += ", ";
-
-                    columns += column;
 
                     // add to exploded list
                     if (columnAndExplode.explodeAlias != null) {
@@ -138,7 +126,7 @@ public class TransformTableGenerator {
                     sameJsonPathSourceGroup.remove(sameJsonPathSourceGroup.size()-1);
 
                     // add backticks to the column path
-                    String column = JsonPathUtils.addBackTicks(superPathRule.jsonPath);
+                    column = JsonPathUtils.addBackTicks(superPathRule.jsonPath);
 
                     //create get json object once at the beginning
                     String getJsonObjectStatement;
@@ -172,32 +160,30 @@ public class TransformTableGenerator {
 
                     column += JsonPathUtils.addBackTicks(superPathRule.jsonPath);
 
-                    columns += column;
-
                     // at the end coalesce everything as we have to choose from existing values
-                    columns = String.format("COALESCE(%s)", columns);
+                    column = String.format("COALESCE(%s)", column);
 
                     // convert types
-                    columns = convertSourceToTargetHIVEType(superPathRule, columns);
+                    column = convertSourceToTargetHIVEType(superPathRule, column);
 
                     //add function call if provided
-                    columns = decorateWithFunction(superPathRule.function, columns);
+                    column = decorateWithFunction(superPathRule.function, column);
                 }
 
                 // gather all selects
-                if (columnSQL.length() > 0)
-                    columnSQL += ", ";
-                columnSQL += "\n";
-                columnSQL += columns;
+                if (columns.length() > 0)
+                    columns += ", ";
+                columns += "\n";
+                columns += column;
             }
             // coalesce when there is more than one source field
             if (groupsPerColumn > 1)
-                columnSQL = String.format("COALESCE(%s)", columnSQL);
+                columns = String.format("COALESCE(%s)", columns);
             // gather all selects
             if (selectSQL.length() > 0)
                 selectSQL += ", ";
             // add alias
-            selectSQL += String.format("%s as %s", columnSQL, targetFieldName);
+            selectSQL += String.format("%s as %s", columns, targetFieldName);
         }
         //lateral views
         for (HashMap.Entry<String, ColumnAndExplode> entry : mapExplodeAliases.entrySet()) {
