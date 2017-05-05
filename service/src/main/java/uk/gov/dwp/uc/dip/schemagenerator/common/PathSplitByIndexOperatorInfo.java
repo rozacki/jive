@@ -1,7 +1,7 @@
 package uk.gov.dwp.uc.dip.schemagenerator.common;
 
 public class PathSplitByIndexOperatorInfo {
-    // if map[..] or array[*]
+    // map[..] and array[*] are exploitable
     public boolean exploitable;
     public String leftJsonPath;
     public String rightJsonPath;

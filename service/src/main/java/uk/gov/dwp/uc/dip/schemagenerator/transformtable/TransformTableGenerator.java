@@ -79,7 +79,7 @@ public class TransformTableGenerator {
 
                 if (sameJsonPathSourceGroup.size() == 1 ) {
                     TechnicalMapping rule = sameJsonPathSourceGroup.get(0);
-                    ColumnAndExplode columnAndExplode = findFirstColumnAndExplode(rule);
+                    ColumnAndExplode columnAndExplode = ColumnAndExplode.findFirstColumnAndExplode(rule);
 
                     // add backticks to the column path
                     column = JsonPathUtils.addBackTicks(columnAndExplode.getColumnName());
@@ -87,25 +87,20 @@ public class TransformTableGenerator {
                     // convert types
                     column = convertSourceToTargetHIVEType(rule, column);
 
-                    //add function call if provided
-                    column = decorateWithFunction(rule.function, column);
-
                     // Support for removed
                     if (removedEnabled) {
                         String removedColumn = JsonPathUtils.addBackTicks(createRemovedColumn(columnAndExplode));
                         removedColumn = convertSourceToTargetHIVEType(rule, removedColumn);
-                        removedColumn = decorateWithFunction(rule.function, removedColumn);
                         // wrap with coalesce
                         column = coalesceRemovedColumn(column, removedColumn);
                     }
 
-                    // add to exploded list
+                    // gather all explode aliases and filter out duplicates
                     if (columnAndExplode.explodeAlias != null) {
-                        // gather all explode aliases and filter out duplicates
                         mapExplodeAliases.put(columnAndExplode.explodeAlias, columnAndExplode);
                         if (removedEnabled) {
                             // add in mapping for removed data
-                            ColumnAndExplode removed = createRemovedVersionOfSelectAndExplode(columnAndExplode);
+                            ColumnAndExplode removed = columnAndExplode.getRemovedVersion();
                             mapExplodeAliases.put(removed.explodeAlias, removed);
                         }
                     }
@@ -165,9 +160,6 @@ public class TransformTableGenerator {
 
                     // convert types
                     column = convertSourceToTargetHIVEType(superPathRule, column);
-
-                    //add function call if provided
-                    column = decorateWithFunction(superPathRule.function, column);
                 }
 
                 // gather all selects
@@ -210,14 +202,6 @@ public class TransformTableGenerator {
             allExplodedSQL = sourceTable;
         return String.format("CREATE TABLE %s AS SELECT \n %s FROM %s\n %s"
                 , TechnicalMappingJSONFieldSchema.normalizeHIVEObjectName(targetTable), selectSQL, sourceTable, allExplodedSQL);
-    }
-
-    private ColumnAndExplode createRemovedVersionOfSelectAndExplode(ColumnAndExplode originalSelectAndExplode){
-        return
-                new ColumnAndExplode(originalSelectAndExplode.column.replace(originalSelectAndExplode.explodeAlias, originalSelectAndExplode.explodeAlias + "Removed")
-                        ,originalSelectAndExplode.explodeAlias + "Removed",
-                        REMOVED + originalSelectAndExplode.normalizedJson
-                        ,originalSelectAndExplode.pathSplitByIndexOperatorInfo);
     }
 
     private String coalesceRemovedColumn(String column, String removedColumn){
@@ -273,11 +257,6 @@ public class TransformTableGenerator {
             return column;
         }
 
-        // functions can change data types for example: size(array<string>) returns integer, each function must have input and output data type
-        if(rule.function.length()!=0){
-            return column;
-        }
-
         if(rule.targetType == SOURCE_TYPE_TIMESTAMP && rule.sourceType == SOURCE_TYPE_STRING){
             return String.format(ConvertStringToTimestampTemplate,column,column,column,column,column,column,column,column);
         }
@@ -303,66 +282,5 @@ public class TransformTableGenerator {
         if(function!=null && function.length()>0)
             return String.format("%s(%s)", function, column);
         return column;
-    }
-
-    /*
-       * Check each segment of technical mapping object jsonpath, if it's an array or map and check if it's
-       * exploitable: array[*], map[mk], map[mv].
-       * @param rule
-       * @return if array[*] is present then we return select (First) and explode (Second)
-       * if it's not present then we return jsonpath (First) and null (Second)
-       */
-    private ColumnAndExplode findFirstColumnAndExplode(TechnicalMapping rule){
-        String column;
-        PathSplitByIndexOperatorInfo splitPathByExplodeOperator = JsonPathUtils.findFirstExplodeOperator(rule.jsonPath);
-
-        // do we have split array
-        if(splitPathByExplodeOperator.exploitable){
-            // create explode alias tht will be used in SELECT by concatenating json path from before [] operator
-            String explodeAlias = String.format("exploded_%s", TechnicalMappingJSONFieldSchema.normalizeHIVEObjectName(splitPathByExplodeOperator.leftJsonPath));
-            if(splitPathByExplodeOperator.rightJsonPath.length()>0) {
-                // if right part (after []) exists then we use it for column name in SELECT
-                column = explodeAlias.concat(".").concat(splitPathByExplodeOperator.rightJsonPath);
-            }else{
-                if(rule.function.length()!=0)
-                    // it's array with FUNCTION
-                    return new ColumnAndExplode(splitPathByExplodeOperator.leftJsonPath, null, null, splitPathByExplodeOperator);
-                // if right part (after[]) does not exists then we just use alias to create column name in SELECT
-                column = explodeAlias;
-            }
-            return new ColumnAndExplode(column, explodeAlias, splitPathByExplodeOperator.leftJsonPath, splitPathByExplodeOperator);
-        }
-        return new ColumnAndExplode(rule.jsonPath, null, null, splitPathByExplodeOperator);
-    }
-
-    /*
-       * Check each segment of technical mapping object jsonpath, if it's an array or map and check if it's
-       * exploitable: array[*], map[mk], map[mv].
-       * @param rule
-       * @return if array[*] is present then we return select (First) and explode (Second)
-       * if it's not present then we return jsonpath (First) and null (Second)
-       */
-    private ColumnAndExplode findColumnAndExplodes(TechnicalMapping rule){
-        String selectSQL;
-        PathSplitByIndexOperatorInfo splitPathByExplodeOperator = JsonPathUtils.findFirstExplodeOperator(rule.jsonPath);
-
-        // do we have split array
-        if(splitPathByExplodeOperator.exploitable){
-            // create explode alias by concatenating json path from before [] operator
-            String explodeAlias = String.format("exploded_%s", TechnicalMappingJSONFieldSchema.normalizeHIVEObjectName(splitPathByExplodeOperator.leftJsonPath));
-            // if right part (after []) exists then we use it for select SQL
-            if(splitPathByExplodeOperator.rightJsonPath.length()>0) {
-                selectSQL = explodeAlias.concat(".").concat(splitPathByExplodeOperator.rightJsonPath);
-            }else{
-                if(rule.function.length()==0)
-                    //if right part (after[]) does not exists then we just use alias to create select
-                    selectSQL = explodeAlias;
-                else
-                    //it's array with function
-                    return new ColumnAndExplode(splitPathByExplodeOperator.leftJsonPath, null, null, splitPathByExplodeOperator);
-            }
-            return new ColumnAndExplode(selectSQL,explodeAlias,splitPathByExplodeOperator.leftJsonPath,splitPathByExplodeOperator);
-        }
-        return new ColumnAndExplode(rule.jsonPath, null, null, splitPathByExplodeOperator);
     }
 }
