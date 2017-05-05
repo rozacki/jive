@@ -79,7 +79,7 @@ public class TransformTableGenerator {
 
                 if (sameJsonPathSourceGroup.size() == 1 ) {
                     TechnicalMapping rule = sameJsonPathSourceGroup.get(0);
-                    ColumnAndExplode columnAndExplode = ColumnAndExplode.findFirstColumnAndExplode(rule);
+                    ColumnAndExplode columnAndExplode = ColumnAndExplode.findFirstColumnAndExplode(rule.jsonPath);
 
                     // add backticks to the column path
                     column = JsonPathUtils.addBackTicks(columnAndExplode.column);
@@ -89,7 +89,7 @@ public class TransformTableGenerator {
 
                     // Support for removed
                     if (removedEnabled) {
-                        String removedColumn = JsonPathUtils.addBackTicks(createRemovedColumn(columnAndExplode));
+                        String removedColumn = JsonPathUtils.addBackTicks(columnAndExplode.createRemovedColumn());
                         removedColumn = convertSourceToTargetHIVEType(rule, removedColumn);
                         // wrap with coalesce
                         column = coalesceRemovedColumn(column, removedColumn);
@@ -127,7 +127,7 @@ public class TransformTableGenerator {
                     String getJsonObjectStatement;
                     if(removedEnabled){
                         String removedColumn = JsonPathUtils.addBackTicks(createRemovedColumn(superPathRule.jsonPath));
-                        //removedColumn = convertSourceToTargetHIVEType(superPathRule, removedColumn);
+                        // removedColumn = convertSourceToTargetHIVEType(superPathRule, removedColumn);
                         // wrap with coalesce
                         getJsonObjectStatement = coalesceRemovedColumn(column, removedColumn);
                     }else{
@@ -208,15 +208,6 @@ public class TransformTableGenerator {
         return "COALESCE(" +
                 removedColumn + ", " +
                 column + ")";
-    }
-
-    private String createRemovedColumn(ColumnAndExplode columnAndExplode){
-        if(null == columnAndExplode.explodeAlias){
-            return REMOVED + columnAndExplode.column;
-        }else{
-            // when exploding removed array we have to give different name than for not removed array hence +'Removed'
-            return columnAndExplode.column.replace(columnAndExplode.explodeAlias, columnAndExplode.explodeAlias + "Removed");
-        }
     }
 
     private String createRemovedColumn(String jsonPath){

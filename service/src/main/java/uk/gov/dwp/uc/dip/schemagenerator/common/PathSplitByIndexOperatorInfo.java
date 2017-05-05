@@ -5,7 +5,9 @@ public class PathSplitByIndexOperatorInfo {
     public boolean exploitable;
     public String leftJsonPath;
     public String rightJsonPath;
+    // are we dealing with map at all?
     public boolean isMapPath;
+    // are we dealing with map and key path, if no then we looking at value
     public boolean isMapKeyPath;
     public String JSONPath;
 
