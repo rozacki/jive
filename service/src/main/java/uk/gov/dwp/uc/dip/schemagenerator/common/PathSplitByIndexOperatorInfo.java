@@ -1,7 +1,8 @@
 package uk.gov.dwp.uc.dip.schemagenerator.common;
 
 public class PathSplitByIndexOperatorInfo {
-    public boolean indexOperatorFound;
+    // if map[..] or array[*]
+    public boolean exploitable;
     public String leftJsonPath;
     public String rightJsonPath;
     public boolean isMapPath;
@@ -15,7 +16,7 @@ public class PathSplitByIndexOperatorInfo {
                                  boolean isMap,
                                  boolean isMapKey){
         this.JSONPath = JSONPath;
-        this.indexOperatorFound = indexOperatorFound;
+        this.exploitable = indexOperatorFound;
         this.leftJsonPath = leftJsonPath;
         this.rightJsonPath = rightJsonPath;
         this.isMapPath = isMap;

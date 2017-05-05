@@ -2,32 +2,42 @@ package uk.gov.dwp.uc.dip.schemagenerator.transformtable;
 
 import uk.gov.dwp.uc.dip.schemagenerator.common.PathSplitByIndexOperatorInfo;
 
-class SelectAndExplode{
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+class ColumnAndExplode {
 
     //column that we will select
-    String selectColumn;
+    String column;
     //if exploding array or map then we generate this alias. It is used to select alias.columns
     String explodeAlias;
     String normalizedJson;
 
+    // as of columns may require many explosions
+    // it keeps pairs of <explodedAlias, normalizedJson>
+    List<Map.Entry<String,String>> explodedAliases = new ArrayList<>();
+
     PathSplitByIndexOperatorInfo pathSplitByIndexOperatorInfo;
 
-    SelectAndExplode(String selectSQL, String explodeAlias, String normalizedJson
+    ColumnAndExplode(String column, String explodeAlias, String normalizedJson
             , PathSplitByIndexOperatorInfo pathSplitByIndexOperator){
-        this.selectColumn = selectSQL;
+        this.column = column;
         this.explodeAlias = explodeAlias;
         this.normalizedJson = normalizedJson;
         this.pathSplitByIndexOperatorInfo = pathSplitByIndexOperator;
+        this.explodedAliases.add(new AbstractMap.SimpleEntry<>(explodeAlias,normalizedJson));
     }
 
-    String getSelectColumnsName(){
+    String getColumnName(){
         if(pathSplitByIndexOperatorInfo.isMapPath){
             if(pathSplitByIndexOperatorInfo.isMapKeyPath){
-                return String.format("%s_key",selectColumn);
+                return String.format("%s_key", column);
             }else{
-                return String.format("%s_value",selectColumn);
+                return String.format("%s_value", column);
             }
         }
-        return  selectColumn;
+        return column;
     }
 }

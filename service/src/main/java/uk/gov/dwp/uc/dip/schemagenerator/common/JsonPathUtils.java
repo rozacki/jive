@@ -33,21 +33,21 @@ public class JsonPathUtils {
     }
 
     /**
-     * Finds first indexing operator that has [*], [mk], [mv] in the jsonpath and splitys into two parts
+     * Finds first indexing operator that has [*], [mk], [mv] in the jsonpath and splits into two parts
      * This function is useful when exploding array and maps hence we look only for [*], [mk], [mv]
      * @return
      * ...
      */
-    public static PathSplitByIndexOperatorInfo splitPathByIndexOperator(String jsonPath){
+    public static PathSplitByIndexOperatorInfo findFirstExplodeOperator(String jsonPath){
         String leftPath = "";
         String rightPath = "";
-        boolean foundIndexOperator = false;
+        boolean foundExplodeOperator = false;
         boolean isMapPath = false;
         boolean isMapKeyPath = false;
 
         List<String> fields = getSegments(jsonPath);
         for(String field: fields){
-            if(!foundIndexOperator) {
+            if(!foundExplodeOperator) {
                 JsonSegmentInfo jsonSegmentInfo = getJsonSegmentInfo(field);
 
                 if (leftPath.length() > 0)
@@ -55,7 +55,7 @@ public class JsonPathUtils {
                 leftPath=leftPath.concat(jsonSegmentInfo.normalizedJsonSegment);
 
                 if ((jsonSegmentInfo.isArray && jsonSegmentInfo.arrayIndex == -1) || jsonSegmentInfo.isMap) {
-                    foundIndexOperator = true;
+                    foundExplodeOperator = true;
                     isMapPath = jsonSegmentInfo.isMap;
                     isMapKeyPath = jsonSegmentInfo.isMapKey;
                 }
@@ -66,7 +66,7 @@ public class JsonPathUtils {
             }
 
         }
-        return new PathSplitByIndexOperatorInfo(jsonPath, foundIndexOperator,leftPath, rightPath, isMapPath, isMapKeyPath);
+        return new PathSplitByIndexOperatorInfo(jsonPath, foundExplodeOperator, leftPath, rightPath, isMapPath, isMapKeyPath);
     }
 
     /**
