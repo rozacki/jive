@@ -23,18 +23,20 @@ class ColumnAndExplode {
     // it keeps pairs of <explodedAlias, normalizedJson>
     List<Map.Entry<String,String>> explodedAliases = new ArrayList<>();
 
-    PathSplitByIndexOperatorInfo pathSplitByIndexOperatorInfo;
+    // maps can only have one level of exploding
+    boolean isMap;
 
     ColumnAndExplode(String column, String explodeAlias, String normalizedJson
-            , PathSplitByIndexOperatorInfo pathSplitByIndexOperator){
+            , Boolean isMap){
         this.column = column;
         this.explodeAlias = explodeAlias;
         this.normalizedJson = normalizedJson;
-        this.pathSplitByIndexOperatorInfo = pathSplitByIndexOperator;
+        this.isMap = isMap;
         this.explodedAliases.add(new AbstractMap.SimpleEntry<>(explodeAlias,normalizedJson));
     }
 
-    String getColumnName(){
+    // todo: do it once when ColumnAndExplode is created
+    private static String getColumnName(String column, PathSplitByIndexOperatorInfo pathSplitByIndexOperatorInfo){
         if(pathSplitByIndexOperatorInfo.isMapPath){
             if(pathSplitByIndexOperatorInfo.isMapKeyPath){
                 return String.format("%s_key", column);
@@ -50,7 +52,7 @@ class ColumnAndExplode {
                 new ColumnAndExplode(this.column.replace(this.explodeAlias, this.explodeAlias + "Removed")
                         ,this.explodeAlias + "Removed"
                         ,REMOVED + this.normalizedJson
-                        ,this.pathSplitByIndexOperatorInfo);
+                        ,this.isMap);
     }
 
     /*
@@ -64,9 +66,8 @@ class ColumnAndExplode {
         String column;
         PathSplitByIndexOperatorInfo splitPathByExplodeOperator = JsonPathUtils.findFirstExplodeOperator(rule.jsonPath);
 
-        // do we have split array
         if(!splitPathByExplodeOperator.exploitable)
-            return new ColumnAndExplode(rule.jsonPath, null, null, splitPathByExplodeOperator);
+            return new ColumnAndExplode(rule.jsonPath, null, null, splitPathByExplodeOperator.isMapPath);
 
         // create explode alias that will be used in SELECT by concatenating json path from before [] operator
         String explodeAlias = String.format("exploded_%s", TechnicalMappingJSONFieldSchema.normalizeHIVEObjectName(splitPathByExplodeOperator.leftJsonPath));
@@ -77,7 +78,7 @@ class ColumnAndExplode {
             // if right part (after[]) does not exists then we just use alias to create column name in SELECT
             column = explodeAlias;
         }
-        return new ColumnAndExplode(column, explodeAlias, splitPathByExplodeOperator.leftJsonPath, splitPathByExplodeOperator);
+        return new ColumnAndExplode( getColumnName(column,splitPathByExplodeOperator), explodeAlias, splitPathByExplodeOperator.leftJsonPath, splitPathByExplodeOperator.isMapPath);
     }
 
     /*
@@ -94,7 +95,7 @@ class ColumnAndExplode {
         //
         if(!splitPathByExplodeOperator.exploitable){
             // column, exploded, normalized json,...
-            return new ColumnAndExplode(rule.jsonPath, null, null, splitPathByExplodeOperator);
+            return new ColumnAndExplode(rule.jsonPath, null, null, splitPathByExplodeOperator.isMapPath);
         }
 
         return null;

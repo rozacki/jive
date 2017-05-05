@@ -82,7 +82,7 @@ public class TransformTableGenerator {
                     ColumnAndExplode columnAndExplode = ColumnAndExplode.findFirstColumnAndExplode(rule);
 
                     // add backticks to the column path
-                    column = JsonPathUtils.addBackTicks(columnAndExplode.getColumnName());
+                    column = JsonPathUtils.addBackTicks(columnAndExplode.column);
 
                     // convert types
                     column = convertSourceToTargetHIVEType(rule, column);
@@ -184,7 +184,7 @@ public class TransformTableGenerator {
                 allExplodedSQL += " ";
             String explodeSQL;
 
-            if(explodeAlias.pathSplitByIndexOperatorInfo.isMapPath) {
+            if(explodeAlias.isMap) {
 
                 explodeSQL = String.format("LATERAL VIEW OUTER EXPLODE(%s) view_%s AS %s_key, %s_value \n"
                         , JsonPathUtils.addBackTicks(explodeAlias.normalizedJson)
@@ -212,11 +212,10 @@ public class TransformTableGenerator {
 
     private String createRemovedColumn(ColumnAndExplode columnAndExplode){
         if(null == columnAndExplode.explodeAlias){
-            return REMOVED + columnAndExplode.getColumnName();
+            return REMOVED + columnAndExplode.column;
         }else{
             // when exploding removed array we have to give different name than for not removed array hence +'Removed'
-            return columnAndExplode.getColumnName().replace(columnAndExplode.explodeAlias
-                    ,columnAndExplode.explodeAlias + "Removed");
+            return columnAndExplode.column.replace(columnAndExplode.explodeAlias, columnAndExplode.explodeAlias + "Removed");
         }
     }
 
