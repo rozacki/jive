@@ -31,20 +31,59 @@ public class ArraysOfArraysTest extends AbstractHiveTest {
     }
 
     @Test
-    public void arrayExplodedTest(){
+    public void countTest() {
         String sql = "SELECT count(*) FROM " + targetTableName + " WHERE array1_array2 IS NOT NULL";
-        List<String> results =  shell.executeQuery(sql);
+        List<String> results = shell.executeQuery(sql);
 
-        assertEquals("3", results.get(0));
+        assertEquals("6", results.get(0));
+    }
+    @Test
+    public void rowsTest(){
+        String sql = "SELECT array1_array2 FROM " + targetTableName + " WHERE array1_array2 IS NOT NULL";
+        List<String> results =  shell.executeQuery(sql);
+        assertEquals("a", results.get(0));
+        assertEquals("b", results.get(1));
+        assertEquals("c", results.get(2));
+        assertEquals("a", results.get(3));
+        assertEquals("b", results.get(4));
+        assertEquals("c", results.get(5));
     }
 
     @Test
-    public void arraySingleElementTest(){
-        String sql = "SELECT arrayElement0 FROM " + targetTableName;
+    public void nestedArrayAndStructCount(){
+        String sql = "SELECT count(*) FROM " + targetTableName + " WHERE array1_array3_a IS NOT NULL";
+        List<String> results =  shell.executeQuery(sql);
+        assertEquals("6", results.get(0));
+    }
+
+    @Test
+    public void nestedArrayAndStructRows(){
+        String sql = "SELECT array1_array3_a,array1_array3_b FROM " + targetTableName + " WHERE array1_array3_a is not null and array1_array3_b IS NOT NULL";
+        List<String> results =  shell.executeQuery(sql);
+        assertEquals("a1\tb1", results.get(0));
+        assertEquals("a2\tb2", results.get(1));
+        assertEquals("a3\tb3", results.get(2));
+        assertEquals("a1\tb1", results.get(3));
+        assertEquals("a2\tb2", results.get(4));
+        assertEquals("a3\tb3", results.get(5));
+    }
+
+    @Test
+    public void arraySingleElementWithRemvedTest(){
+        String sql = "SELECT array1_array4_array4_index FROM " + targetTableName + " where  array1_array4_array4_index is not null";
         List<String> results = shell.executeQuery(sql);
 
-        assertEquals(9, results.size());
-        assertEquals("ID0", results.get(0));
+        assertEquals(2, results.size());
     }
+
+    @Test
+    public void nestedArrayAndIndexRowsTest(){
+        String sql = "SELECT array1_array4_array4_index FROM " + targetTableName + " where  array1_array4_array4_index is not null";
+        List<String> results = shell.executeQuery(sql);
+
+        assertEquals("1", results.get(0));
+        assertEquals("2", results.get(1));
+    }
+
 }
 

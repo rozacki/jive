@@ -8,6 +8,7 @@ import uk.gov.dwp.uc.dip.schemagenerator.common.TechnicalMappingJSONFieldSchema;
 import java.util.*;
 
 import org.apache.log4j.Logger;
+import uk.gov.dwp.uc.dip.schemagenerator.common.Tuple;
 
 import static uk.gov.dwp.uc.dip.mappingreader.MappingTypeEnum.*;
 import static uk.gov.dwp.uc.dip.mappingreader.MappingTypeEnum.SOURCE_TYPE_STRING;
@@ -54,6 +55,7 @@ public class TransformTableGenerator {
         String allExplodedSQL = "";
         // have unique explodeAliases
         HashMap<String,ExplodeInfo> mapExplodeAliases = new HashMap<>();
+        HashMap<String,Tuple<String,Boolean>> mapExplodeAliases2 = new HashMap<>();
         // group rules together by target to coalesce and produce one target column
         HashMap<TechnicalMapping, List<TechnicalMapping>> columnGroups = TechnicalMappingReader.groupByTarget(rules);
 
@@ -88,21 +90,23 @@ public class TransformTableGenerator {
                     // convert types
                     column = convertSourceToTargetHIVEType(rule, column);
 
+                    ExplodeInfo removeExplodeInfo = explodeInfo.getRemovedVersionOfExplodeAlias2();
                     // Support for removed
                     if (removedEnabled) {
-                        String removedColumn = JsonPathUtils.addBackTicks(explodeInfo.createRemovedColumn());
+                        String removedColumn = JsonPathUtils.addBackTicks(removeExplodeInfo.column);
                         removedColumn = convertSourceToTargetHIVEType(rule, removedColumn);
                         // wrap with coalesce
                         column = coalesceRemovedColumn(column, removedColumn);
                     }
 
                     // gather all explode aliases and filter out duplicates
-                    if (explodeInfo.explodeAlias != null) {
-                        mapExplodeAliases.put(explodeInfo.explodeAlias, explodeInfo);
+                    if (explodeInfo.explodeAliases.size() > 0) {
+                        explodeInfo.explodeAliases.forEach((key, val) -> mapExplodeAliases2.putIfAbsent(key, new Tuple<>(val, explodeInfo.isMap)));
+
                         if (removedEnabled) {
                             // add in mapping for removed data
-                            ExplodeInfo removed = explodeInfo.getRemovedVersionOfExplodeAlias();
-                            mapExplodeAliases.put(removed.explodeAlias, removed);
+                            removeExplodeInfo.explodeAliases.forEach((key, val) -> mapExplodeAliases2.putIfAbsent(key, new Tuple<>(val, explodeInfo.isMap)));
+
                         }
                     }
                 }else {
@@ -178,23 +182,27 @@ public class TransformTableGenerator {
             // add alias
             selectSQL += String.format("%s as %s", columns, targetFieldName);
         }
+
         //lateral views
-        for (HashMap.Entry<String, ExplodeInfo> entry : mapExplodeAliases.entrySet()) {
-            ExplodeInfo explodeAlias = entry.getValue();
+        for (HashMap.Entry<String, Tuple<String, Boolean>> entry : mapExplodeAliases2.entrySet()) {
+            String alias = entry.getKey();
+            String path = entry.getValue().x;
+            Boolean isMap = entry.getValue().y;
+
             if (allExplodedSQL.length() > 0)
                 allExplodedSQL += " ";
             String explodeSQL;
 
-            if(explodeAlias.isMap) {
+            if(isMap) {
 
                 explodeSQL = String.format("LATERAL VIEW OUTER EXPLODE(%s) view_%s AS %s_key, %s_value \n"
-                        , JsonPathUtils.addBackTicks(explodeAlias.explodePath)
-                        , explodeAlias.explodeAlias, explodeAlias.explodeAlias, explodeAlias.explodeAlias);
+                        , JsonPathUtils.addBackTicks(path)
+                        , alias, alias, alias);
 
             }else {
                 explodeSQL = String.format("LATERAL VIEW OUTER EXPLODE(%s) view_%s AS %s \n"
-                        , JsonPathUtils.addBackTicks(explodeAlias.explodePath)
-                        , explodeAlias.explodeAlias, explodeAlias.explodeAlias);
+                        , JsonPathUtils.addBackTicks(path)
+                        , alias, alias);
             }
             allExplodedSQL += explodeSQL;
         }
