@@ -32,8 +32,7 @@ public class ArraysOfArraysTest extends AbstractHiveTest {
 
     @Test
     public void arrayExplodedTest(){
-        String sql = "SELECT count(*) FROM " + targetTableName
-                + " WHERE array1_array2 IS NOT NULL";
+        String sql = "SELECT count(*) FROM " + targetTableName + " WHERE array1_array2 IS NOT NULL";
         List<String> results =  shell.executeQuery(sql);
 
         assertEquals("3", results.get(0));

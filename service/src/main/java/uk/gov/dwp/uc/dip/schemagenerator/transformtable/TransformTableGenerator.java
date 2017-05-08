@@ -3,7 +3,6 @@ package uk.gov.dwp.uc.dip.schemagenerator.transformtable;
 import uk.gov.dwp.uc.dip.mappingreader.TechnicalMapping;
 import uk.gov.dwp.uc.dip.mappingreader.TechnicalMappingReader;
 import uk.gov.dwp.uc.dip.schemagenerator.common.JsonPathUtils;
-import uk.gov.dwp.uc.dip.schemagenerator.common.PathSplitByIndexOperatorInfo;
 import uk.gov.dwp.uc.dip.schemagenerator.common.TechnicalMappingJSONFieldSchema;
 
 import java.util.*;
@@ -54,7 +53,7 @@ public class TransformTableGenerator {
         String selectSQL = "";
         String allExplodedSQL = "";
         // have unique explodeAliases
-        HashMap<String,ColumnAndExplode> mapExplodeAliases = new HashMap<>();
+        HashMap<String,ExplodeInfo> mapExplodeAliases = new HashMap<>();
         // group rules together by target to coalesce and produce one target column
         HashMap<TechnicalMapping, List<TechnicalMapping>> columnGroups = TechnicalMappingReader.groupByTarget(rules);
 
@@ -72,6 +71,7 @@ public class TransformTableGenerator {
             // iterate each source group
             for(Map.Entry<String,List<TechnicalMapping>> sameJsonPathSourceGroupsEntry:sameJsonPathSourceGroups.entrySet()) {
                 List<TechnicalMapping> sameJsonPathSourceGroup = sameJsonPathSourceGroupsEntry.getValue();
+                // used to generate SELECT column
                 String column;
 
                 //reverse the order as super jsonpath has to come last
@@ -79,28 +79,29 @@ public class TransformTableGenerator {
 
                 if (sameJsonPathSourceGroup.size() == 1 ) {
                     TechnicalMapping rule = sameJsonPathSourceGroup.get(0);
-                    ColumnAndExplode columnAndExplode = ColumnAndExplode.findFirstColumnAndExplode(rule.jsonPath);
+                    //ExplodeInfo columnAndExplode = ExplodeInfo.findFirstColumnAndExplode(rule.jsonPath);
+                    ExplodeInfo explodeInfo = ExplodeInfo.createExplodeInfo(rule);
 
                     // add backticks to the column path
-                    column = JsonPathUtils.addBackTicks(columnAndExplode.column);
+                    column = JsonPathUtils.addBackTicks(explodeInfo.column);
 
                     // convert types
                     column = convertSourceToTargetHIVEType(rule, column);
 
                     // Support for removed
                     if (removedEnabled) {
-                        String removedColumn = JsonPathUtils.addBackTicks(columnAndExplode.createRemovedColumn());
+                        String removedColumn = JsonPathUtils.addBackTicks(explodeInfo.createRemovedColumn());
                         removedColumn = convertSourceToTargetHIVEType(rule, removedColumn);
                         // wrap with coalesce
                         column = coalesceRemovedColumn(column, removedColumn);
                     }
 
                     // gather all explode aliases and filter out duplicates
-                    if (columnAndExplode.explodeAlias != null) {
-                        mapExplodeAliases.put(columnAndExplode.explodeAlias, columnAndExplode);
+                    if (explodeInfo.explodeAlias != null) {
+                        mapExplodeAliases.put(explodeInfo.explodeAlias, explodeInfo);
                         if (removedEnabled) {
                             // add in mapping for removed data
-                            ColumnAndExplode removed = columnAndExplode.getRemovedVersion();
+                            ExplodeInfo removed = explodeInfo.getRemovedVersionOfExplodeAlias();
                             mapExplodeAliases.put(removed.explodeAlias, removed);
                         }
                     }
@@ -178,8 +179,8 @@ public class TransformTableGenerator {
             selectSQL += String.format("%s as %s", columns, targetFieldName);
         }
         //lateral views
-        for (HashMap.Entry<String, ColumnAndExplode> entry : mapExplodeAliases.entrySet()) {
-            ColumnAndExplode explodeAlias = entry.getValue();
+        for (HashMap.Entry<String, ExplodeInfo> entry : mapExplodeAliases.entrySet()) {
+            ExplodeInfo explodeAlias = entry.getValue();
             if (allExplodedSQL.length() > 0)
                 allExplodedSQL += " ";
             String explodeSQL;
@@ -187,12 +188,12 @@ public class TransformTableGenerator {
             if(explodeAlias.isMap) {
 
                 explodeSQL = String.format("LATERAL VIEW OUTER EXPLODE(%s) view_%s AS %s_key, %s_value \n"
-                        , JsonPathUtils.addBackTicks(explodeAlias.normalizedJson)
+                        , JsonPathUtils.addBackTicks(explodeAlias.explodePath)
                         , explodeAlias.explodeAlias, explodeAlias.explodeAlias, explodeAlias.explodeAlias);
 
             }else {
                 explodeSQL = String.format("LATERAL VIEW OUTER EXPLODE(%s) view_%s AS %s \n"
-                        , JsonPathUtils.addBackTicks(explodeAlias.normalizedJson)
+                        , JsonPathUtils.addBackTicks(explodeAlias.explodePath)
                         , explodeAlias.explodeAlias, explodeAlias.explodeAlias);
             }
             allExplodedSQL += explodeSQL;
