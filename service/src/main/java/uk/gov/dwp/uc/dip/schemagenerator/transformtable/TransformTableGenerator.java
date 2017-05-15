@@ -54,8 +54,7 @@ public class TransformTableGenerator {
         String selectSQL = "";
         String allExplodedSQL = "";
         // have unique explodeAliases
-        HashMap<String,ExplodeInfo> mapExplodeAliases = new HashMap<>();
-        HashMap<String,Tuple<String,Boolean>> mapExplodeAliases2 = new HashMap<>();
+        HashMap<String,Tuple<String,Boolean>> mapExplodeAliases = new LinkedHashMap<>();
         // group rules together by target to coalesce and produce one target column
         HashMap<TechnicalMapping, List<TechnicalMapping>> columnGroups = TechnicalMappingReader.groupByTarget(rules);
 
@@ -101,11 +100,11 @@ public class TransformTableGenerator {
 
                     // gather all explode aliases and filter out duplicates
                     if (explodeInfo.explodeAliases.size() > 0) {
-                        explodeInfo.explodeAliases.forEach((key, val) -> mapExplodeAliases2.putIfAbsent(key, new Tuple<>(val, explodeInfo.isMap)));
+                        explodeInfo.explodeAliases.forEach((key, val) -> mapExplodeAliases.putIfAbsent(key, new Tuple<>(val, explodeInfo.isMap)));
 
                         if (removedEnabled) {
                             // add in mapping for removed data
-                            removeExplodeInfo.explodeAliases.forEach((key, val) -> mapExplodeAliases2.putIfAbsent(key, new Tuple<>(val, explodeInfo.isMap)));
+                            removeExplodeInfo.explodeAliases.forEach((key, val) -> mapExplodeAliases.putIfAbsent(key, new Tuple<>(val, explodeInfo.isMap)));
 
                         }
                     }
@@ -184,7 +183,7 @@ public class TransformTableGenerator {
         }
 
         //lateral views
-        for (HashMap.Entry<String, Tuple<String, Boolean>> entry : mapExplodeAliases2.entrySet()) {
+        for (HashMap.Entry<String, Tuple<String, Boolean>> entry : mapExplodeAliases.entrySet()) {
             String alias = entry.getKey();
             String path = entry.getValue().x;
             Boolean isMap = entry.getValue().y;
