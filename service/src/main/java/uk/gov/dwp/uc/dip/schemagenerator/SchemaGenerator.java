@@ -49,6 +49,8 @@ public class SchemaGenerator {
         options.addOption("g", false, "output postgres create table(s) script");
         options.addOption("o", false, "output target tables list");
         options.addOption("d", false, "output data checks");
+        options.addOption("orc", false, "table stored as orc");
+
 
         CommandLineParser parser = new DefaultParser();
 
@@ -71,6 +73,7 @@ public class SchemaGenerator {
             boolean generateTargetDBCreateTable = cmd.hasOption("g");
             boolean listTargetTable = cmd.hasOption("o");
             boolean generateDataQualityChecks = cmd.hasOption("d");
+            boolean storeTableAsORC = cmd.hasOption("orc");
 
             SchemaGenerator generator = new SchemaGenerator(technicalMapping);
 
@@ -116,14 +119,14 @@ public class SchemaGenerator {
                 System.out.println("!echo ------------------------;");
                 System.out.println("!echo ------------------------ " + targetTable + ";");
                 System.out.println("!echo ------------------------;");
-                System.out.println(generator.transformAsString(targetTable));
+                System.out.println(generator.transformAsString(targetTable, storeTableAsORC));
             }else {
                 // transform all rules
                 for (String t : generator.techMap.getTargetTables()) {
                     System.out.println("!echo ------------------------;");
                     System.out.println("!echo ------------------------ " + t + ";");
                     System.out.println("!echo ------------------------;");
-                    System.out.println(generator.transformAsString(t));
+                    System.out.println(generator.transformAsString(t, storeTableAsORC));
                 }
             }
         } catch (ParseException e) {
@@ -140,7 +143,7 @@ public class SchemaGenerator {
             result.append("!echo ------------------------;\n");
             result.append("!echo ------------------------ ").append(t).append(";\n");
             result.append("!echo ------------------------;\n");
-            result.append(transformAsString(t));
+            result.append(transformAsString(t, false));
         }
         return result.toString();
     }
@@ -153,8 +156,8 @@ public class SchemaGenerator {
         return transforms;
     }
 
-    private String transformAsString(String targetTable){
-        List<String> transforms = transform(targetTable);
+    private String transformAsString(String targetTable, boolean storeTableAsORC){
+        List<String> transforms = transformStoreaAs(targetTable, storeTableAsORC);
         StringBuilder result = new StringBuilder();
         for(String transform : transforms){
             result.append(transform).append(";\n\n");
@@ -162,8 +165,7 @@ public class SchemaGenerator {
         return result.toString();
     }
 
-    public List<String> transform(String targetTable) {
-
+    public List<String> transformStoreaAs(String targetTable, boolean storeAsORC){
         List<String> result = new ArrayList<>();
         // SOURCE STEP
         // TODO there's only going to be one source database per table (for foreseeable future).
@@ -180,11 +182,15 @@ public class SchemaGenerator {
                 // TRANSFORM STEP
                 TransformTableGenerator transformTableGenerator = new TransformTableGenerator();
                 result.addAll(transformTableGenerator.generateSqlForTable(
-                        techMap, targetTable, sourceTableGenerator.getTargetSourceTableName()));
+                        techMap, targetTable, sourceTableGenerator.getTargetSourceTableName(), storeAsORC));
             }
         }
 
         return result;
+    }
+
+    public List<String> transform(String targetTable) {
+        return transformStoreaAs(targetTable, false);
     }
 
     public String dataCheckAsString(String targetTable){

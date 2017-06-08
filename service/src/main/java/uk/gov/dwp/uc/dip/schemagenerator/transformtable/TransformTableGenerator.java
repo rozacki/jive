@@ -28,7 +28,8 @@ public class TransformTableGenerator {
 
     public List<String> generateSqlForTable(TechnicalMappingReader techMap,
                                       String targetTable,
-                                      String sourceTableName) {
+                                      String sourceTableName,
+                                        boolean storeAsOrc) {
         List<String> result = new ArrayList<>();
 
         // get all rules related to the target table
@@ -36,8 +37,7 @@ public class TransformTableGenerator {
 
         result.add(String.format("DROP TABLE IF EXISTS %s",targetTable));
         //
-        result.add(getTransformSQL(sourceTableName
-                ,targetRules, targetTable));
+        result.add(getTransformSQL(sourceTableName,targetRules, targetTable, storeAsOrc));
         
         return result;
     }
@@ -49,7 +49,7 @@ public class TransformTableGenerator {
      * @param targetTable
      * @return
      */
-    private String getTransformSQL(String sourceTable, List<TechnicalMapping> rules, String targetTable) {
+    private String getTransformSQL(String sourceTable, List<TechnicalMapping> rules, String targetTable, boolean storeAsORC) {
         logger.debug(String.format("source table:%s, target table: %s, removed enabled: %s",sourceTable,targetTable,removedEnabled));
         String selectSQL = "";
         String allExplodedSQL = "";
@@ -208,8 +208,13 @@ public class TransformTableGenerator {
 
         if(allExplodedSQL.length()==0)
             allExplodedSQL = sourceTable;
-        return String.format("CREATE TABLE %s AS SELECT \n %s FROM %s\n %s"
-                , TechnicalMappingJSONFieldSchema.normalizeHIVEObjectName(targetTable), selectSQL, sourceTable, allExplodedSQL);
+
+        String storedAs = "";
+        if(storeAsORC)
+            storedAs = "STORED AS ORC";
+
+        return String.format("CREATE TABLE %s %s AS SELECT \n %s FROM %s\n %s"
+                , TechnicalMappingJSONFieldSchema.normalizeHIVEObjectName(targetTable), storedAs, selectSQL, sourceTable, allExplodedSQL);
     }
 
     private String coalesceRemovedColumn(String column, String removedColumn){
