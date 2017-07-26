@@ -2,10 +2,12 @@ package uk.gov.dwp.uc.dip.schemagenerator.sourcetable;
 
 import uk.gov.dwp.uc.dip.mappingreader.TechnicalMapping;
 import uk.gov.dwp.uc.dip.mappingreader.TechnicalMappingReader;
+import uk.gov.dwp.uc.dip.schemagenerator.common.JsonPathUtils;
 import uk.gov.dwp.uc.dip.schemagenerator.common.TechnicalMappingJSONFieldSchema;
 import uk.gov.dwp.uc.dip.schemagenerator.common.TechnicalMappingJSONSchema;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -35,6 +37,12 @@ public class SourceTableGenerator {
 
         // iterate all rules and create schema
         TechnicalMappingJSONSchema schema = TechnicalMappingJSONSchema.Start();
+        // must be sorted ASC before grouping
+        sourceRules.sort(new Comparator<TechnicalMapping>() {
+            public int compare(TechnicalMapping t1, TechnicalMapping t2){
+                return JsonPathUtils.compareJSONPathsDesc(t1.jsonPath,t2.jsonPath);
+            }
+        });
         for(TechnicalMapping rule: sourceRules) {
             schema.push(rule);
         }
