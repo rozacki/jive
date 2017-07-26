@@ -179,7 +179,7 @@ public class JsonPathUtils {
      * @param jsonPath2
      * @return
      */
-    static int compareJSONPathsAsc(String jsonPath1, String jsonPath2){
+    public static int compareJSONPathsAsc(String jsonPath1, String jsonPath2){
         List<String> segments1 =    getSegments(jsonPath1);
         List<String> segments2 =    getSegments(jsonPath2);
 
@@ -204,7 +204,7 @@ public class JsonPathUtils {
         }return -1;
     }
 
-    static public int compareJSONPathsDesc(String jsonPath1, String jsonPath2){
+    public static int compareJSONPathsDesc(String jsonPath1, String jsonPath2){
         List<String> segments1 =    getSegments(jsonPath1);
         List<String> segments2 =    getSegments(jsonPath2);
 
