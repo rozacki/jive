@@ -1,9 +1,14 @@
 package uk.gov.dwp.uc.dip.schemagenerator;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 
+import com.opencsv.CSVReader;
 import org.apache.commons.cli.*;
 import org.apache.log4j.Logger;
 import uk.gov.dwp.uc.dip.mappingreader.TechnicalMapping;
@@ -43,14 +48,14 @@ public class SchemaGenerator {
         //todo: group options together for example:
         //-d does not require l, or -t requires -d to be not present
         options.addOption("tm", true, "technical mapping file e.g. /var/tmp/tm.csv");
-        options.addOption("l", true, "HDFS raw data location e.g. /data/2016-01-01");
+        options.addOption("l", true, "HDFS raw data location e.g. /data/2017-01-01");
         options.addOption("t", true, "transform table, only provided table will be transformed, " +
                 "if not provided all target tables will be generated");
         options.addOption("g", false, "output postgres create table(s) script");
         options.addOption("o", false, "output target tables list");
         options.addOption("d", false, "output data checks");
         options.addOption("orc", false, "table stored as orc");
-
+        options.addOption("where", true, "target table name to where clause to append at the end of create .. statement");
 
         CommandLineParser parser = new DefaultParser();
 
@@ -76,6 +81,11 @@ public class SchemaGenerator {
             boolean storeTableAsORC = cmd.hasOption("orc");
 
             SchemaGenerator generator = new SchemaGenerator(technicalMapping);
+            HashMap<String,String> wheres = new LinkedHashMap<>();
+
+            if(cmd.hasOption("where")){
+                wheres = getWhereClauses(cmd.getParsedOptionValue("where").toString());
+            }
 
             if (cmd.hasOption("l")) {
                 generator.setSourceJsonFileLocation((cmd.getParsedOptionValue("l")).toString());
@@ -119,14 +129,14 @@ public class SchemaGenerator {
                 System.out.println("!echo ------------------------;");
                 System.out.println("!echo ------------------------ " + targetTable + ";");
                 System.out.println("!echo ------------------------;");
-                System.out.println(generator.transformAsString(targetTable, storeTableAsORC));
+                System.out.println(generator.transformAsString(targetTable, storeTableAsORC, wheres));
             }else {
                 // transform all rules
                 for (String t : generator.techMap.getTargetTables()) {
                     System.out.println("!echo ------------------------;");
                     System.out.println("!echo ------------------------ " + t + ";");
                     System.out.println("!echo ------------------------;");
-                    System.out.println(generator.transformAsString(t, storeTableAsORC));
+                    System.out.println(generator.transformAsString(t, storeTableAsORC, wheres));
                 }
             }
         } catch (ParseException e) {
@@ -143,7 +153,7 @@ public class SchemaGenerator {
             result.append("!echo ------------------------;\n");
             result.append("!echo ------------------------ ").append(t).append(";\n");
             result.append("!echo ------------------------;\n");
-            result.append(transformAsString(t, false));
+            result.append(transformAsString(t, false, new LinkedHashMap<>()));
         }
         return result.toString();
     }
@@ -156,8 +166,8 @@ public class SchemaGenerator {
         return transforms;
     }
 
-    private String transformAsString(String targetTable, boolean storeTableAsORC){
-        List<String> transforms = transformStoreaAs(targetTable, storeTableAsORC);
+    private String transformAsString(String targetTable, boolean storeTableAsORC, HashMap<String,String> wheres){
+        List<String> transforms = transformStoreaAs(targetTable, storeTableAsORC, wheres);
         StringBuilder result = new StringBuilder();
         for(String transform : transforms){
             result.append(transform).append(";\n\n");
@@ -165,7 +175,7 @@ public class SchemaGenerator {
         return result.toString();
     }
 
-    public List<String> transformStoreaAs(String targetTable, boolean storeAsORC){
+    public List<String> transformStoreaAs(String targetTable, boolean storeAsORC, HashMap<String,String> wheres){
         List<String> result = new ArrayList<>();
         // SOURCE STEP
         // TODO there's only going to be one source database per table (for foreseeable future).
@@ -182,7 +192,7 @@ public class SchemaGenerator {
                 // TRANSFORM STEP
                 TransformTableGenerator transformTableGenerator = new TransformTableGenerator();
                 result.addAll(transformTableGenerator.generateSqlForTable(
-                        techMap, targetTable, sourceTableGenerator.getTargetSourceTableName(), storeAsORC));
+                        techMap, targetTable, sourceTableGenerator.getTargetSourceTableName(), storeAsORC, wheres));
             }
         }
 
@@ -190,7 +200,7 @@ public class SchemaGenerator {
     }
 
     public List<String> transform(String targetTable) {
-        return transformStoreaAs(targetTable, false);
+        return transformStoreaAs(targetTable, false, new LinkedHashMap<>());
     }
 
     public String dataCheckAsString(String targetTable){
@@ -231,5 +241,21 @@ public class SchemaGenerator {
 
     public void setSourceJsonFileLocation(String sourceJsonFileLocation) {
         this.sourceJsonFileLocation = sourceJsonFileLocation;
+    }
+
+    /***
+     * Loads map of target-table=where-clause that will ba attached at the end of the
+     * @return
+     */
+    private static HashMap<String,String> getWhereClauses(String filePath) throws IOException{
+        HashMap<String,String> wheres = new LinkedHashMap<>();
+        CSVReader reader = new CSVReader(new FileReader(filePath));
+        List<String[]> rows=reader.readAll();
+
+        for(String row[] : rows){
+            wheres.put(row[0], row[1]);
+        }
+
+        return wheres;
     }
 }
