@@ -71,7 +71,7 @@ public class DataCheckTest extends AbstractHiveTest {
     public void DQTest_firstColumn_nullability() throws Exception {
         // FIRST COLUMN:
         // generate data checks for the first column
-        List<String> dataQualityChecks = dataCheck.getDataQualityChecks(rules.get(0));
+        List<String> dataQualityChecks = dataCheck.getDataQualityChecks(rules.get(4));
 
         // for first column we expect two data checks
         assertTrue(dataQualityChecks.size() == 2);
@@ -90,7 +90,7 @@ public class DataCheckTest extends AbstractHiveTest {
     public void DQTest_firstColumn_uniqueness() throws Exception {
         // FIRST COLUMN:
         // generate data checks for the first column
-        List<String> dataQualityChecks = dataCheck.getDataQualityChecks(rules.get(0));
+        List<String> dataQualityChecks = dataCheck.getDataQualityChecks(rules.get(4));
 
         // run second check - uniqueness
         result = shell.executeQuery(dataQualityChecks.get(1));
@@ -105,7 +105,7 @@ public class DataCheckTest extends AbstractHiveTest {
 
         // SECOND COLUMN:
         // generate data checks for the second column
-        List<String> dataQualityChecks = dataCheck.getDataQualityChecks(rules.get(1));
+        List<String> dataQualityChecks = dataCheck.getDataQualityChecks(rules.get(5));
 
         // for this cilumn we expect to 0 checks
         assertTrue(dataQualityChecks.size() == 0);
@@ -116,7 +116,7 @@ public class DataCheckTest extends AbstractHiveTest {
 
         // THIRD COLUMN:
         // generate data checks for the third column
-        List<String> dataQualityChecks = dataCheck.getDataQualityChecks(rules.get(2));
+        List<String> dataQualityChecks = dataCheck.getDataQualityChecks(rules.get(6));
 
         // for first column we expect two data checks
         assertTrue(dataQualityChecks.size() == 2);
@@ -134,7 +134,7 @@ public class DataCheckTest extends AbstractHiveTest {
     @Test
     public void DQTest_thirdColumn_uniqueness() throws Exception {
 
-        List<String> dataQualityChecks = dataCheck.getDataQualityChecks(rules.get(2));
+        List<String> dataQualityChecks = dataCheck.getDataQualityChecks(rules.get(6));
 
         // run second check - uniqueness
         result = shell.executeQuery(dataQualityChecks.get(1));
@@ -148,7 +148,7 @@ public class DataCheckTest extends AbstractHiveTest {
 
         //FOURTH COLUMNS:
         // generate data checks for the second column
-        List<String> dataQualityChecks = dataCheck.getDataQualityChecks(rules.get(3));
+        List<String> dataQualityChecks = dataCheck.getDataQualityChecks(rules.get(7));
 
         // for first column we expect two data checks
         assertTrue(dataQualityChecks.size() == 2);
@@ -162,7 +162,7 @@ public class DataCheckTest extends AbstractHiveTest {
 
     public void DQTest_fourthColumn_uniqueness() throws Exception {
 
-        List<String> dataQualityChecks = dataCheck.getDataQualityChecks(rules.get(3));
+        List<String> dataQualityChecks = dataCheck.getDataQualityChecks(rules.get(7));
 
         // we expect to get 1
         assertArrayEquals(result.toArray(), Arrays.asList(new String("1")).toArray());

@@ -27,7 +27,7 @@ class SystemColumns {
                 tm.sourceType = MappingTypeEnum.getByTypeName(systemColumnsEnum.sourceDataType);
                 tm.targetType = MappingTypeEnum.getByTypeName(systemColumnsEnum.destinationDataType);
                 tm.function = "";
-                rulesForTable.add(tm);
+                rulesForTable.add(0,tm);
             }
         }
 
