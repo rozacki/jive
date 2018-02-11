@@ -8,8 +8,10 @@ import java.util.List;
  */
 class SystemColumns {
 
+    static boolean enableSystemCoumns = false;
+
     static List<TechnicalMapping> updateOrAddSystemColumnMappings(List<TechnicalMapping> rulesForTable){
-        if(rulesForTable.size()==0)
+        if(rulesForTable.size()==0 || !enableSystemCoumns)
             return rulesForTable;
         // Get some common values
         TechnicalMapping existingRule = rulesForTable.get(0);
