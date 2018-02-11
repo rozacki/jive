@@ -19,6 +19,7 @@ import java.util.List;
 public class SourceTableGenerator {
     private String sourceJsonFileLocation;
     private String targetSourceTableName;
+    private boolean removeEnabled = false;
 
     public SourceTableGenerator(String sourceJsonFileLocation) {
 
@@ -65,6 +66,15 @@ public class SourceTableGenerator {
             }
             columnDefinitions+=columnDef+"\n";
         }
+
+        if(!removeEnabled)
+            return String.format(
+                    "CREATE EXTERNAL TABLE %s(" +
+                            "\n%s)" +
+                            "\nROW FORMAT SERDE 'org.openx.data.jsonserde.JsonSerDe'" +
+                            "\nSTORED AS TEXTFILE" +
+                            "\nLOCATION '%s'", targetTable
+                    ,columnDefinitions, dataLocation);
 
         String columnDefinitionsRemoved="";
 
