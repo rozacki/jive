@@ -20,7 +20,7 @@ public class TransformTableGenerator {
     /**
      * Implemented only here to facilitate DP-2587. Should be global flag.
      */
-    boolean removedEnabled=true;
+    boolean removedEnabled=false;
 
     final static Logger logger = Logger.getLogger(TransformTableGenerator.class.getName());
 
@@ -36,7 +36,7 @@ public class TransformTableGenerator {
         // get all rules related to the target table
         List<TechnicalMapping> targetRules = techMap.getTargetColumns(targetTable);
 
-        result.add(String.format("DROP TABLE IF EXISTS %s",targetTable));
+        result.add(String.format("DROP TABLE IF EXISTS %s", TechnicalMappingJSONFieldSchema.normalizeHIVEObjectName(targetTable)));
         //
         result.add(getTransformSQL(sourceTableName,targetRules, targetTable, storeTableAs, wheres));
         
@@ -181,7 +181,7 @@ public class TransformTableGenerator {
             if (selectSQL.length() > 0)
                 selectSQL += ", ";
             // add alias
-            selectSQL += String.format("%s as %s", columns, targetFieldName);
+            selectSQL += String.format("%s as %s", columns, JsonPathUtils.addBackTicks(TechnicalMappingJSONFieldSchema.normalizeHIVEObjectName(targetFieldName)));
         }
 
         //lateral views

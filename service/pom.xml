@@ -10,7 +10,7 @@
     <parent>
         <groupId>uk.gov.dwp.uc.dip</groupId>
         <artifactId>jive</artifactId>
-        <version>1.0.14</version>
+        <version>10.0.15</version>
     </parent>
 
     <name>${project.artifactId}-${project.version}</name>
@@ -77,7 +77,7 @@
         <dependency>
             <groupId>com.klarna</groupId>
             <artifactId>hiverunner</artifactId>
-            <version>3.1.0</version>
+            <version>3.2.0</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -103,7 +103,7 @@
                     <reuseForks>true</reuseForks>
                     <argLine>-Xmx2048m -XX:MaxPermSize=512m</argLine>
                     <systemProperties>
-                        <hiveconf_hive.execution.engine>mr</hiveconf_hive.execution.engine>
+                        <hiveconf_hive.execution.engine>tez</hiveconf_hive.execution.engine>
                         <hiveconf_hive.exec.counters.pull.interval>1000</hiveconf_hive.exec.counters.pull.interval>
                         <enableTimeout>true</enableTimeout>
                         <timeoutSeconds>60</timeoutSeconds>
