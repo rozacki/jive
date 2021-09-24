@@ -1,5 +1,7 @@
 package uk.gov.dwp.uc.dip.mappingreader;
 
+import uk.gov.dwp.uc.dip.Configuration;
+
 import java.util.List;
 
 /**
@@ -9,6 +11,9 @@ import java.util.List;
 class SystemColumns {
 
     static List<TechnicalMapping> updateOrAddSystemColumnMappings(List<TechnicalMapping> rulesForTable){
+        if(!Configuration.getConfiguration().hasOption("uc"))
+            return rulesForTable;
+
         if(rulesForTable.size()==0)
             return rulesForTable;
         // Get some common values

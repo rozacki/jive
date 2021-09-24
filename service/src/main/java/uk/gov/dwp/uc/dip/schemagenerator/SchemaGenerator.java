@@ -11,6 +11,7 @@ import java.util.List;
 import com.opencsv.CSVReader;
 import org.apache.commons.cli.*;
 import org.apache.log4j.Logger;
+import uk.gov.dwp.uc.dip.Configuration;
 import uk.gov.dwp.uc.dip.mappingreader.TechnicalMapping;
 import uk.gov.dwp.uc.dip.mappingreader.TechnicalMappingException;
 import uk.gov.dwp.uc.dip.mappingreader.TechnicalMappingReader;
@@ -23,6 +24,7 @@ import uk.gov.dwp.uc.dip.schemagenerator.transformtable.TransformTableGenerator;
  * Created by chrisrozacki on 12/10/2016.
  * Generate source tables from Technical Mapping
  */
+
 public class SchemaGenerator {
 
     private String sourceJsonFileLocation;
@@ -57,12 +59,14 @@ public class SchemaGenerator {
         options.addOption("orc", false, "store table as orc");
         options.addOption("avro", false, "store table as avro");
         options.addOption("where", true, "target table name to where clause to append at the end of create .. statement");
+        options.addOption("uc", false, "include uc specific json attributes");
 
         CommandLineParser parser = new DefaultParser();
 
         CommandLine cmd;
         try {
             cmd = parser.parse(options, args);
+            Configuration.cmd = cmd;
 
             String technicalMapping ="";
             if (cmd.hasOption("tm")) {

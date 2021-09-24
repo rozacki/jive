@@ -1,5 +1,6 @@
 package uk.gov.dwp.uc.dip.schemagenerator.sourcetable;
 
+import uk.gov.dwp.uc.dip.Configuration;
 import uk.gov.dwp.uc.dip.mappingreader.TechnicalMapping;
 import uk.gov.dwp.uc.dip.mappingreader.TechnicalMappingReader;
 import uk.gov.dwp.uc.dip.schemagenerator.common.JsonPathUtils;
@@ -66,25 +67,36 @@ public class SourceTableGenerator {
             columnDefinitions+=columnDef+"\n";
         }
 
-        String columnDefinitionsRemoved="";
 
-        for(HashMap.Entry<String,TechnicalMappingJSONFieldSchema> entry: schema.children.entrySet()){
-            String columnDef = getSourceColumnSQL(entry.getValue(), true);
-            if(columnDefinitionsRemoved.length()>0){
-                columnDefinitionsRemoved+=",";
+        if (Configuration.getConfiguration().hasOption("uc")) {
+            String columnDefinitionsRemoved = "";
+
+            for (HashMap.Entry<String, TechnicalMappingJSONFieldSchema> entry : schema.children.entrySet()) {
+                String columnDef = getSourceColumnSQL(entry.getValue(), true);
+                if (columnDefinitionsRemoved.length() > 0) {
+                    columnDefinitionsRemoved += ",";
+                }
+                columnDefinitionsRemoved += columnDef + "\n";
             }
-            columnDefinitionsRemoved+=columnDef+"\n";
-        }
 
-        return String.format(
-                "CREATE EXTERNAL TABLE %s(" +
-                        "\n%s" +
-                        ",`_removed` STRUCT<%s" +
-                        ">)" +
-                        "\nROW FORMAT SERDE 'org.openx.data.jsonserde.JsonSerDe'" +
-                        "\nSTORED AS TEXTFILE" +
-                        "\nLOCATION '%s'", targetTable
-                ,columnDefinitions, columnDefinitionsRemoved, dataLocation);
+            return String.format(
+                    "CREATE EXTERNAL TABLE %s(" +
+                            "\n%s" +
+                            ",`_removed` STRUCT<%s" +
+                            ">)" +
+                            "\nROW FORMAT SERDE 'org.openx.data.jsonserde.JsonSerDe'" +
+                            "\nSTORED AS TEXTFILE" +
+                            "\nLOCATION '%s'", targetTable
+                    , columnDefinitions, columnDefinitionsRemoved, dataLocation);
+        }else{
+            return String.format(
+                    "CREATE EXTERNAL TABLE %s(" +
+                            "\n%s )" +
+                            "\nROW FORMAT SERDE 'org.openx.data.jsonserde.JsonSerDe'" +
+                            "\nSTORED AS TEXTFILE" +
+                            "\nLOCATION '%s'", targetTable
+                    , columnDefinitions, dataLocation);
+        }
     }
 
     /*

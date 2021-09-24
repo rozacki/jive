@@ -1,5 +1,6 @@
 package uk.gov.dwp.uc.dip.schemagenerator.transformtable;
 
+import uk.gov.dwp.uc.dip.Configuration;
 import uk.gov.dwp.uc.dip.mappingreader.TechnicalMapping;
 import uk.gov.dwp.uc.dip.mappingreader.TechnicalMappingReader;
 import uk.gov.dwp.uc.dip.schemagenerator.common.JsonPathUtils;
@@ -20,7 +21,6 @@ public class TransformTableGenerator {
     /**
      * Implemented only here to facilitate DP-2587. Should be global flag.
      */
-    boolean removedEnabled=true;
 
     final static Logger logger = Logger.getLogger(TransformTableGenerator.class.getName());
 
@@ -52,6 +52,9 @@ public class TransformTableGenerator {
      */
     private String getTransformSQL(String sourceTable, List<TechnicalMapping> rules, String targetTable, String storeTableAs
     ,HashMap<String,String> wheres) {
+
+        boolean removedEnabled= Configuration.getConfiguration().hasOption("uc");
+
         logger.debug(String.format("source table:%s, target table: %s, removed enabled: %s",sourceTable,targetTable,removedEnabled));
         String selectSQL = "";
         String allExplodedSQL = "";

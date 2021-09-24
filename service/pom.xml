@@ -32,13 +32,9 @@
 
     <repositories>
         <repository>
-            <id>central</id>
-            <name>Central Repository</name>
-            <url>http://repo.maven.apache.org/maven2</url>
-            <layout>default</layout>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
+            <id>org.pentaho</id>
+<!--            <url>https://repo.spring.io/plugins-release-local</url>-->
+            <url>https://repo.spring.io/ui/native/milestone/</url>
         </repository>
     </repositories>
 
@@ -73,6 +69,13 @@
             <groupId>com.opencsv</groupId>
             <artifactId>opencsv</artifactId>
             <version>3.7</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.pentaho/pentaho-aggdesigner-algorithm -->
+        <dependency>
+            <groupId>org.pentaho</groupId>
+            <artifactId>pentaho-aggdesigner-algorithm</artifactId>
+            <version>5.1.5-jhyde</version>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.klarna</groupId>
